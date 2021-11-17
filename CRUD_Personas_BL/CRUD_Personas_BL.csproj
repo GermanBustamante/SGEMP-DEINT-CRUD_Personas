@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CRUD_Personas_DAL\CRUD_Personas_DAL.csproj" />
+    <ProjectReference Include="..\CRUD_Personas_Entidades\CRUD_Personas_Entidades.csproj" />
+  </ItemGroup>
+
+</Project>
