@@ -19,10 +19,10 @@ namespace CRUD_Personas_Core_UI.Models
         //    NombreDepartamento = ClsListadoDepartamentosDAL.getNombreDepartamento(oPersona.IdDepartamento);
         //}
 
-        public ClsPersonaDepartamento(int id, string nombre, string apellidos, DateTime fechaNacimiento, string direccion, string telefono, int idDepartamento)
-                       : base(id, nombre, apellidos, fechaNacimiento, direccion, telefono, idDepartamento)
+        public ClsPersonaDepartamento(int id, string nombre, string apellidos, DateTime fechaNacimiento, string direccion, string telefono, String foto,int idDepartamento)
+                       : base(id, nombre, apellidos, fechaNacimiento, direccion, telefono, foto,idDepartamento)
         {
-            NombreDepartamento = ClsListadoDepartamentosDAL.getNombreDepartamento(idDepartamento);
+            NombreDepartamento = ClsListadoDepartamentosDAL.getNombreDepartamentoDAL(idDepartamento);
         }
     }
 }

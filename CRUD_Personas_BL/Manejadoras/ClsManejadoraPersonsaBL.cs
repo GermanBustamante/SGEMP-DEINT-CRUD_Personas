@@ -2,7 +2,8 @@
 
 namespace CRUD_Personas_BL.Manejadoras
 {
-    public class ClsManejadoraPersonsaDAL
+    public class ClsManejadoraPersonsaBL
     {
+        
     }
 }

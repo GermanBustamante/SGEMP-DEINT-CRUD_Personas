@@ -19,11 +19,11 @@ namespace CRUD_Personas_Core_UI.Models
         private List<ClsPersonaDepartamento> rellenarListaPersonasDepartamento()
         {
             List<ClsPersonaDepartamento> listaPersonasDepartamento = new List<ClsPersonaDepartamento>();
-            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompleto();
+            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
             foreach(ClsPersona oPersonaRecogida in listadoPersonas)
             {
                 listaPersonasDepartamento.Add(new ClsPersonaDepartamento(
-                    oPersonaRecogida.Id, oPersonaRecogida.Nombre, oPersonaRecogida.Apellidos, oPersonaRecogida.FechaNacimiento, oPersonaRecogida.Direccion, oPersonaRecogida.Telefono, oPersonaRecogida.IdDepartamento));
+                    oPersonaRecogida.Id, oPersonaRecogida.Nombre, oPersonaRecogida.Apellidos, oPersonaRecogida.FechaNacimiento, oPersonaRecogida.Direccion, oPersonaRecogida.Telefono, oPersonaRecogida.Foto,oPersonaRecogida.IdDepartamento));
             }
             return listaPersonasDepartamento;
         }

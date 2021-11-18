@@ -21,7 +21,7 @@ namespace CRUD_Personas_DAL.Listados
         /// </summary>
         /// <param name="idDepartamento"></param>
         /// <returns></returns>
-        public static String getNombreDepartamento(int idDepartamento)
+        public static String getNombreDepartamentoDAL (int idDepartamento)
         {
             String nombreDepartamento = null;
             MiConexion = new ClsMyConnection();

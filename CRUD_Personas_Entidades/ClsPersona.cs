@@ -7,7 +7,6 @@ namespace CRUD_Personas_Entidades
         #region atributos privados
         private string nombre;
         private string apellidos;
-        public int IdDepartamento { get; set; }
         #endregion
         #region constructores
         //Constructor por defecto
@@ -20,7 +19,7 @@ namespace CRUD_Personas_Entidades
             Nombre = nombre;
             Apellidos = apellido;
         }
-        public ClsPersona(int id,string nombre, string apellido, DateTime fechaNacimiento, String direccion, String telefono, int idDepartamento)
+        public ClsPersona(int id,string nombre, string apellido, DateTime fechaNacimiento, String direccion, String telefono,String foto ,int idDepartamento)
         {
             Id = id;
             Nombre = nombre;
@@ -28,6 +27,7 @@ namespace CRUD_Personas_Entidades
             FechaNacimiento = fechaNacimiento;
             Direccion = direccion;
             Telefono = telefono;
+            Foto = foto;
             IdDepartamento = idDepartamento;
         }
         #endregion
@@ -54,6 +54,9 @@ namespace CRUD_Personas_Entidades
         public DateTime FechaNacimiento { get; set; }
         public String Direccion { get; set; }
         public String Telefono { get; set; }
+        public int IdDepartamento { get; set; }
+        //FOTO PUEDE SER ARRAY DE BYTES O STRING SI FUESE UNA URL
+        public String Foto { get; set; }
         #endregion
     }
 }

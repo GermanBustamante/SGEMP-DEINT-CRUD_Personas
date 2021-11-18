@@ -1,4 +1,6 @@
-﻿using CRUD_Personas_Core_UI.Models;
+﻿using CRUD_Personas_BL.Listados;
+using CRUD_Personas_Core_UI.Models;
+using CRUD_Personas_Entidades;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,9 +13,14 @@ namespace CRUD_Personas_Core_UI.Controllers
     {
         public IActionResult Index()
         {
-            //TODO MI CLASE CLSPERSONA DEBE TENER UN IDDEPARTAMENTO?
             ClsListadoPersonasVM personasDepart = new ClsListadoPersonasVM();
             return View(personasDepart.ListadoPersonasDepartamento);
+        }
+
+        public IActionResult Edit(int id)
+        {
+            ClsPersona oPersona= ClsListadoPersonasBL.getPersonaDadoIdBL(id);
+            return View(oPersona);
         }
     }
 }

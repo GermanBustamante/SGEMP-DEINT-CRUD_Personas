@@ -8,9 +8,14 @@ namespace CRUD_Personas_BL.Listados
 {
     public class ClsListadoPersonasBL
     {
-        public static List<ClsPersona> getListadoPersonasCompleto()
+        public static List<ClsPersona> getListadoPersonasCompletoBL()
         {
-            return ClsListadoPersonasDAL.getListaCompletaTablaPersonas();
+            return ClsListadoPersonasDAL.getListaCompletaTablaPersonasDAL();
+        }
+
+        public static ClsPersona getPersonaDadoIdBL(int id)
+        {
+            return ClsListadoPersonasDAL.getPersonaDAL(id);
         }
     }
 }
