@@ -60,8 +60,20 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    @Html.ActionLink("Back to List", "Index") |
 </div>
+
+@{
+    if (ViewBag.NumeroFilasAfectadas == 1)
+    {
+        <h3>Se ha actualizado correctamente</h3>
+    }
+    else
+    {
+        <h3>No se ha actualizado la persona</h3>
+    }
+}
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

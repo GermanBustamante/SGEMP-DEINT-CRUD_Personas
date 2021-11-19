@@ -5,6 +5,7 @@ using CRUD_Personas_Entidades;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,20 +15,48 @@ namespace CRUD_Personas_Core_UI.Controllers
     {
         public IActionResult Index()
         {
-            ClsListadoPersonasVM personasDepart = new ClsListadoPersonasVM();
+            ClsListadoPersonasVM personasDepart = null;
+            try
+            {
+                personasDepart = new ClsListadoPersonasVM();
+            }
+            catch (SqlException ex)
+            {
+                ViewBag.ErrorMsg = ex.Message;
+                return View("Error", ex);
+            }
             return View(personasDepart.ListadoPersonasDepartamento);
         }
 
         public IActionResult Edit(int id)
         {
-            ClsPersona oPersona= ClsListadoPersonasBL.getPersonaDadoIdBL(id);
+            ClsPersona oPersona = null;
+            try
+            {
+                oPersona = ClsListadoPersonasBL.getPersonaDadoIdBL(id);
+            }
+            catch (SqlException ex)
+            {
+                ViewBag.ErrorMsg = ex.Message;
+                return View("Error", ex);
+            }
+
             return View(oPersona);
         }
 
+        //TODO VIEWMODEL CON DROP DESPLEGABLE DE LOS NOMBRES DE LAS LISTAS Y QUE ESTÉ POR DEFECTO EL ID
         [HttpPost]
         public IActionResult Edit(ClsPersona oPersona)
         {
-            ClsManejadoraPersonsaBL.actualizarPersonaBL(oPersona);
+            try
+            {
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarPersonaBL(oPersona);
+            }
+            catch (SqlException ex)
+            {
+                ViewBag.ErrorMsg = ex.Message;
+                return View("Error", ex);
+            }
             return View(oPersona);
         }
     }

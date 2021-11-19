@@ -9,6 +9,13 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
+        <NavigationView x:Name="nvSample" PaneDisplayMode="Top" IsSettingsVisible="False" ItemInvoked="nvSample_ItemInvoked">
+            <NavigationView.MenuItems>
+                <NavigationViewItem  Content="Personas" Tag="PersonasPage"/>
+                <NavigationViewItemSeparator/>
+                <NavigationViewItem  Content="Departamentos" Tag="DepartamentosPage" />
+            </NavigationView.MenuItems>
+            <Frame x:Name="contentFrame"/>
+        </NavigationView>
     </Grid>
 </Page>

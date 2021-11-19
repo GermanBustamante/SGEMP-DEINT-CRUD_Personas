@@ -6,9 +6,13 @@ namespace CRUD_Personas_BL.Manejadoras
 {
     public class ClsManejadoraPersonsaBL
     {
-        public static void actualizarPersonaBL(ClsPersona oPersona)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oPersona"></param>
+        public static int actualizarPersonaBL(ClsPersona oPersona)
         {
-            ClsManejadoraPersonaDAL.actualizarPersonaDAL(oPersona);
+            return ClsManejadoraPersonaDAL.actualizarPersonaDAL(oPersona);
         }
     }
 }
