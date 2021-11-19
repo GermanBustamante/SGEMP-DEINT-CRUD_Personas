@@ -1,4 +1,5 @@
 ﻿using CRUD_Personas_BL.Listados;
+using CRUD_Personas_BL.Manejadoras;
 using CRUD_Personas_Core_UI.Models;
 using CRUD_Personas_Entidades;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,13 @@ namespace CRUD_Personas_Core_UI.Controllers
         public IActionResult Edit(int id)
         {
             ClsPersona oPersona= ClsListadoPersonasBL.getPersonaDadoIdBL(id);
+            return View(oPersona);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(ClsPersona oPersona)
+        {
+            ClsManejadoraPersonsaBL.actualizarPersonaBL(oPersona);
             return View(oPersona);
         }
     }

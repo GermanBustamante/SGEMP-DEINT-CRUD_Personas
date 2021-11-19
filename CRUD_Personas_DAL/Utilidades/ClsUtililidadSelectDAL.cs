@@ -1,4 +1,5 @@
 ﻿using CRUD_Personas_DAL.Conexion;
+using CRUD_Personas_DAL.Utilidades;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,11 +8,9 @@ using System.Text;
 namespace DAL.Utilidades
 {   
     //Esta clase contendrá todas las propiedades y métodos que usaremos en una clase que ejecute instrucciones SELECT
-    public abstract class ClsUtililidadSelectDAL
+    public abstract class ClsUtililidadSelectDAL : ClsUtilidadBaseDAL
     {
         #region propiedades publicas
-        public static ClsMyConnection MiConexion { get; set; }
-        public static SqlCommand MiComando { get; set; }
         public static SqlDataReader MiLector { get; set; }
         #endregion
 
@@ -29,6 +28,19 @@ namespace DAL.Utilidades
             MiComando.CommandText = instruccion;
             MiComando.Connection = MiConexion.Conexion;
             return MiComando.ExecuteReader();
+        }
+
+        public static void instanciarConexion()
+        {
+            MiConexion = new ClsMyConnection();
+            MiComando = new SqlCommand();
+            MiConexion.getConnection();
+        }
+
+        public static void cerrarFlujos()
+        {
+            MiConexion.closeConnection();
+            MiLector.Close();
         }
         #endregion
 

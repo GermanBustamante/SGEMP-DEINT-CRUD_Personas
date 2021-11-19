@@ -11,9 +11,12 @@ namespace CRUD_Personas_DAL.Listados
     {
         #region constantes
         public const String INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS = "SELECT nombreDepartamento FROM Departamentos WHERE IdDepartamento=";
+        public const String COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS = "nombreDepartamento";
         #endregion
 
         #region atributos
+        #endregion
+        #region propiedades publicas
         #endregion
         #region metodos publicos
         /// <summary>
@@ -24,35 +27,20 @@ namespace CRUD_Personas_DAL.Listados
         public static String getNombreDepartamentoDAL (int idDepartamento)
         {
             String nombreDepartamento = null;
-            MiConexion = new ClsMyConnection();
-            MiComando = new SqlCommand();
-
-            MiConexion.getConnection();
+            instanciarConexion();
             MiLector = ejecutarSelectDadoPK(INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS, idDepartamento);
 
             if (MiLector.HasRows)
             {
                 MiLector.Read();
-                nombreDepartamento = (String)MiLector["nombreDepartamento"];
+                nombreDepartamento = (String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS];
             }
+
+            cerrarFlujos();
 
             return nombreDepartamento;
         }
         #endregion
-
-
-        //private static SqlDataReader ejecutarSelectDadoPK(String instruccionSelect, int primaryKey)
-        //{
-        //    MiComando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = primaryKey;
-        //    MiComando.Connection = MiConexion.Conexion;
-        //    MiComando.CommandText = INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS+"@id";//TODO HACER CTE
-        //    return MiComando.ExecuteReader();
-        //}
-
-        private void instanciarConexionComando()
-        {
-
-        }
     }
 
 

@@ -95,8 +95,6 @@ namespace CRUD_Personas_DAL.Conexion
                 throw;
             }
         }
-
-        
     }
 
 }
