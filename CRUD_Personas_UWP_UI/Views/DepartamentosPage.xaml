@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="CRUD_Personas_UWP_UI.Views.PersonasPage"
+    x:Class="CRUD_Personas_UWP_UI.Views.DepartamentosPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:CRUD_Personas_UWP_UI.Views"
@@ -9,6 +9,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">filhnsdifjsdopfjsdi</TextBlock>
+
     </Grid>
 </Page>

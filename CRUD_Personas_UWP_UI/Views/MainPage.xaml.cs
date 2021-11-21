@@ -31,13 +31,13 @@ namespace CRUD_Personas_UWP_UI
         private void nvSample_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             var item = args.InvokedItemContainer as NavigationViewItem;
-            if (item.Tag == "Personas")
+            if (item.Tag.Equals("PersonasPage"))
             {
                 contentFrame.Navigate(typeof(PersonasPage));
             }
             else
             {
-
+                contentFrame.Navigate(typeof(DepartamentosPage));
             }
         }
     }
