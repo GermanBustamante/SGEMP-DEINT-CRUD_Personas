@@ -15,7 +15,7 @@ namespace DAL.Utilidades
         #endregion
 
         #region metodos publicos
-        public static SqlDataReader ejecutarSelectDadoPK(String instruccionSelect, int primaryKey)
+        public static SqlDataReader ejecutarSelectCondicion(String instruccionSelect, int primaryKey)
         {
             MiComando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = primaryKey;
             MiComando.Connection = MiConexion.Conexion;
@@ -23,18 +23,19 @@ namespace DAL.Utilidades
             return MiComando.ExecuteReader();
         }
 
-        public static SqlDataReader ejecutarSelectSinCondicion(String instruccion)
+        public static SqlDataReader ejecutarSelectCondicion(String instruccionSelect, String primaryKey)
+        {
+            MiComando.Parameters.Add("@id", System.Data.SqlDbType.VarChar).Value = primaryKey;
+            MiComando.Connection = MiConexion.Conexion;
+            MiComando.CommandText = instruccionSelect + "@id";//TODO HACER CTE
+            return MiComando.ExecuteReader();
+        }
+
+        public static SqlDataReader ejecutarSelect(String instruccion)
         {
             MiComando.CommandText = instruccion;
             MiComando.Connection = MiConexion.Conexion;
             return MiComando.ExecuteReader();
-        }
-
-        public static void instanciarConexion()
-        {
-            MiConexion = new ClsMyConnection();
-            MiComando = new SqlCommand();
-            MiConexion.getConnection();
         }
 
         public static void cerrarFlujos()
@@ -43,10 +44,5 @@ namespace DAL.Utilidades
             MiLector.Close();
         }
         #endregion
-
-
-
-
-
     }
 }

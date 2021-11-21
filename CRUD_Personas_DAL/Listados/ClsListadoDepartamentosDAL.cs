@@ -10,15 +10,36 @@ namespace CRUD_Personas_DAL.Listados
     public class ClsListadoDepartamentosDAL : ClsUtililidadSelectDAL
     {
         #region constantes
-        public const String INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS = "SELECT nombreDepartamento FROM Departamentos WHERE IdDepartamento=";
+        public const String INSTRUCCION_SELECT_NOMBRE_DEPARTAMENTO_PK = "SELECT nombreDepartamento FROM Departamentos WHERE IdDepartamento=";
+        public const String INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS = "SELECT nombreDepartamento FROM Departamentos";
         public const String COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS = "nombreDepartamento";
+        public const String COLUMNA_IDDEPARTAMENTO_TABLA_DEPARTAMENTOS = "IDDepartamento";
+        public const String INTRUCCION_SELECT_ID_DEPARTAMENTO_DADO_NOMBRE = "SELECT IDDepartamento FROM Departamentos WHERE "+COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS+"=";
         #endregion
 
-        #region atributos
-        #endregion
         #region propiedades publicas
         #endregion
         #region metodos publicos
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="nombreDepartamento"></param>
+        /// <returns></returns>
+        public static int getIdDepartamentoDAL(string nombreDepartamento)
+        {
+            int idDepartamento = 0;
+            instanciarConexion();
+            MiLector = ejecutarSelectCondicion(INTRUCCION_SELECT_ID_DEPARTAMENTO_DADO_NOMBRE, nombreDepartamento);
+
+            if (MiLector.HasRows)
+            {
+                MiLector.Read();
+                idDepartamento = (int)MiLector[COLUMNA_IDDEPARTAMENTO_TABLA_DEPARTAMENTOS];
+            }
+            return idDepartamento;
+        }
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -28,7 +49,7 @@ namespace CRUD_Personas_DAL.Listados
         {
             String nombreDepartamento = null;
             instanciarConexion();
-            MiLector = ejecutarSelectDadoPK(INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS, idDepartamento);
+            MiLector = ejecutarSelectCondicion(INSTRUCCION_SELECT_NOMBRE_DEPARTAMENTO_PK, idDepartamento);
 
             if (MiLector.HasRows)
             {
@@ -40,24 +61,40 @@ namespace CRUD_Personas_DAL.Listados
 
             return nombreDepartamento;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static List<String> getListadoNombresDepartamentosDAL()
+        {
+            List<String> listadoNombresDepartamentos = null;
+            instanciarConexion();
+            MiLector = ejecutarSelect(INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS);
+
+            if (MiLector.HasRows)
+            {
+                listadoNombresDepartamentos = rellenarListadoNombresDepartamento();
+            }
+
+            cerrarFlujos();
+
+            return listadoNombresDepartamentos;
+        }
+        #endregion
+        #region metodos privados
+        private static List<string> rellenarListadoNombresDepartamento()
+        {
+            List<String> listadoNombresDepartamentos = new List<String>();
+            while (MiLector.Read())
+            {
+                listadoNombresDepartamentos.Add((String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS]);
+            }
+            return listadoNombresDepartamentos;
+        }
         #endregion
     }
 
 
-    //public static List<String> getListaCompletaNombresDepartamento()
-    //{
-    //    miConexion = new ClsMyConnection();
-    //    miConexion.getConnection();
-    //    miLector = ejecutarComando("SELECT nombreDepartamento FROM Departamentos");
-    //    if (miLector.HasRows)
-    //    {
-    //        while (miLector.Read())
-    //        {
-    //            listadoNombresDepartamento.Add((String)miLector["nombreDepartamento"]);
-    //        }
-    //    }
-    //    miConexion.closeConnection();
 
-    //    return listadoNombresDepartamento;
-    //}
 }

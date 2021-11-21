@@ -6,6 +6,8 @@ using System.Text;
 
 namespace CRUD_Personas_DAL.Utilidades
 {
+    //Esta clase contiene todos los atributos y metodos que SIEMPRE se usan al trabajar con datos en la capa DAL, 
+    //como la conexion, el comando, e instanciar abrir dicha conexion
     public abstract class ClsUtilidadBaseDAL
     {
         #region propiedades publicas
@@ -20,6 +22,5 @@ namespace CRUD_Personas_DAL.Utilidades
             MiConexion.getConnection();
         }
         #endregion
-
     }
 }

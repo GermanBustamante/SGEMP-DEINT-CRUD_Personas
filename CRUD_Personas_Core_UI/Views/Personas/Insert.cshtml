@@ -1,0 +1,72 @@
+﻿@model CRUD_Personas_Core_UI.Models.ViewModels.ClsPersonaListadoDepartamentosNombreDepartamentoVM
+
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<h1>Insert</h1>
+
+<h4>ClsPersonaNombreDepartamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Insert" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.TextBoxFor(model => model.Nombre)
+                <span asp-validation-for="NombreDepartamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Apellidos)
+                @Html.TextBoxFor(model => model.Apellidos)
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+                @Html.TextBoxFor(model => model.FechaNacimiento)
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Direccion)
+                @Html.TextBoxFor(model => model.Direccion)
+                <span asp-validation-for="Apellidos" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Telefono)
+                @Html.TextBoxFor(model => model.Telefono)
+                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.Foto)
+                @Html.TextBoxFor(model => model.Foto)
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                @Html.DisplayNameFor(model => model.NombreDepartamento)
+                @Html.DropDownListFor(model => model.NombreDepartamento,
+                new SelectList(Model.ListadoNombresDepartamentos))
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "Personas")
+</div>
+
+@{
+    if (ViewBag.NumeroFilasAfectadas == 1)
+    {
+        <div>Se ha creado correctamente</div>
+    }
+    else if (ViewBag.NumeroFilasAfectadas == 0)
+    {
+        <div>No se ha creado correctamente</div>
+    }
+}
+

@@ -1,80 +1,93 @@
-﻿@model CRUD_Personas_Entidades.ClsPersona
+﻿@model CRUD_Personas_Core_UI.Models.ViewModels.ClsPersonaListadoDepartamentosNombreDepartamentoVM
 
 @{
-    ViewData["Title"] = "Edit";
+    Layout = null;
 }
 
-<h1>Edit</h1>
+<!DOCTYPE html>
 
-<h4>ClsPersona</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Id)
-                @Html.TextBoxFor(model => model.Id)<!--HACER INVISIBLE-->
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Nombre)
-                @Html.TextBoxFor(model => model.Nombre)
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Apellidos)
-                @Html.TextBoxFor(model => model.Apellidos)
-                <span asp-validation-for="Apellidos" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.FechaNacimiento)
-                @Html.TextBoxFor(model => model.FechaNacimiento)
-                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Direccion)
-                @Html.TextBoxFor(model => model.Direccion)
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Telefono)
-                @Html.TextBoxFor(model => model.Telefono)
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.IdDepartamento)
-                @Html.TextBoxFor(model => model.IdDepartamento)
-                <span asp-validation-for="IdDepartamento" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                @Html.LabelFor(model => model.Foto)
-                @Html.TextBoxFor(model => model.Foto)
-                <span asp-validation-for="Foto" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+
+    <h4>ClsPersonaListadoDepartamentosVM</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Id" class="control-label"></label>
+                    @Html.HiddenFor(model => model.Id)
+                    <span asp-validation-for="Id" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Nombre" class="control-label"></label>
+                    @Html.TextBoxFor(model => model.Nombre)
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Apellidos" class="control-label"></label>
+                    @Html.TextBoxFor(model => model.Apellidos)
+                    <span asp-validation-for="Apellidos" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="FechaNacimiento" class="control-label"></label>
+                    @Html.TextBoxFor(model => model.FechaNacimiento)
+                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Direccion" class="control-label"></label>
+                    @Html.TextBoxFor(model => model.Direccion)
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Telefono" class="control-label"></label>
+                    @Html.TextBoxFor(model => model.Telefono)
+                    <span asp-validation-for="Telefono" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Foto" class="control-label"></label>
+                    @Html.TextBoxFor(model => model.Foto)
+                    <span asp-validation-for="Foto" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdDepartamento" class="control-label"></label>
+                    @{
+                        SelectList dropNombres = new SelectList(Model.ListadoNombresDepartamentos);
+                    }
+                    @Html.DropDownListFor(model => model.NombreDepartamento,
+                    dropNombres, Model.NombreDepartamento)               
+                    <span asp-validation-for="IdDepartamento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="IdDepartamento" class="control-label"></label>
+                    @Html.HiddenFor(model => model.IdDepartamento)
+                    <span asp-validation-for="IdDepartamento" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    @Html.ActionLink("Back to List", "Index") |
-</div>
+    <div>
+    @Html.ActionLink("Back to List", "Index", "Personas")    
+    </div>
 
-@{
-    if (ViewBag.NumeroFilasAfectadas == 1)
-    {
-        <h3>Se ha actualizado correctamente</h3>
+    @{
+            if (ViewBag.NumeroFilasAfectadas == 1)
+            {
+            <div>Se ha actualizado correctamente</div>
+        }else if (ViewBag.NumeroFilasAfectadas == 0)
+        {
+            <div>No se ha actualizado</div>
+        }
     }
-    else
-    {
-        <h3>No se ha actualizado la persona</h3>
-    }
-}
 
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</body>
+</html>

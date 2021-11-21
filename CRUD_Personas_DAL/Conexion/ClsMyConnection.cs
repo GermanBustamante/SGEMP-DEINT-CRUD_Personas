@@ -21,19 +21,20 @@ namespace CRUD_Personas_DAL.Conexion
 {
     public class ClsMyConnection
     {
-        //Atributos
+        #region propiedades publicas
         public String Server { get; set; }
         public String DataBase { get; set; }
         public String User { get; set; }
         public String Pass { get; set; }
         public SqlConnection Conexion { get; set; }
+        #endregion
 
-        //Constructores
+        #region constructores
         public ClsMyConnection()
         {
             Server = "servidor-german-sql.database.windows.net";
             DataBase = "PersonasDepartamentosDB";
-            User = "gdebustamante";            
+            User = "gdebustamante";
             Pass = "#Mitesoro";
         }
         //Con parámetros por si quisiera cambiar las conexiones
@@ -44,10 +45,12 @@ namespace CRUD_Personas_DAL.Conexion
             User = user;
             Pass = pass;
         }
+        #endregion
 
 
-        //METODOS
 
+
+        #region metodos publicos
         /// <summary>
         /// Método que abre una conexión con la base de datos
         /// </summary>
@@ -66,9 +69,6 @@ namespace CRUD_Personas_DAL.Conexion
                 throw;
             }
         }
-
-
-
 
         /// <summary>
         /// Este metodo cierra una conexión con la Base de datos
@@ -95,6 +95,7 @@ namespace CRUD_Personas_DAL.Conexion
                 throw;
             }
         }
+        #endregion
     }
 
 }

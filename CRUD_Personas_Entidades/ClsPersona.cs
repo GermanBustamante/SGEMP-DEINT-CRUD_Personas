@@ -14,11 +14,6 @@ namespace CRUD_Personas_Entidades
         {
         }
         //Constructores por parametros
-        public ClsPersona(string nombre, string apellido)
-        {
-            Nombre = nombre;
-            Apellidos = apellido;
-        }
         public ClsPersona(int id,string nombre, string apellido, DateTime fechaNacimiento, String direccion, String telefono,String foto ,int idDepartamento)
         {
             Id = id;
@@ -59,4 +54,24 @@ namespace CRUD_Personas_Entidades
         public String Foto { get; set; }
         #endregion
     }
+    //public ClsPersona(string nombre, string apellido, DateTime fechaNacimiento, String direccion, String telefono, String foto)
+    //{
+    //    Nombre = nombre;
+    //    Apellidos = apellido;
+    //    FechaNacimiento = fechaNacimiento;
+    //    Direccion = direccion;
+    //    Telefono = telefono;
+    //    Foto = foto;
+    //}
+
+    //public ClsPersona(string nombre, string apellido, DateTime fechaNacimiento, String direccion, String telefono, String foto, int idDepartamento)
+    //{
+    //    Nombre = nombre;
+    //    Apellidos = apellido;
+    //    FechaNacimiento = fechaNacimiento;
+    //    Direccion = direccion;
+    //    Telefono = telefono;
+    //    Foto = foto;
+    //    IdDepartamento = idDepartamento;
+    //}
 }

@@ -31,7 +31,7 @@ namespace CRUD_Personas_UWP_UI
         private void nvSample_ItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             var item = args.InvokedItemContainer as NavigationViewItem;
-            if (item.Name == "Personas")
+            if (item.Tag == "Personas")
             {
                 contentFrame.Navigate(typeof(PersonasPage));
             }

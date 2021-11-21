@@ -33,12 +33,12 @@ namespace CRUD_Personas_DAL.Listados
             List<ClsPersona> listadoPersonasRecogido = new List<ClsPersona>();
             instanciarConexion();
 
-            MiLector = ejecutarSelectSinCondicion(INSTRUCCION_SELECT_ALL_PERSONAS);
+            MiLector = ejecutarSelect(INSTRUCCION_SELECT_ALL_PERSONAS);
             if (MiLector.HasRows)
             {
                 listadoPersonasRecogido = RellenarListadoPersonas();
             }
-            MiConexion.closeConnection();
+
             cerrarFlujos();
             
             return listadoPersonasRecogido;
@@ -53,7 +53,7 @@ namespace CRUD_Personas_DAL.Listados
         {
             ClsPersona oPersonaRecogida = null;
             instanciarConexion();
-            MiLector = ejecutarSelectDadoPK(INSTRUCCION_SELECT_PERSONA_DADO_ID, id);
+            MiLector = ejecutarSelectCondicion(INSTRUCCION_SELECT_PERSONA_DADO_ID, id);
 
             if (MiLector.HasRows)
             {//TODO CTES COLUMNA_X_TABLA_Y
@@ -79,8 +79,6 @@ namespace CRUD_Personas_DAL.Listados
             return oPersonaRecogida;
         }
         #endregion
-
-
 
         #region metodos privados
         /// <summary>
