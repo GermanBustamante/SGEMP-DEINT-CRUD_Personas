@@ -3,6 +3,7 @@ using CRUD_Personas_Entidades;
 using DAL.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 
 namespace CRUD_Personas_DAL.Listados
@@ -28,9 +29,9 @@ namespace CRUD_Personas_DAL.Listados
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<ClsPersona> getListaCompletaTablaPersonasDAL()
+        public static ObservableCollection<ClsPersona> getListaCompletaTablaPersonasDAL()
         {
-            List<ClsPersona> listadoPersonasRecogido = new List<ClsPersona>();
+            ObservableCollection<ClsPersona> listadoPersonasRecogido = new ObservableCollection<ClsPersona>();
             instanciarConexion();
 
             MiLector = ejecutarSelect(INSTRUCCION_SELECT_ALL_PERSONAS);
@@ -86,9 +87,9 @@ namespace CRUD_Personas_DAL.Listados
         /// </summary>
         /// <param name="miLector"></param>
         /// <param name="oPersona"></param>
-        private static List<ClsPersona> RellenarListadoPersonas()
+        private static ObservableCollection<ClsPersona> RellenarListadoPersonas()
         {
-            List<ClsPersona> listadoPersonasRecogido = new List<ClsPersona>();
+            ObservableCollection<ClsPersona> listadoPersonasRecogido = new ObservableCollection<ClsPersona>();
             ClsPersona oPersonaRecogida = null;
             while (MiLector.Read())
             {

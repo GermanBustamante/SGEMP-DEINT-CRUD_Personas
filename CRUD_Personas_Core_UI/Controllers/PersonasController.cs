@@ -88,6 +88,7 @@ namespace CRUD_Personas_Core_UI.Controllers
         [ActionName("Delete")]
         public IActionResult DeletePost(int Id)
         {
+            //TODO QUE SE HA BORRADO CORRECTAMENTE
             ClsListadoPersonasNombreDepartamentoVM personasDepartamento = null;
             try
             {

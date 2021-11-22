@@ -3,6 +3,7 @@ using CRUD_Personas_DAL.Listados;
 using CRUD_Personas_Entidades;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CRUD_Personas_BL.Listados
 {
@@ -12,7 +13,7 @@ namespace CRUD_Personas_BL.Listados
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<ClsPersona> getListadoPersonasCompletoBL()
+        public static ObservableCollection<ClsPersona> getListadoPersonasCompletoBL()
         {
             return ClsListadoPersonasDAL.getListaCompletaTablaPersonasDAL();
         }

@@ -120,6 +120,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\clsMainPageVM.cs" />
+    <Compile Include="ViewModels\clsPersonsPageVM.cs" />
+    <Compile Include="ViewModels\Models\clsPersonDepartmentName.cs" />
     <Compile Include="ViewModels\Utilidades\clsVMBase.cs" />
     <Compile Include="ViewModels\Utilidades\clsDelegateCommand.cs" />
     <Compile Include="Views\DepartamentosPage.xaml.cs">
@@ -171,7 +173,19 @@
       <Version>6.2.12</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\CRUD_Personas_BL\CRUD_Personas_BL.csproj">
+      <Project>{0ecf8d3f-8747-45b5-b185-026b3f4e3f72}</Project>
+      <Name>CRUD_Personas_BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CRUD_Personas_Entidades\CRUD_Personas_Entidades.csproj">
+      <Project>{E0156E38-97E5-436B-9ABD-D5EFFA3A6312}</Project>
+      <Name>CRUD_Personas_Entidades</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Assets\Images\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

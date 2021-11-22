@@ -2,6 +2,7 @@
 using CRUD_Personas_Entidades;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace CRUD_Personas_Core_UI.Models
     public class ClsListadoPersonasNombreDepartamentoVM
     {
         #region propiedades publicas
-        public List<ClsPersonaNombreDepartamento> ListadoPersonasDepartamento { get; set; }
+        public ObservableCollection<ClsPersonaNombreDepartamento> ListadoPersonasDepartamento { get; set; }
         #endregion
         #region constructores
         public ClsListadoPersonasNombreDepartamentoVM()
@@ -23,10 +24,10 @@ namespace CRUD_Personas_Core_UI.Models
         /// 
         /// </summary>
         /// <returns></returns>
-        private List<ClsPersonaNombreDepartamento> rellenarListaPersonasDepartamento()
+        private ObservableCollection<ClsPersonaNombreDepartamento> rellenarListaPersonasDepartamento()
         {
-            List<ClsPersonaNombreDepartamento> listaPersonasDepartamento = new List<ClsPersonaNombreDepartamento>();
-            List<ClsPersona> listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
+            ObservableCollection<ClsPersonaNombreDepartamento> listaPersonasDepartamento = new ObservableCollection<ClsPersonaNombreDepartamento>();
+            ObservableCollection<ClsPersona> listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
             foreach (ClsPersona oPersonaRecogida in listadoPersonas)
             {
                 listaPersonasDepartamento.Add(new ClsPersonaNombreDepartamento(

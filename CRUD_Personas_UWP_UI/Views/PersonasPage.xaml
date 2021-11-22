@@ -6,9 +6,66 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:vm="using:CRUD_Personas_UWP_UI.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
-        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">filhnsdifjsdopfjsdi</TextBlock>
-    </Grid>
+    <Page.DataContext>
+        <vm:clsPersonsPageVM/>
+    </Page.DataContext>
+    
+    <RelativePanel>
+        <CommandBar x:Name="cmndBarPersonas" Background="Gray" DefaultLabelPosition="Right"
+                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+            <AppBarButton Icon="Add" Label="Add"/><!--TODO ATAJOS TECLADO-->
+            <AppBarSeparator/>
+            <AppBarButton Icon="Edit" Label="Edit"/>
+            <AppBarSeparator/>
+            <AppBarButton Icon="Share" Label="Share"/>
+        </CommandBar>
+        <ListView x:Name="lstVwPersonas" RelativePanel.Below="cmndBarPersonas" RelativePanel.AlignLeftWith="cmndBarPersonas" RelativePanel.AlignBottomWithPanel="True"
+                  ItemsSource="{Binding ListadoPersonas}" SelectedItem="{Binding oPersonaSeleccionada}"><!--TERMINAR-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Foto}" Height="40" Width="40" Margin="10" Stretch="UniformToFill"/>
+                        <TextBlock Text="{Binding Nombre}" FontSize="22" Margin="10"/>
+                        <TextBlock Text="{Binding Apellidos}" FontSize="22" Margin="10"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Grid x:Name="gridMaster" Background="LightGray" 
+              RelativePanel.Below="cmndBarPersonas" RelativePanel.RightOf="lstVwPersonas" RelativePanel.AlignRightWith="cmndBarPersonas" RelativePanel.AlignBottomWith="lstVwPersonas">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Nombre"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="0"
+                       VerticalAlignment="Center"/>
+            <Border Grid.Column="1" Grid.Row="0" CornerRadius="8" Background="LightGray" Margin="10">
+                <TextBox Text="Bertín Osborne" FontSize="20" FontWeight="Normal" Padding="5"/>
+            </Border>
+            <TextBlock Text="Apellidos"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="1"
+                       VerticalAlignment="Center"/>
+            <Border Grid.Column="1" Grid.Row="1" CornerRadius="8" Background="LightGray" Margin="10">
+                <TextBox Text="Osborne" FontSize="20" FontWeight="Normal" Padding="5" />
+            </Border>
+            <TextBlock Text="Dirección"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="2"
+                       VerticalAlignment="Center"/>
+            <Border Grid.Column="1" Grid.Row="2" CornerRadius="8" Background="LightGray" Margin="10">
+                <TextBox Text="Calle Virgen de Luján 34" FontSize="20" FontWeight="Normal" Padding="5" />
+            </Border>
+            <TextBlock Text="Teléfono"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="3"
+                       VerticalAlignment="Center"/>
+            <Border Grid.Column="1" Grid.Row="3" CornerRadius="8" Background="LightGray" Margin="10">
+                <TextBox Text="684524859" FontSize="20" FontWeight="Normal" Padding="5" />
+            </Border>
+        </Grid>
+    </RelativePanel>
 </Page>
