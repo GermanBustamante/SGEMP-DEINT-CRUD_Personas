@@ -88,19 +88,18 @@ namespace CRUD_Personas_Core_UI.Controllers
         [ActionName("Delete")]
         public IActionResult DeletePost(int Id)
         {
-            //ClsPersonaNombreDepartamento oPersonaNombreDepartamento;
+            ClsListadoPersonasNombreDepartamentoVM personasDepartamento = null;
             try
             {
-                //TODO DUDA QUE QUIERE QUE SE MUESTRE UNA VEZ BORRADO
                 ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.eliminarPersonaBL(Id);
-                //oPersonaNombreDepartamento = new ClsPersonaNombreDepartamento(ClsListadoPersonasBL.getPersonaBL(Id));
+                personasDepartamento = new ClsListadoPersonasNombreDepartamentoVM();
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
                 return View("Error");
             }
-            return View("Index");
+            return View("Index", personasDepartamento.ListadoPersonasDepartamento);
         }
         #endregion
 

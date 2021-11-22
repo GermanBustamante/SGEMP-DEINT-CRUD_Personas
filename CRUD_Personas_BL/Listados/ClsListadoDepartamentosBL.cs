@@ -33,7 +33,7 @@ namespace CRUD_Personas_BL.Listados
         /// <returns></returns>
         public static int getIdDepartamentoBL(string nombreDepartamento)
         {
-            return ClsListadoDepartamentosDAL.getIdDepartamentoDadoNombre(nombreDepartamento);
+            return ClsListadoDepartamentosDAL.getIdDepartamentoDAL(nombreDepartamento);
         }
     }
 }

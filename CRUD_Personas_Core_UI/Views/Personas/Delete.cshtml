@@ -62,7 +62,7 @@
     </dl>
     
     <form asp-action="Delete" method = "post">
-        @Html.HiddenFor(model => model.Id);
+        @Html.HiddenFor(model => model.Id)
 @*        DUDA QUE PREFIERES QUE SOLO PONGAMOS HIDDEN EL ID Y RECOJAMOS LA PERSONA DE LA BD O PONGO HIDDEN
         TODOS LOS ATRIBUTOS DE LA CLASE PERSONA Y RECOJO LA PERSONA DIRECTAMENTE*@
         <input type="submit" value="Delete" class="btn btn-danger" />
