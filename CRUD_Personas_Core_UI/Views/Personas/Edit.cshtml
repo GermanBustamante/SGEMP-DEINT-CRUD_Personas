@@ -56,11 +56,8 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="IdDepartamento" class="control-label"></label>
-                    @{
-                        SelectList dropNombres = new SelectList(Model.ListadoNombresDepartamentos);
-                    }
                     @Html.DropDownListFor(model => model.NombreDepartamento,
-                    dropNombres, Model.NombreDepartamento)               
+                    new SelectList(Model.ListadoNombresDepartamentos, Model.NombreDepartamento))
                     <span asp-validation-for="IdDepartamento" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -76,14 +73,15 @@
     </div>
 
     <div>
-    @Html.ActionLink("Back to List", "Index", "Personas")    
+        @Html.ActionLink("Back to List", "Index", "Personas")
     </div>
 
     @{
-            if (ViewBag.NumeroFilasAfectadas == 1)
-            {
+        if (ViewBag.NumeroFilasAfectadas == 1)
+        {
             <div>Se ha actualizado correctamente</div>
-        }else if (ViewBag.NumeroFilasAfectadas == 0)
+        }
+        else if (ViewBag.NumeroFilasAfectadas == 0)
         {
             <div>No se ha actualizado</div>
         }

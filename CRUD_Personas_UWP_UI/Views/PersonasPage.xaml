@@ -12,18 +12,25 @@
     <Page.DataContext>
         <vm:clsPersonsPageVM/>
     </Page.DataContext>
-    
+
+    <!--TODO MIRAR MOTIONS ANIMACIONES-->
+    <!--TODO MIRAR ANIMATEDICONS ANIMACIONES-->
+
     <RelativePanel>
-        <CommandBar x:Name="cmndBarPersonas" Background="Gray" DefaultLabelPosition="Right"
+        <CommandBar x:Name="cmndBarPersonas"
                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
-            <AppBarButton Icon="Add" Label="Add"/><!--TODO ATAJOS TECLADO-->
+            <AppBarButton Icon="Add" Label="Add Person"/>
+            <!--TODO ATAJOS TECLADO-->
             <AppBarSeparator/>
             <AppBarButton Icon="Edit" Label="Edit"/>
             <AppBarSeparator/>
-            <AppBarButton Icon="Share" Label="Share"/>
+            <AppBarButton Icon="Save" Label="Save"/>
+            <AppBarSeparator/>
+            <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}"/>
         </CommandBar>
         <ListView x:Name="lstVwPersonas" RelativePanel.Below="cmndBarPersonas" RelativePanel.AlignLeftWith="cmndBarPersonas" RelativePanel.AlignBottomWithPanel="True"
-                  ItemsSource="{Binding ListadoPersonas}" SelectedItem="{Binding oPersonaSeleccionada}"><!--TERMINAR-->
+                  ItemsSource="{Binding ListadoPersonas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding OPersonaSeleccionada, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  Margin="10">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -34,38 +41,53 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Grid x:Name="gridMaster" Background="LightGray" 
+        <Grid x:Name="gridMaster" Background="AliceBlue" Margin="10"
               RelativePanel.Below="cmndBarPersonas" RelativePanel.RightOf="lstVwPersonas" RelativePanel.AlignRightWith="cmndBarPersonas" RelativePanel.AlignBottomWith="lstVwPersonas">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Nombre"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="0"
-                       VerticalAlignment="Center"/>
-            <Border Grid.Column="1" Grid.Row="0" CornerRadius="8" Background="LightGray" Margin="10">
-                <TextBox Text="Bertín Osborne" FontSize="20" FontWeight="Normal" Padding="5"/>
-            </Border>
-            <TextBlock Text="Apellidos"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="1"
-                       VerticalAlignment="Center"/>
-            <Border Grid.Column="1" Grid.Row="1" CornerRadius="8" Background="LightGray" Margin="10">
-                <TextBox Text="Osborne" FontSize="20" FontWeight="Normal" Padding="5" />
-            </Border>
-            <TextBlock Text="Dirección"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="2"
-                       VerticalAlignment="Center"/>
-            <Border Grid.Column="1" Grid.Row="2" CornerRadius="8" Background="LightGray" Margin="10">
-                <TextBox Text="Calle Virgen de Luján 34" FontSize="20" FontWeight="Normal" Padding="5" />
-            </Border>
-            <TextBlock Text="Teléfono"  FontSize="20" FontWeight="Normal" Foreground="Black" Margin="10"   Grid.Column="0" Grid.Row="3"
-                       VerticalAlignment="Center"/>
-            <Border Grid.Column="1" Grid.Row="3" CornerRadius="8" Background="LightGray" Margin="10">
-                <TextBox Text="684524859" FontSize="20" FontWeight="Normal" Padding="5" />
-            </Border>
+
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Text="Nombre" Margin="10,10,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionada.Nombre}" Margin="10,5,10,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3">
+                <TextBlock Text="Apellidos" Margin="10,10,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionada.Apellidos}" Margin="10,5,10,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="3">
+                <TextBlock Text="Dirección" Margin="10,10,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionada.Direccion}" Margin="10,5,10,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+                <TextBlock Text="Teléfono" Margin="10,10,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionada.Telefono}" Margin="10,5,10,0"/>
+            </StackPanel>
+
+            <ComboBox Header="Departamento" ItemsSource="{Binding ListadoNombresDepartamentos}" SelectedValue="{Binding NombreDepartamento}"
+                       Margin="10,10,10,0" Grid.Row="4" Grid.Column="0"/>
+
+            <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionada.FechaNacimiento}"
+                        Margin="10,10,10,0" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top"/>
+
+            <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="2">
+                <TextBlock Text="Foto" FontWeight="Normal" Foreground="Black" Margin="10,10,10,0"/>
+                <Image Source="{Binding OPersonaSeleccionada.Foto}" Height="150" Width="150"  Stretch="UniformToFill"/>
+            </StackPanel>
         </Grid>
     </RelativePanel>
 </Page>

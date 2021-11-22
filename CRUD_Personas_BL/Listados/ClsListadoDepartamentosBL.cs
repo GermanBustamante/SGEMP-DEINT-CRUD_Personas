@@ -1,6 +1,7 @@
 ﻿using CRUD_Personas_DAL.Listados;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace CRUD_Personas_BL.Listados
@@ -11,7 +12,7 @@ namespace CRUD_Personas_BL.Listados
         /// Devuelve una lista con los nombres de los departamentos de la tabla Departamentos
         /// </summary>
         /// <returns></returns>
-        public  static List<String> getListadoNombresDepartamentosBL()
+        public  static ObservableCollection<String> getListadoNombresDepartamentosBL()
         {
             return ClsListadoDepartamentosDAL.getListadoNombresDepartamentosDAL();
         }

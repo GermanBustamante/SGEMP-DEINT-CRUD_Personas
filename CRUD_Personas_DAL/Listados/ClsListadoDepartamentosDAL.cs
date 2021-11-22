@@ -2,6 +2,7 @@
 using DAL.Utilidades;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Text;
 
@@ -66,9 +67,9 @@ namespace CRUD_Personas_DAL.Listados
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<String> getListadoNombresDepartamentosDAL()
+        public static ObservableCollection<String> getListadoNombresDepartamentosDAL()
         {
-            List<String> listadoNombresDepartamentos = null;
+            ObservableCollection<String> listadoNombresDepartamentos = null;
             instanciarConexion();
             MiLector = ejecutarSelect(INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS);
 
@@ -83,9 +84,9 @@ namespace CRUD_Personas_DAL.Listados
         }
         #endregion
         #region metodos privados
-        private static List<string> rellenarListadoNombresDepartamento()
+        private static ObservableCollection<string> rellenarListadoNombresDepartamento()
         {
-            List<String> listadoNombresDepartamentos = new List<String>();
+            ObservableCollection<String> listadoNombresDepartamentos = new ObservableCollection<String>();
             while (MiLector.Read())
             {
                 listadoNombresDepartamentos.Add((String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS]);

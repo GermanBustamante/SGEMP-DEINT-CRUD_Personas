@@ -1,5 +1,9 @@
 ﻿using CRUD_Personas_BL.Listados;
+using CRUD_Personas_BL.Manejadoras;
 using CRUD_Personas_Entidades;
+using CRUD_Personas_UWP_UI.ViewModels.Utilidades;
+using Microsoft.VisualStudio.PlatformUI;
+using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,18 +13,71 @@ using System.Threading.Tasks;
 
 namespace CRUD_Personas_UWP_UI.ViewModels
 {
-    public class clsPersonsPageVM
+    public class clsPersonsPageVM : clsVMBase
     {
         //Mi vista necesita una lista de personas y la persona seleccionada(ClsPersonaNombreDepartamento), 
-        //TUn
+
+        #region atributos
+        private ClsPersona oPersonaSeleccionada;
+        private String nombreDepartamento;
+        private DelegateCommand deletePersonCommand;
+        #endregion
+        #region propiedades publicas
+        public DelegateCommand DeletePersonCommand
+        {
+            get
+            {
+                return deletePersonCommand = new DelegateCommand(DeletePersonCommand_Execute, DeletePersonCommand_CanExecute);
+            }
+        }
+
         public ObservableCollection<ClsPersona> ListadoPersonas { get; set; }
-        public ClsPersona oPersonaSeleccionada { get; set; }        
+        public ObservableCollection<String> ListadoNombresDepartamentos { get; set; }
+        public String NombreDepartamento {
+            get { return nombreDepartamento; }
+            set//SI LLEGO A UNA PERSONA Y LE DOY A CAMBIAR, SE CAMBIA PERO AL SALTAR A OTRA PERSONA NO VUELVE A SU VALOR
+            {
+                nombreDepartamento = value;
+                NotifyPropertyChanged("NombreDepartamento");
+            }
+        }
+        public ClsPersona OPersonaSeleccionada
+        {
+            get { return oPersonaSeleccionada; }
+            set
+            {
+                oPersonaSeleccionada = value;
+                //ESTE IF-ELSE ES PQ SI BORRO UNA PERSONA, LUEGO OPERSONASELECCIONADA SE PONE A NULL Y DEBO
+                //CONTROLAR QUE SI ESO OCURRE EL NOMBRE DEPARTAMENTO TAMBIÉN SE PONGA NULO PARA QUE AL BORRAR NO
+                //SE QUEDE NINGÚN DEPARTAMENTO SELECCIONADO
+                NombreDepartamento = oPersonaSeleccionada != null ?   ClsListadoDepartamentosBL.getNombreDepartamentoBL(oPersonaSeleccionada.IdDepartamento) : null;
+
+                NotifyPropertyChanged("OPersonaSeleccionada");
+                deletePersonCommand.RaiseCanExecuteChanged();
+            }
+        }
+        #endregion
 
         #region constructores
         public clsPersonsPageVM()
         {
             ListadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
+            ListadoNombresDepartamentos = ClsListadoDepartamentosBL.getListadoNombresDepartamentosBL();
         }
+        #endregion
+
+        #region commands
+        private void DeletePersonCommand_Execute()
+        {
+            //¿DUDA QUE HAGO CON EL INT QUE DEVUELVE? ESTA BIEN ASÍ
+            ClsManejadoraPersonsaBL.eliminarPersonaBL(oPersonaSeleccionada.Id);
+            ListadoPersonas.Remove(oPersonaSeleccionada);
+        }
+        private bool DeletePersonCommand_CanExecute()
+        {
+            return oPersonaSeleccionada != null;
+        }
+
         #endregion
     }
 }

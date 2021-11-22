@@ -2,13 +2,14 @@
 using CRUD_Personas_Entidades;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace CRUD_Personas_Core_UI.Models.ViewModels
 {
     public class ClsPersonaListadoDepartamentosNombreDepartamentoVM : ClsPersonaNombreDepartamento
     {
         #region propiedades publicas
-        public List<string> ListadoNombresDepartamentos { get; set; }
+        public ObservableCollection<string> ListadoNombresDepartamentos { get; set; }
         #endregion
         #region constructores
         public ClsPersonaListadoDepartamentosNombreDepartamentoVM(ClsPersona oPersona)

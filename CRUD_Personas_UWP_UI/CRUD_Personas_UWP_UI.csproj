@@ -172,6 +172,12 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.12</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Utilities">
+      <Version>17.0.31902.203</Version>
+    </PackageReference>
+    <PackageReference Include="Prism.Core">
+      <Version>8.1.97</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CRUD_Personas_BL\CRUD_Personas_BL.csproj">
