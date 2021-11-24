@@ -21,8 +21,28 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         private ClsPersona oPersonaSeleccionada;
         private String nombreDepartamento;
         private DelegateCommand deletePersonCommand;
+        private DelegateCommand editPersonCommand;
+        private DelegateCommand addPersonCommand;
         #endregion
         #region propiedades publicas
+        public DelegateCommand AddPersonCommand
+        {
+            get
+            {
+                return addPersonCommand = new DelegateCommand(AddPersonCommand_Execute, AddPersonCommand_CanExecute);
+            }
+        }
+
+        
+
+        public DelegateCommand EditPersonCommand
+        {
+            get
+            {
+                return editPersonCommand = new DelegateCommand(EditPersonCommand_Execute, EditPersonCommand_CanExecute);
+            }
+        }
+        
         public DelegateCommand DeletePersonCommand
         {
             get
@@ -33,7 +53,8 @@ namespace CRUD_Personas_UWP_UI.ViewModels
 
         public ObservableCollection<ClsPersona> ListadoPersonas { get; set; }
         public ObservableCollection<String> ListadoNombresDepartamentos { get; set; }
-        public String NombreDepartamento {
+        public String NombreDepartamento
+        {
             get { return nombreDepartamento; }
             set//SI LLEGO A UNA PERSONA Y LE DOY A CAMBIAR, SE CAMBIA PERO AL SALTAR A OTRA PERSONA NO VUELVE A SU VALOR
             {
@@ -50,9 +71,10 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 //ESTE IF-ELSE ES PQ SI BORRO UNA PERSONA, LUEGO OPERSONASELECCIONADA SE PONE A NULL Y DEBO
                 //CONTROLAR QUE SI ESO OCURRE EL NOMBRE DEPARTAMENTO TAMBIÉN SE PONGA NULO PARA QUE AL BORRAR NO
                 //SE QUEDE NINGÚN DEPARTAMENTO SELECCIONADO
-                NombreDepartamento = oPersonaSeleccionada != null ?   ClsListadoDepartamentosBL.getNombreDepartamentoBL(oPersonaSeleccionada.IdDepartamento) : null;
+                NombreDepartamento = oPersonaSeleccionada != null ? ClsListadoDepartamentosBL.getNombreDepartamentoBL(oPersonaSeleccionada.IdDepartamento) : null;
 
                 NotifyPropertyChanged("OPersonaSeleccionada");
+                editPersonCommand.RaiseCanExecuteChanged();
                 deletePersonCommand.RaiseCanExecuteChanged();
             }
         }
@@ -67,6 +89,16 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         #endregion
 
         #region commands
+        
+
+        private void AddPersonCommand_Execute()
+        {
+            //TODO NI ZORRA DE COMO HACERLO AQUÍ
+        }
+        private bool AddPersonCommand_CanExecute()
+        {
+            return oPersonaSeleccionada == null;
+        }
         private void DeletePersonCommand_Execute()
         {
             //¿DUDA QUE HAGO CON EL INT QUE DEVUELVE? ESTA BIEN ASÍ
@@ -77,7 +109,14 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         {
             return oPersonaSeleccionada != null;
         }
-
+        private void EditPersonCommand_Execute()
+        {
+            ClsManejadoraPersonsaBL.actualizarPersonaBL(oPersonaSeleccionada);
+        }
+        private bool EditPersonCommand_CanExecute()
+        {
+            return oPersonaSeleccionada != null;
+        }
         #endregion
     }
 }

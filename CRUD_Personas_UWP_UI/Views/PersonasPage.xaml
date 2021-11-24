@@ -19,12 +19,10 @@
     <RelativePanel>
         <CommandBar x:Name="cmndBarPersonas"
                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
-            <AppBarButton Icon="Add" Label="Add Person"/>
+            <AppBarButton Icon="Add" Label="Add Person" Command="{Binding AddPersonCommand}"/>
             <!--TODO ATAJOS TECLADO-->
             <AppBarSeparator/>
-            <AppBarButton Icon="Edit" Label="Edit"/>
-            <AppBarSeparator/>
-            <AppBarButton Icon="Save" Label="Save"/>
+            <AppBarButton Icon="Edit" Label="Edit" Command="{Binding EditPersonCommand}"/>
             <AppBarSeparator/>
             <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}"/>
         </CommandBar>
@@ -35,7 +33,7 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{Binding Foto}" Height="40" Width="40" Margin="10" Stretch="UniformToFill"/>
-                        <TextBlock Text="{Binding Nombre}" FontSize="22" Margin="10"/>
+                        <TextBlock Text="{Binding Nombre}"  FontSize="22" Margin="10"/>
                         <TextBlock Text="{Binding Apellidos}" FontSize="22" Margin="10"/>
                     </StackPanel>
                 </DataTemplate>
