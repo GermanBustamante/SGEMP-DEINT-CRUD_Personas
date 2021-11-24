@@ -55,7 +55,7 @@ namespace CRUD_Personas_Core_UI.Controllers
             try
             {
                 oPersonaNombreDepartamento.IdDepartamento = ClsListadoDepartamentosBL.getIdDepartamentoBL(oPersonaNombreDepartamento.NombreDepartamento);
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarPersonaBL(oPersonaNombreDepartamento);
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaNombreDepartamento);
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersonaNombreDepartamento);
 
             }
@@ -88,7 +88,6 @@ namespace CRUD_Personas_Core_UI.Controllers
         [ActionName("Delete")]
         public IActionResult DeletePost(int Id)
         {
-            //TODO QUE SE HA BORRADO CORRECTAMENTE
             ClsListadoPersonasNombreDepartamentoVM personasDepartamento = null;
             try
             {
@@ -123,16 +122,27 @@ namespace CRUD_Personas_Core_UI.Controllers
             return View(oPersonaListadoDepartamentos);
         }
 
-        [HttpPost]
+//        ObservableCollection<String> listadoNombresDepartamento;
+//            try
+//            {
+//                listadoNombresDepartamento = ClsListadoDepartamentosBL.getListadoNombresDepartamentosBL();
+//            }
+//            catch (SqlException ex)
+//            {
+//                ViewBag.ErrorMsg = ex.Message;
+//                return View("Error");
+//}
+//return View(listadoNombresDepartamento);
+
+[HttpPost]
         public IActionResult Insert(ClsPersonaNombreDepartamento oPersonaNombreDepartamento)
         {
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
                 oPersonaNombreDepartamento.IdDepartamento = ClsListadoDepartamentosBL.getIdDepartamentoBL(oPersonaNombreDepartamento.NombreDepartamento);
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.aniadirPersonaBL(oPersonaNombreDepartamento);
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaNombreDepartamento);
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersonaNombreDepartamento);
-
             }
             catch (SqlException ex)
             {

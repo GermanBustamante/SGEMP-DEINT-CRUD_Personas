@@ -124,6 +124,7 @@
     <Compile Include="ViewModels\Models\clsPersonDepartmentName.cs" />
     <Compile Include="ViewModels\Utilidades\clsVMBase.cs" />
     <Compile Include="ViewModels\Utilidades\clsDelegateCommand.cs" />
+    <Compile Include="ViewModels\Utilidades\Converters\DateTimeToDateTimeOffsetConverter.cs" />
     <Compile Include="Views\DepartamentosPage.xaml.cs">
       <DependentUpon>DepartamentosPage.xaml</DependentUpon>
     </Compile>

@@ -27,7 +27,7 @@
             <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}"/>
         </CommandBar>
         <ListView x:Name="lstVwPersonas" RelativePanel.Below="cmndBarPersonas" RelativePanel.AlignLeftWith="cmndBarPersonas" RelativePanel.AlignBottomWithPanel="True"
-                  ItemsSource="{Binding ListadoPersonas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding OPersonaSeleccionada, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding ListadoPersonas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Margin="10">
             <ListView.ItemTemplate>
                 <DataTemplate>
@@ -58,33 +58,32 @@
 
             <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
                 <TextBlock Text="Nombre" Margin="10,10,10,0"/>
-                <TextBox Text="{Binding OPersonaSeleccionada.Nombre}" Margin="10,5,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,0"/>
             </StackPanel>
-
             <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3">
                 <TextBlock Text="Apellidos" Margin="10,10,10,0"/>
-                <TextBox Text="{Binding OPersonaSeleccionada.Apellidos}" Margin="10,5,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Apellidos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,0"/>
             </StackPanel>
 
             <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="3">
                 <TextBlock Text="Dirección" Margin="10,10,10,0"/>
-                <TextBox Text="{Binding OPersonaSeleccionada.Direccion}" Margin="10,5,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Direccion}" Margin="10,5,10,0"/>
             </StackPanel>
-
+            
             <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
                 <TextBlock Text="Teléfono" Margin="10,10,10,0"/>
-                <TextBox Text="{Binding OPersonaSeleccionada.Telefono}" Margin="10,5,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Telefono, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,0"/>
             </StackPanel>
 
             <ComboBox Header="Departamento" ItemsSource="{Binding ListadoNombresDepartamentos}" SelectedValue="{Binding NombreDepartamento}"
                        Margin="10,10,10,0" Grid.Row="4" Grid.Column="0"/>
 
-            <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionada.FechaNacimiento}"
+            <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionadaNombreDepartamento.FechaNacimiento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Margin="10,10,10,0" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top"/>
 
             <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="2">
                 <TextBlock Text="Foto" FontWeight="Normal" Foreground="Black" Margin="10,10,10,0"/>
-                <Image Source="{Binding OPersonaSeleccionada.Foto}" Height="150" Width="150"  Stretch="UniformToFill"/>
+                <Image Source="{Binding OPersonaSeleccionadaNombreDepartamento.Foto}" Height="150" Width="150"  Stretch="UniformToFill"/>
             </StackPanel>
         </Grid>
     </RelativePanel>

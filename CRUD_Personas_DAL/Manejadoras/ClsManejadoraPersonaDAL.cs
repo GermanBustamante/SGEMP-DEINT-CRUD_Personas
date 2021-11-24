@@ -20,31 +20,19 @@ namespace CRUD_Personas_DAL.Manejadoras
         /// </summary>
         /// <param name="oPersona"></param>
         /// <returns></returns>
-        public static int actualizarPersonaDAL(ClsPersona oPersona)
+        public static int actualizarAñadirPersonaDAL(ClsPersona oPersona)
         {
             int resultado = 0;
 
             instanciarConexion();
-
-            resultado = ejecutarUpdatePersona(oPersona);
-
-            MiConexion.closeConnection();
-
-            return resultado;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="oPersona"></param>
-        /// <returns></returns>
-        public static int aniadirPersonaDAL(ClsPersona oPersona)
-        {
-            int resultado = 0;
-
-            instanciarConexion();
-
-            resultado = ejecutarInsertPersona(oPersona);
+            if (oPersona.Id != null)
+            {
+                resultado = ejecutarUpdatePersona(oPersona);
+            }
+            else
+            {
+                resultado = ejecutarInsertPersona(oPersona);
+            }
 
             MiConexion.closeConnection();
 

@@ -6,13 +6,14 @@ namespace CRUD_Personas_BL.Manejadoras
 {
     public class ClsManejadoraPersonsaBL
     {
+        //TODO MODURAILIZAR Y DEPENDER DE SU SU ID DE LA PERSONA ES NULO
         /// <summary>
         /// Actualiza una persona de la BD
         /// </summary>
         /// <param name="oPersona"></param>
-        public static int actualizarPersonaBL(ClsPersona oPersona)
+        public static int actualizarAñadirPersonaBL(ClsPersona oPersona)
         {
-            return ClsManejadoraPersonaDAL.actualizarPersonaDAL(oPersona);
+            return ClsManejadoraPersonaDAL.actualizarAñadirPersonaDAL(oPersona);
         }
 
         /// <summary>
@@ -25,14 +26,6 @@ namespace CRUD_Personas_BL.Manejadoras
             return ClsManejadoraPersonaDAL.eliminarPersonaDAL(id);
         }
 
-        /// <summary>
-        /// Aniade una persona a la BD
-        /// </summary>
-        /// <param name="oPersona"></param>
-        /// <returns></returns>
-        public static int aniadirPersonaBL(ClsPersona oPersona)
-        {
-            return ClsManejadoraPersonaDAL.aniadirPersonaDAL(oPersona);
-        }
+        
     }
 }
