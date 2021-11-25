@@ -16,10 +16,10 @@ namespace CRUD_Personas_UWP_UI.ViewModels
 {
     public class clsPersonsPageVM : clsVMBase
     {
-        //Mi vista necesita una lista de personas y la persona seleccionada(ClsPersonaNombreDepartamento), 
-
         #region atributos
         private clsPersonDepartmentName oPersonaSeleccionadaNombreDepartamento;
+        private ObservableCollection<ClsDepartamento> listadoDepartamentos;
+        private ObservableCollection<clsPersonDepartmentName> listadoPersonasNombreDepartamento;
         private DelegateCommand deletePersonCommand;
         private DelegateCommand editPersonCommand;
         private DelegateCommand addPersonCommand;
@@ -32,9 +32,6 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 return addPersonCommand = new DelegateCommand(AddPersonCommand_Execute, AddPersonCommand_CanExecute);
             }
         }
-
-        
-
         public DelegateCommand EditPersonCommand
         {
             get
@@ -42,7 +39,6 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 return editPersonCommand = new DelegateCommand(EditPersonCommand_Execute, EditPersonCommand_CanExecute);
             }
         }
-        
         public DelegateCommand DeletePersonCommand
         {
             get
@@ -51,22 +47,33 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             }
         }
 
-        public ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento { get; set; }
-        public ObservableCollection<String> ListadoNombresDepartamentos { get; set; }
+        public ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento
+        {
+            get { return listadoPersonasNombreDepartamento; }
+            set
+            {
+                listadoPersonasNombreDepartamento = value;
+                NotifyPropertyChanged("ListadoPersonasNombreDepartamento");
+            }
+        }
+        public ObservableCollection<ClsDepartamento> ListadoDepartamentos
+        {
+            get { return listadoDepartamentos; }
+            set
+            {
+                listadoDepartamentos = value;
+            }
+        }
         public clsPersonDepartmentName OPersonaSeleccionadaNombreDepartamento
         {
             get { return oPersonaSeleccionadaNombreDepartamento; }
             set
             {
                 oPersonaSeleccionadaNombreDepartamento = value;
-                //ESTE IF-ELSE ES PQ SI BORRO UNA PERSONA, LUEGO OPERSONASELECCIONADA SE PONE A NULL Y DEBO
-                //CONTROLAR QUE SI ESO OCURRE EL NOMBRE DEPARTAMENTO TAMBIÉN SE PONGA NULO PARA QUE AL BORRAR NO
-                //SE QUEDE NINGÚN DEPARTAMENTO SELECCIONADO
-                //oPersonaSeleccionadaNombreDepartamento.IdDepartamento = oPersonaSeleccionadaNombreDepartamento.IdDepartamento != null ? ClsListadoDepartamentosBL.getNombreDepartamentoBL(oPersonaSeleccionadaNombreDepartamento.IdDepartamento) : null;
-
-                NotifyPropertyChanged("OPersonaSeleccionada");
+                NotifyPropertyChanged("OPersonaSeleccionadaNombreDepartamento");
                 editPersonCommand.RaiseCanExecuteChanged();
                 deletePersonCommand.RaiseCanExecuteChanged();
+                addPersonCommand.RaiseCanExecuteChanged();
             }
         }
         #endregion
@@ -80,17 +87,14 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             {
                 ListadoPersonasNombreDepartamento.Add(new clsPersonDepartmentName(item));
             }
-
-            ListadoNombresDepartamentos = ClsListadoDepartamentosBL.getListadoNombresDepartamentosBL();
+            listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
         }
         #endregion
 
         #region commands
-        
-
         private void AddPersonCommand_Execute()
         {
-            //TODO NI ZORRA DE COMO HACERLO AQUÍ
+            ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento);
         }
         private bool AddPersonCommand_CanExecute()
         {
@@ -98,7 +102,8 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         }
         private void DeletePersonCommand_Execute()
         {
-            //¿DUDA QUE HAGO CON EL INT QUE DEVUELVE? ESTA BIEN ASÍ
+            //TODO QUE ES MEJOR QUE LE DIGA QUE CUANDO BORRE UNA PERSONA VUELVA A MIRAR LA LISTA DE PERSONAS
+            //O MEJOR LO BORRO DE LA QUE TENGO Y YASTA??
             ClsManejadoraPersonsaBL.eliminarPersonaBL(oPersonaSeleccionadaNombreDepartamento.Id);
             ListadoPersonasNombreDepartamento.Remove(oPersonaSeleccionadaNombreDepartamento);
         }

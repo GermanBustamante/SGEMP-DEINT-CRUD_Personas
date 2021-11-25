@@ -1,4 +1,5 @@
 ﻿using CRUD_Personas_DAL.Conexion;
+using CRUD_Personas_Entidades;
 using DAL.Utilidades;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace CRUD_Personas_DAL.Listados
         public const String COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS = "nombreDepartamento";
         public const String COLUMNA_IDDEPARTAMENTO_TABLA_DEPARTAMENTOS = "IDDepartamento";
         public const String INTRUCCION_SELECT_ID_DEPARTAMENTO_DADO_NOMBRE = "SELECT IDDepartamento FROM Departamentos WHERE "+COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS+"=";
+        public const String INSTRUCCION_SELECT_DEPARTAMENTOS = "SELECT * FROM Departamentos";
+
         #endregion
 
         #region propiedades publicas
@@ -40,6 +43,25 @@ namespace CRUD_Personas_DAL.Listados
             return idDepartamento;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public static ObservableCollection<ClsDepartamento> getListadoDepartamentosDAL()
+        {
+            ObservableCollection<ClsDepartamento> listadoDepartamentos = null;
+            instanciarConexion();
+            MiLector = ejecutarSelect(INSTRUCCION_SELECT_DEPARTAMENTOS);
+
+            if (MiLector.HasRows)
+            {
+                listadoDepartamentos = rellenarListadoDepartamentos();
+            }
+
+            cerrarFlujos();
+
+            return listadoDepartamentos;
+        }
 
         /// <summary>
         /// 
@@ -92,6 +114,17 @@ namespace CRUD_Personas_DAL.Listados
                 listadoNombresDepartamentos.Add((String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS]);
             }
             return listadoNombresDepartamentos;
+        }
+        private static ObservableCollection<ClsDepartamento> rellenarListadoDepartamentos()
+        {
+            ObservableCollection<ClsDepartamento> listadoDepartamentos = new ObservableCollection<ClsDepartamento>();
+            while (MiLector.Read())
+            {
+                int idDepartamento = (int)MiLector[COLUMNA_IDDEPARTAMENTO_TABLA_DEPARTAMENTOS];
+                String nombreDepartamento = (String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS];
+                listadoDepartamentos.Add(new ClsDepartamento(idDepartamento, nombreDepartamento));
+            }
+            return listadoDepartamentos;
         }
         #endregion
     }

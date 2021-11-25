@@ -1,4 +1,5 @@
 ﻿using CRUD_Personas_DAL.Listados;
+using CRUD_Personas_Entidades;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -35,6 +36,11 @@ namespace CRUD_Personas_BL.Listados
         public static int getIdDepartamentoBL(string nombreDepartamento)
         {
             return ClsListadoDepartamentosDAL.getIdDepartamentoDAL(nombreDepartamento);
+        }
+
+       public static ObservableCollection<ClsDepartamento> getListadoDepartamentosBL()
+        {
+            return ClsListadoDepartamentosDAL.getListadoDepartamentosDAL();
         }
     }
 }

@@ -7,32 +7,49 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:vm="using:CRUD_Personas_UWP_UI.ViewModels"
+    xmlns:cv ="using:CRUD_Personas_UWP_UI.ViewModels.Utilidades.Converters"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
         <vm:clsPersonsPageVM/>
     </Page.DataContext>
+    <UserControl.Resources>
+        <cv:DateTimeToDateTimeOffsetConverter x:Key="Converter"/>
+    </UserControl.Resources>
 
     <!--TODO MIRAR MOTIONS ANIMACIONES-->
     <!--TODO MIRAR ANIMATEDICONS ANIMACIONES-->
 
     <RelativePanel>
-        <CommandBar x:Name="cmndBarPersonas"
+        <CommandBar x:Name="cmndBarPersonas" DefaultLabelPosition="Right"
                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
-            <AppBarButton Icon="Add" Label="Add Person" Command="{Binding AddPersonCommand}"/>
-            <!--TODO ATAJOS TECLADO-->
+            <AppBarButton Icon="Add" Label="Add Person" Command="{Binding AddPersonCommand}">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
+            <!--TODO MOSTRAR ATAJOS TECLADO-->
             <AppBarSeparator/>
-            <AppBarButton Icon="Edit" Label="Edit" Command="{Binding EditPersonCommand}"/>
+            <AppBarButton Icon="Edit" Label="Edit" Command="{Binding EditPersonCommand}">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
             <AppBarSeparator/>
-            <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}"/>
+            <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="D"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
         </CommandBar>
         <ListView x:Name="lstVwPersonas" RelativePanel.Below="cmndBarPersonas" RelativePanel.AlignLeftWith="cmndBarPersonas" RelativePanel.AlignBottomWithPanel="True"
-                  ItemsSource="{Binding ListadoPersonasNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding ListadoPersonasNombreDepartamento}" SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Margin="10">
             <ListView.ItemTemplate>
+                <!--TODO CUANDO SE EDITE UNA PERSONA QUE SE CAMBIE EL NOMBRE Y APELLIDOS DEL LISTVIEW-->
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="{Binding Foto}" Height="40" Width="40" Margin="10" Stretch="UniformToFill"/>
+                        <Image Source="/Assets/Images/ImgFotoListView.png" Height="40" Width="40" Margin="10" Stretch="UniformToFill"/>
                         <TextBlock Text="{Binding Nombre}"  FontSize="22" Margin="10"/>
                         <TextBlock Text="{Binding Apellidos}" FontSize="22" Margin="10"/>
                     </StackPanel>
@@ -47,44 +64,47 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+            <Image Source="{Binding OPersonaSeleccionadaNombreDepartamento.Foto}" Height="150" Width="150"  Stretch="UniformToFill"
+                       Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10"/>
 
-            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
                 <TextBlock Text="Nombre" Margin="10,10,10,0"/>
-                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,0"/>
-            </StackPanel>
-            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="0"  Grid.ColumnSpan="3">
-                <TextBlock Text="Apellidos" Margin="10,10,10,0"/>
-                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Apellidos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="10,5,10,0"/>
             </StackPanel>
 
-            <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0"  Grid.ColumnSpan="3">
-                <TextBlock Text="Dirección" Margin="10,10,10,0"/>
-                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Direccion}" Margin="10,5,10,0"/>
+            <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+                <TextBlock Text="Apellidos" Margin="10,10,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Apellidos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="10,5,10,0"/>
             </StackPanel>
-            
-            <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">
+
+            <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
+                <TextBlock Text="Dirección" Margin="10,10,10,0"/>
+                <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Direccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,0"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
                 <TextBlock Text="Teléfono" Margin="10,10,10,0"/>
                 <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Telefono, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,5,10,0"/>
             </StackPanel>
 
-            <ComboBox Header="Departamento" ItemsSource="{Binding ListadoNombresDepartamentos}" SelectedValue="{Binding NombreDepartamento}"
-                       Margin="10,10,10,0" Grid.Row="4" Grid.Column="0"/>
+            <ComboBox Header="Departamento" ItemsSource="{Binding ListadoDepartamentos}" SelectedValue="{Binding OPersonaSeleccionadaNombreDepartamento.IdDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Id"
+                       Margin="10,10,10,0" Grid.Row="4" Grid.Column="0">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Nombre}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
 
-            <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionadaNombreDepartamento.FechaNacimiento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,10,10,0" Grid.Row="4" Grid.Column="1" VerticalAlignment="Top"/>
-
-            <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="2">
-                <TextBlock Text="Foto" FontWeight="Normal" Foreground="Black" Margin="10,10,10,0"/>
-                <Image Source="{Binding OPersonaSeleccionadaNombreDepartamento.Foto}" Height="150" Width="150"  Stretch="UniformToFill"/>
-            </StackPanel>
+            <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionadaNombreDepartamento.FechaNacimiento,Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="10,10,10,0" Grid.Row="4" Grid.Column="1"/>
         </Grid>
     </RelativePanel>
 </Page>
