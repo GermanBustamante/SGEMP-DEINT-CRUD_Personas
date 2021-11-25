@@ -12,6 +12,12 @@ namespace CRUD_Personas_Entidades
         #endregion
         #region constructores
         public ClsDepartamento() { }
+        public ClsDepartamento(int id, string nombre)
+        {
+            Id = id;
+            Nombre = nombre;
+        }
+
         #endregion
     }
 }

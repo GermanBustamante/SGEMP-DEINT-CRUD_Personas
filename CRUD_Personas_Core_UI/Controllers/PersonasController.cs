@@ -49,15 +49,13 @@ namespace CRUD_Personas_Core_UI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(ClsPersonaNombreDepartamento oPersonaNombreDepartamento)
+        public IActionResult Edit(ClsPersona oPersona)
         {
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
-                oPersonaNombreDepartamento.IdDepartamento = ClsListadoDepartamentosBL.getIdDepartamentoBL(oPersonaNombreDepartamento.NombreDepartamento);
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaNombreDepartamento);
-                oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersonaNombreDepartamento);
-
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersona);
+                oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
             }
             catch (SqlException ex)
             {
@@ -104,9 +102,6 @@ namespace CRUD_Personas_Core_UI.Controllers
         #endregion
 
         #region ActionInsert
-        //MI VISTA INSERT SOLO NECESITA LA LISTA DE NOMBRES DE DEPARTAMENTO, PERO SI SOLO LE PONGO ESO
-        //COMO MODELO NO PUEDO APROVECHAR LOS HELPERS, ESTÁ CORRECTO HACERLO ASI? O LO HAGO SIN HELPERS Y USO
-        //<INPUT> NORMALES
         public IActionResult Insert()
         {
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
@@ -134,7 +129,7 @@ namespace CRUD_Personas_Core_UI.Controllers
 //}
 //return View(listadoNombresDepartamento);
 
-[HttpPost]
+        [HttpPost]
         public IActionResult Insert(ClsPersonaNombreDepartamento oPersonaNombreDepartamento)
         {
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;

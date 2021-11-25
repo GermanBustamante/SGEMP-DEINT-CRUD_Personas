@@ -74,6 +74,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         #region constructores
         public clsPersonsPageVM()
         {
+            ListadoPersonasNombreDepartamento = new ObservableCollection<clsPersonDepartmentName>();
             ObservableCollection<ClsPersona> listaPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
             foreach (var item in listaPersonas)
             {
@@ -99,7 +100,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         {
             //¿DUDA QUE HAGO CON EL INT QUE DEVUELVE? ESTA BIEN ASÍ
             ClsManejadoraPersonsaBL.eliminarPersonaBL(oPersonaSeleccionadaNombreDepartamento.Id);
-            ListadoPersonas.Remove(oPersonaSeleccionadaNombreDepartamento);
+            ListadoPersonasNombreDepartamento.Remove(oPersonaSeleccionadaNombreDepartamento);
         }
         private bool DeletePersonCommand_CanExecute()
         {

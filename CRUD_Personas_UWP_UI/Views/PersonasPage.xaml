@@ -27,7 +27,7 @@
             <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}"/>
         </CommandBar>
         <ListView x:Name="lstVwPersonas" RelativePanel.Below="cmndBarPersonas" RelativePanel.AlignLeftWith="cmndBarPersonas" RelativePanel.AlignBottomWithPanel="True"
-                  ItemsSource="{Binding ListadoPersonas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                  ItemsSource="{Binding ListadoPersonasNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Margin="10">
             <ListView.ItemTemplate>
                 <DataTemplate>
