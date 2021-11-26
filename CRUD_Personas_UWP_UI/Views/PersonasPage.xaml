@@ -23,6 +23,12 @@
     <RelativePanel>
         <CommandBar x:Name="cmndBarPersonas" DefaultLabelPosition="Right"
                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+            <AppBarSeparator/>
+            <AppBarButton Icon="Save" Label="Save" Command="{Binding SavePersonCommand}">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
             <AppBarButton Icon="Add" Label="Add Person" Command="{Binding AddPersonCommand}">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Control" Key="S"/>

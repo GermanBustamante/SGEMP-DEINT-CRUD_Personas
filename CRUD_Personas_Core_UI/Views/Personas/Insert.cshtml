@@ -44,8 +44,10 @@
             </div>
             <div class="form-group">
                 @Html.DisplayNameFor(model => model.NombreDepartamento)
-                @Html.DropDownListFor(model => model.NombreDepartamento,
-                new SelectList(Model.ListadoNombresDepartamentos))
+                @foreach (var department in @Model.ListadoDepartamentos)
+                {
+                    <option value="@department.Id" selected="@((Model.NombreDepartamento==department.Nombre)?"selected":false)">@department.Nombre</option>
+                }
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
             <div class="form-group">

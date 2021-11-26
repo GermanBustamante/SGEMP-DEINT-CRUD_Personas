@@ -23,13 +23,32 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         private DelegateCommand deletePersonCommand;
         private DelegateCommand editPersonCommand;
         private DelegateCommand addPersonCommand;
+        private DelegateCommand savePersonCommand;
         #endregion
         #region propiedades publicas
+        public DelegateCommand SavePersonCommand
+        {
+            get
+            {
+                return savePersonCommand = new DelegateCommand(SavePersonCommand_Execute, SavePersonCommand_CanExecute);
+            }
+        }
+
+        private bool SavePersonCommand_CanExecute()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void SavePersonCommand_Execute()
+        {
+            throw new NotImplementedException();
+        }
+
         public DelegateCommand AddPersonCommand
         {
             get
             {
-                return addPersonCommand = new DelegateCommand(AddPersonCommand_Execute, AddPersonCommand_CanExecute);
+                return addPersonCommand = new DelegateCommand(AddPersonCommand_Execute);
             }
         }
         public DelegateCommand EditPersonCommand
@@ -69,11 +88,15 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             get { return oPersonaSeleccionadaNombreDepartamento; }
             set
             {
-                oPersonaSeleccionadaNombreDepartamento = value;
-                NotifyPropertyChanged("OPersonaSeleccionadaNombreDepartamento");
-                editPersonCommand.RaiseCanExecuteChanged();
-                deletePersonCommand.RaiseCanExecuteChanged();
-                addPersonCommand.RaiseCanExecuteChanged();
+                if (value != null)
+                {
+                    oPersonaSeleccionadaNombreDepartamento = value;
+                    NotifyPropertyChanged("OPersonaSeleccionadaNombreDepartamento");
+                    editPersonCommand.RaiseCanExecuteChanged();
+                    deletePersonCommand.RaiseCanExecuteChanged();
+                    addPersonCommand.RaiseCanExecuteChanged();
+                }
+
             }
         }
         #endregion
@@ -82,23 +105,38 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         public clsPersonsPageVM()
         {
             ListadoPersonasNombreDepartamento = new ObservableCollection<clsPersonDepartmentName>();
+            listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
+            recargarAtributosVM();
+        }
+
+        private void recargarAtributosVM()
+        {
             ObservableCollection<ClsPersona> listaPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
+            if (ListadoPersonasNombreDepartamento != null)
+            {
+                ListadoPersonasNombreDepartamento.Clear();
+            }
             foreach (var item in listaPersonas)
             {
                 ListadoPersonasNombreDepartamento.Add(new clsPersonDepartmentName(item));
             }
-            listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
+            oPersonaSeleccionadaNombreDepartamento = new clsPersonDepartmentName();
         }
         #endregion
 
         #region commands
         private void AddPersonCommand_Execute()
         {
+            oPersonaSeleccionadaNombreDepartamento = new clsPersonDepartmentName();
+            
+            oPersonaSeleccionadaNombreDepartamento.Foto = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.xatakandroid.com%2Fsistema-operativo%2Fse-actualizara-mi-movil-a-android-10-lista-completa-actualizada&psig=AOvVaw2GoFIeULBEYpxJlDeAqMWb&ust=1637324751968000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKDBg9fzofQCFQAAAAAdAAAAABAD";
+
             ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento);
+            recargarAtributosVM();
         }
         private bool AddPersonCommand_CanExecute()
         {
-            return oPersonaSeleccionadaNombreDepartamento == null;
+            return oPersonaSeleccionadaNombreDepartamento.Id == 0;
         }
         private void DeletePersonCommand_Execute()
         {
@@ -106,18 +144,20 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             //O MEJOR LO BORRO DE LA QUE TENGO Y YASTA??
             ClsManejadoraPersonsaBL.eliminarPersonaBL(oPersonaSeleccionadaNombreDepartamento.Id);
             ListadoPersonasNombreDepartamento.Remove(oPersonaSeleccionadaNombreDepartamento);
+            recargarAtributosVM();
         }
         private bool DeletePersonCommand_CanExecute()
         {
-            return oPersonaSeleccionadaNombreDepartamento != null;
+            return oPersonaSeleccionadaNombreDepartamento.Id != 0;
         }
         private void EditPersonCommand_Execute()
         {
             ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento);
+            recargarAtributosVM();
         }
         private bool EditPersonCommand_CanExecute()
         {
-            return oPersonaSeleccionadaNombreDepartamento != null;
+            return oPersonaSeleccionadaNombreDepartamento.Id != 0;
         }
         #endregion
     }

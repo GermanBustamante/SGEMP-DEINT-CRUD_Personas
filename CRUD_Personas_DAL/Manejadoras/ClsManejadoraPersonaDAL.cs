@@ -25,7 +25,7 @@ namespace CRUD_Personas_DAL.Manejadoras
             int resultado = 0;
 
             instanciarConexion();
-            if (oPersona.Id != null)
+            if (oPersona.Id != 0)
             {
                 resultado = ejecutarUpdatePersona(oPersona);
             }

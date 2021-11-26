@@ -9,20 +9,20 @@ namespace CRUD_Personas_Core_UI.Models.ViewModels
     public class ClsPersonaListadoDepartamentosNombreDepartamentoVM : ClsPersonaNombreDepartamento
     {
         #region propiedades publicas
-        public ObservableCollection<string> ListadoNombresDepartamentos { get; set; }
+        public ObservableCollection<ClsDepartamento> ListadoDepartamentos { get; set; }
         #endregion
         #region constructores
         public ClsPersonaListadoDepartamentosNombreDepartamentoVM(ClsPersona oPersona)
                        : base(oPersona.Id, oPersona.Nombre, oPersona.Apellidos, oPersona.FechaNacimiento, oPersona.Direccion, oPersona.Telefono, oPersona.Foto, oPersona.IdDepartamento)
         {
 
-            ListadoNombresDepartamentos = ClsListadoDepartamentosBL.getListadoNombresDepartamentosBL();
+            ListadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
         }
 
         public ClsPersonaListadoDepartamentosNombreDepartamentoVM()
         {
 
-            ListadoNombresDepartamentos = ClsListadoDepartamentosBL.getListadoNombresDepartamentosBL();
+            ListadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
         }
         #endregion
     }

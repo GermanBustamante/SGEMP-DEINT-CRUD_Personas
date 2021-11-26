@@ -130,14 +130,13 @@ namespace CRUD_Personas_Core_UI.Controllers
 //return View(listadoNombresDepartamento);
 
         [HttpPost]
-        public IActionResult Insert(ClsPersonaNombreDepartamento oPersonaNombreDepartamento)
+        public IActionResult Insert(ClsPersona oPersona)
         {
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
-                oPersonaNombreDepartamento.IdDepartamento = ClsListadoDepartamentosBL.getIdDepartamentoBL(oPersonaNombreDepartamento.NombreDepartamento);
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaNombreDepartamento);
-                oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersonaNombreDepartamento);
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersona);
+                oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
             }
             catch (SqlException ex)
             {
