@@ -46,7 +46,7 @@ namespace CRUD_Personas_DAL.Utilidades
         /// <returns> int representando el número de filas afectadas por dicha sentenciaDML</returns>
         public static int ejecutarSentenciaDMLCondicion(String sentenciaDML, int condicion)
         {
-            MiComando.Parameters["@param"].Value = condicion;
+            MiComando.Parameters.Add("@param", System.Data.SqlDbType.Int).Value = condicion;
             MiComando.CommandText = sentenciaDML+"@param";
             MiComando.Connection = MiConexion.Conexion;
             return MiComando.ExecuteNonQuery();

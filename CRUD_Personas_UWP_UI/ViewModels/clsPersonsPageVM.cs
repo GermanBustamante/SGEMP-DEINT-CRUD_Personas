@@ -8,6 +8,7 @@ using Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,17 +25,17 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         private ObservableCollection<ClsDepartamento> listadoDepartamentos;
         private ObservableCollection<clsPersonDepartmentName> listadoPersonasNombreDepartamento;
         private DelegateCommand deletePersonCommand;
-        //private DelegateCommand editPersonCommand;
+        private DelegateCommand editPersonCommand;
         private DelegateCommand addPersonCommand;
         private DelegateCommand savePersonCommand;
         private String txtBlckOperacionExitosa;
+        private String txtBlckError;
         private static Timer timer;
         #endregion
         public const string MENSAJE_OPERACION_EXITOSA = "La operación ha sido un exito";
         public const string MENSAJE_OPERACION_FALLIDA = "Algo ha fallado";
 
         #region constantes
-
         #endregion
         #region propiedades publicas
         public DelegateCommand SavePersonCommand
@@ -52,13 +53,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 return addPersonCommand = new DelegateCommand(AddPersonCommand_Execute);
             }
         }
-        //public DelegateCommand EditPersonCommand
-        //{
-        //    get
-        //    {
-        //        return editPersonCommand = new DelegateCommand(EditPersonCommand_Execute, EditPersonCommand_CanExecute);
-        //    }
-        //}
+
         public DelegateCommand DeletePersonCommand
         {
             get
@@ -66,6 +61,24 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 return deletePersonCommand = new DelegateCommand(DeletePersonCommand_Execute, DeletePersonCommand_CanExecute);
             }
         }
+        //public DelegateCommand EditPersonCommand
+        //{
+        //    get
+        //    {
+        //        return editPersonCommand = new DelegateCommand(EditPersonCommand_Execute, EditPersonCommand_CanExecute);
+        //    }
+        //}
+
+        //private bool EditPersonCommand_CanExecute()
+        //{
+        //    return oPersonaSeleccionadaNombreDepartamento.Id != 0;
+        //}
+
+        //private void EditPersonCommand_Execute()
+        //{
+        //    //Que se desactive el botón edit y activar el de save
+        //}
+
         public ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento
         {
             get { return listadoPersonasNombreDepartamento; }
@@ -75,6 +88,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 NotifyPropertyChanged("ListadoPersonasNombreDepartamento");
             }
         }
+
         public ObservableCollection<ClsDepartamento> ListadoDepartamentos
         {
             get { return listadoDepartamentos; }
@@ -83,6 +97,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 listadoDepartamentos = value;
             }
         }
+
         public clsPersonDepartmentName OPersonaSeleccionadaNombreDepartamento
         {
             get { return oPersonaSeleccionadaNombreDepartamento; }
@@ -95,6 +110,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 savePersonCommand.RaiseCanExecuteChanged();
             }
         }
+
         public String TxtBlckOperacionExitosa
         {
             get { return txtBlckOperacionExitosa; }
@@ -105,16 +121,33 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 setTimer();
             }
         }
+
+        public String TxtBlckError
+        {
+            get { return txtBlckOperacionExitosa; }
+            set
+            {
+                txtBlckOperacionExitosa = value;
+                NotifyPropertyChanged("TxtBlckError");
+            }
+        }
         #endregion
         #region constructores
         public clsPersonsPageVM()
         {
             ListadoPersonasNombreDepartamento = new ObservableCollection<clsPersonDepartmentName>();
-            listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
-            recargarAtributosVM();
+            try
+            {
+                listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
+                recargarAtributosVM();
+            }catch (SqlException ex)
+            {
+                txtBlckOperacionExitosa = ex.Message;
+                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+            }
         }
         #endregion
-      
+
 
         #region commands
         private bool DeletePersonCommand_CanExecute()
@@ -122,6 +155,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             return oPersonaSeleccionadaNombreDepartamento.Id != 0;
         }
 
+        //CUANDO ELIJA UNA PERSONA NO PUEDA GUARDAR HASTA QUE CAMBIE ALGÚN CAMPO
         private bool SavePersonCommand_CanExecute()
         {
             return true;//oPersonaSeleccionadaNombreDepartamento.Id != 0 /* || QUE CONDICION LE PONGO  */;
@@ -129,20 +163,57 @@ namespace CRUD_Personas_UWP_UI.ViewModels
 
         //TODO DUDA CUANDO QUIERO AGREGAR UNA PERSONA LE DIGO Q EL ID SEA != 0 (NO HAY PERSONA SELECCIONADA) PERO YO QUIERO ESA CONDICIÓN Y OTRA 
         //MÁS PARA QUE ESA PERSONA NO ME LA ENVIE
+
+        /// <summary>
+        /// 
+        /// </summary>
         private void AddPersonCommand_Execute()
         {
-            recargarAtributosVM();
+            try
+            {
+                recargarAtributosVM();
+            }
+            catch (SqlException ex)
+            {
+                txtBlckOperacionExitosa = ex.Message;
+                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+            }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private void SavePersonCommand_Execute()
         {
-            oPersonaSeleccionadaNombreDepartamento.Foto = "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.xatakandroid.com%2Fsistema-operativo%2Fse-actualizara-mi-movil-a-android-10-lista-completa-actualizada&psig=AOvVaw2GoFIeULBEYpxJlDeAqMWb&ust=1637324751968000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKDBg9fzofQCFQAAAAAdAAAAABAD";
-            TxtBlckOperacionExitosa = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento) == 1 ? MENSAJE_OPERACION_EXITOSA : MENSAJE_OPERACION_FALLIDA;
-            recargarAtributosVM();
+            if (oPersonaSeleccionadaNombreDepartamento.Foto == null)
+            {
+                oPersonaSeleccionadaNombreDepartamento.Foto = "https://www.pinclipart.com/picdir/middle/393-3932440_png-file-svg-icono-de-contacto-png-blanco.png";
+            }
+            try
+            {
+                TxtBlckOperacionExitosa = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento) == 1 ? MENSAJE_OPERACION_EXITOSA : MENSAJE_OPERACION_FALLIDA;
+                recargarAtributosVM();
+            }
+            catch (SqlException ex)
+            {
+                txtBlckOperacionExitosa = ex.Message;
+                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+            }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private void DeletePersonCommand_Execute()
         {
-            ClsManejadoraPersonsaBL.eliminarPersonaBL(oPersonaSeleccionadaNombreDepartamento.Id);
-            ListadoPersonasNombreDepartamento.Remove(oPersonaSeleccionadaNombreDepartamento);
+            try
+            {
+                ClsManejadoraPersonaBL.eliminarPersonaBL(oPersonaSeleccionadaNombreDepartamento.Id);
+                ListadoPersonasNombreDepartamento.Remove(oPersonaSeleccionadaNombreDepartamento);
+            }
+            catch (SqlException ex)
+            {
+                txtBlckOperacionExitosa = ex.Message;
+                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+            }
         }
         #endregion
 

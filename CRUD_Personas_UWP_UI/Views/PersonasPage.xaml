@@ -113,8 +113,11 @@
             <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionadaNombreDepartamento.FechaNacimiento,Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Margin="10,10,10,0" Grid.Row="4" Grid.Column="1"/>
             <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckOperacionExitosa}"
-                     Grid.Row="5" Grid.Column="0" />
-            
+                     Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
+            <TextBlock Text="{Binding TxtBlckOperacionExitosa}" FontSize="14" Foreground="Red"
+                       Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
+
+
         </Grid>
     </RelativePanel>
 </Page>

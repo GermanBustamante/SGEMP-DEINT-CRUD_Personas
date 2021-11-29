@@ -10,22 +10,30 @@ namespace CRUD_Personas_BL.Listados
     public class ClsListadoPersonasBL
     {
         /// <summary>
-        /// 
+        /// <b>Prototipo:</b> public static ObservableCollection*ClsPersona* getListadoPersonasCompletoBL()<br/>
+        /// <b>Comentarios:</b>Devuelve un listado de personas completo de la capa DAL<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b> Retorna un listado de todas las personas de la tabla Personas, llamando al método correspondiente
+        /// de la capa DAL
         /// </summary>
-        /// <returns></returns>
+        /// <returns> ObservableCollection*ClsPersona* representando el listado de personas de la BD</returns>
         public static ObservableCollection<ClsPersona> getListadoPersonasCompletoBL()
         {
-            return ClsListadoPersonasDAL.getListaCompletaTablaPersonasDAL();
+            return ClsListadoPersonasDAL.getListadoPersonasCompletoDAL();
         }
 
         /// <summary>
-        /// Devuelve un objeto tipo Persona dado su id
+        /// <b>Prototipo:</b> public static ClsPersona getPersonaBL(int idPersona)<br/>
+        /// <b>Comentarios:</b> Devuelve una persona de la capa DAL<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b> Retorna una persona de la tabla Personas dado su id, llamando al método correspondiente
+        /// de la capa DAL
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static ClsPersona getPersonaBL(int id)
+        /// <param name="idPersona"></param>
+        /// <returns>ClsPersona representando la persona obtenida de la BD</returns>
+        public static ClsPersona getPersonaBL(int idPersona)
         {
-            return ClsListadoPersonasDAL.getPersonaDAL(id);
+            return ClsListadoPersonasDAL.getPersonaDAL(idPersona);
         }
     }
 }

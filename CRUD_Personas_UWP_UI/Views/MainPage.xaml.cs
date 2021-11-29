@@ -40,5 +40,10 @@ namespace CRUD_Personas_UWP_UI
                 contentFrame.Navigate(typeof(DepartamentosPage));
             }
         }
+
+        private void nvSample_BackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+        {
+            contentFrame.Navigate(typeof(MainPage));
+        }
     }
 }

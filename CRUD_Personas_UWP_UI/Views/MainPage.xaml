@@ -9,13 +9,15 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <NavigationView x:Name="nvSample" PaneDisplayMode="Top" IsSettingsVisible="False" ItemInvoked="nvSample_ItemInvoked">
+        <NavigationView x:Name="nvSample" PaneDisplayMode="Top" IsBackEnabled="True" BackRequested="nvSample_BackRequested" IsBackButtonVisible="Auto" IsSettingsVisible="False" ItemInvoked="nvSample_ItemInvoked">
             <NavigationView.MenuItems>
                 <NavigationViewItem  Content="Personas" Tag="PersonasPage"/>
                 <NavigationViewItemSeparator/>
                 <NavigationViewItem  Content="Departamentos" Tag="DepartamentosPage" />
             </NavigationView.MenuItems>
-            <Frame x:Name="contentFrame"/>
+            <Frame x:Name="contentFrame">
+                <Image Source="/Assets/Images/CRUD.png" Height="400" Width="400"/>
+            </Frame>
         </NavigationView>
     </Grid>
 </Page>

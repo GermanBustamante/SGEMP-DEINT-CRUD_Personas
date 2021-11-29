@@ -16,6 +16,7 @@ namespace CRUD_Personas_Core_UI.Controllers
     public class PersonasController : Controller
     {
         #region ActionList
+        //TODO MIRAR REDIRECTTOACTION Y IACTIONRESULT RESULTADO PARA SUSTITUIR 2 RETURNS
         public IActionResult Index()
         {
             ClsListadoPersonasNombreDepartamentoVM personasDepart = null;
@@ -54,7 +55,7 @@ namespace CRUD_Personas_Core_UI.Controllers
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersona);
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
             }
             catch (SqlException ex)
@@ -89,7 +90,7 @@ namespace CRUD_Personas_Core_UI.Controllers
             ClsListadoPersonasNombreDepartamentoVM personasDepartamento = null;
             try
             {
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.eliminarPersonaBL(Id);
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.eliminarPersonaBL(Id);
                 personasDepartamento = new ClsListadoPersonasNombreDepartamentoVM();
             }
             catch (SqlException ex)
@@ -123,7 +124,7 @@ namespace CRUD_Personas_Core_UI.Controllers
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonsaBL.actualizarAñadirPersonaBL(oPersona);
+                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
             }
             catch (SqlException ex)
