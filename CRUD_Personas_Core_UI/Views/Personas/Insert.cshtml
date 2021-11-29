@@ -56,18 +56,18 @@
         </form>
     </div>
 </div>
-<div>x
+<div>
     @Html.ActionLink("Back to List", "Index", "Personas")
 </div>
 
 @{
     if (ViewBag.NumeroFilasAfectadas == 1)
-    {
-        <div>Se ha creado correctamente</div>
-    }
-    else if (ViewBag.NumeroFilasAfectadas == 0)
-    {
-        <div>No se ha creado correctamente</div>
-    }
+        {
+            <div><font color = "green">Se ha creado correctamente</font></div>
+        }
+        else if (ViewBag.NumeroFilasAfectadas == 0)
+        {
+            <div><font color = "red">No se ha agregado la persona</font></div>
+        }
 }
 

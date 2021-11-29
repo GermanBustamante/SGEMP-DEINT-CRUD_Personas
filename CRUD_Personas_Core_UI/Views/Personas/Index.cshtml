@@ -10,11 +10,11 @@
     @{
         if (ViewBag.NumeroFilasAfectadas == 1)
         {
-            <div>Se ha borrado correctamente</div>
+            <div><font color = "green">Se ha borrado correctamente</font></div>
         }
         else if (ViewBag.NumeroFilasAfectadas == 0)
         {
-            <div>No se ha borrado</div>
+            <div><font color = "red">No se ha borrado la persona correspondiente</font></div>
         }
     }
 </p>
@@ -81,6 +81,7 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
                     @Html.ActionLink("Delete", "Delete", new { id = item.Id })
                 </td>
             </tr>

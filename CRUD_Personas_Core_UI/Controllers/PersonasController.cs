@@ -16,123 +16,152 @@ namespace CRUD_Personas_Core_UI.Controllers
     public class PersonasController : Controller
     {
         #region ActionList
-        //TODO MIRAR REDIRECTTOACTION Y IACTIONRESULT RESULTADO PARA SUSTITUIR 2 RETURNS
-        public IActionResult Index()
+        public IActionResult Index(/*int numeroFilas*/)
         {
+            IActionResult actionResult = null;
             ClsListadoPersonasNombreDepartamentoVM personasDepart = null;
             try
             {
                 personasDepart = new ClsListadoPersonasNombreDepartamentoVM();
+                actionResult = View(personasDepart.ListadoPersonasDepartamento);
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View("Error");
+                actionResult = View("Error");
             }
-            return View(personasDepart.ListadoPersonasDepartamento);
+            return actionResult;
         }
         #endregion
 
         #region ActionEdit
         public IActionResult Edit(int id)
         {
+            IActionResult actionResult = null;
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(ClsListadoPersonasBL.getPersonaBL(id));
+                actionResult = View(oPersonaListadoDepartamentos);
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View("Error");
+                actionResult = View("Error");
             }
-            return View(oPersonaListadoDepartamentos);
+            return actionResult;
         }
 
         [HttpPost]
         public IActionResult Edit(ClsPersona oPersona)
         {
+            IActionResult actionResult = null;
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
                 ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
+                actionResult = View(oPersonaListadoDepartamentos);
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View("Error");
+                actionResult = View("Error");
             }
-            return View(oPersonaListadoDepartamentos);
+            return actionResult;
         }
         #endregion
 
         #region ActionDelete
         public IActionResult Delete(int id)
         {
+            IActionResult actionResult = null;
             ClsPersonaNombreDepartamento oPersonaNombreDepartamento;
             try
             {
                 oPersonaNombreDepartamento = new ClsPersonaNombreDepartamento(ClsListadoPersonasBL.getPersonaBL(id));
+                actionResult = View(oPersonaNombreDepartamento);
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View("Error");
+                actionResult =  View("Error");
             }
-            return View(oPersonaNombreDepartamento);
+            return actionResult;
         }
 
         [HttpPost]
         [ActionName("Delete")]
         public IActionResult DeletePost(int Id)
         {
-            ClsListadoPersonasNombreDepartamentoVM personasDepartamento = null;
+            IActionResult actionResult;
             try
             {
                 ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.eliminarPersonaBL(Id);
-                personasDepartamento = new ClsListadoPersonasNombreDepartamentoVM();
+                actionResult = RedirectToAction("Index");//, new {numeroFilas = ViewBag.NumeroFilasAfectadas}
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View("Error");
+                actionResult = View("Error");
             }
-            return View("Index", personasDepartamento.ListadoPersonasDepartamento);
+            return actionResult;
         }
         #endregion
 
         #region ActionInsert
         public IActionResult Insert()
         {
+            IActionResult actionResult =null;
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM();
+                actionResult = View(oPersonaListadoDepartamentos);
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View("Error");
+                actionResult =  View("Error");
             }
-            return View(oPersonaListadoDepartamentos);
+            return actionResult;
         }
 
         [HttpPost]
         public IActionResult Insert(ClsPersona oPersona)
         {
+            IActionResult actionResult =null;
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
                 ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
+                actionResult = View(oPersonaListadoDepartamentos);
             }
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                return View("Error");
+                actionResult =  View("Error");
             }
-            return View(oPersonaListadoDepartamentos);
+            return actionResult;
+        }
+        #endregion
+        #region ActionDetails
+        public IActionResult Details(int id)
+        {
+            IActionResult actionResult = null;
+            ClsPersonaNombreDepartamento oPersonaNombreDepartamento;
+            try
+            {
+                oPersonaNombreDepartamento = new ClsPersonaNombreDepartamento(ClsListadoPersonasBL.getPersonaBL(id));
+                actionResult = View(oPersonaNombreDepartamento);
+            }
+            catch (SqlException ex)
+            {
+                ViewBag.ErrorMsg = ex.Message;
+                actionResult = View("Error");
+            }
+            return actionResult;
         }
         #endregion
     }

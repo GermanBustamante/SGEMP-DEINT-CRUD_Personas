@@ -26,22 +26,17 @@
             <AppBarSeparator/>
             <AppBarButton Icon="Save" Label="Save" Command="{Binding SavePersonCommand}">
                 <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                    <KeyboardAccelerator Modifiers="Control" Key="S"/>
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
             <AppBarSeparator/>
             <AppBarButton Icon="Add" Label="Add Person" Command="{Binding AddPersonCommand}">
                 <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                    <KeyboardAccelerator Modifiers="Control" Key="A"/>
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
             <!--TODO MOSTRAR ATAJOS TECLADO-->
             <AppBarSeparator/>
-            <!--<AppBarButton Icon="Edit" Label="Edit" Command="{Binding EditPersonCommand}">
-                <AppBarButton.KeyboardAccelerators>
-                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
-                </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>-->
             <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Control" Key="D"/>
@@ -52,7 +47,6 @@
                   ItemsSource="{Binding ListadoPersonasNombreDepartamento}" SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                   Margin="10">
             <ListView.ItemTemplate>
-                <!--TODO CUANDO SE EDITE UNA PERSONA QUE SE CAMBIE EL NOMBRE Y APELLIDOS DEL LISTVIEW-->
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Assets/Images/ImgFotoListView.png" Height="40" Width="40" Margin="10" Stretch="UniformToFill"/>
@@ -112,12 +106,12 @@
 
             <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionadaNombreDepartamento.FechaNacimiento,Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Margin="10,10,10,0" Grid.Row="4" Grid.Column="1"/>
-            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckOperacionExitosa}"
+            
+            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckMensajeOperacion}" TextWrapping="WrapWholeWords"
                      Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
-            <TextBlock Text="{Binding TxtBlckOperacionExitosa}" FontSize="14" Foreground="Red"
+            <TextBlock Text="{Binding TxtBlckOperacionExitosa}" FontSize="14" Foreground="Red" TextWrapping="WrapWholeWords"
                        Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"/>
-
-
+            
         </Grid>
     </RelativePanel>
 </Page>

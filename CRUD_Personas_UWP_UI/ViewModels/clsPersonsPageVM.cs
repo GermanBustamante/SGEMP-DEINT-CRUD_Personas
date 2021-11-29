@@ -3,6 +3,7 @@ using CRUD_Personas_BL.Manejadoras;
 using CRUD_Personas_Entidades;
 using CRUD_Personas_UWP_UI.ViewModels.Models;
 using CRUD_Personas_UWP_UI.ViewModels.Utilidades;
+using GalaSoft.MvvmLight.Views;
 using Microsoft.VisualStudio.PlatformUI;
 using Prism.Commands;
 using System;
@@ -15,6 +16,7 @@ using System.Threading.Tasks;
 using System.Timers;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
+using Windows.UI.Xaml.Controls;
 
 namespace CRUD_Personas_UWP_UI.ViewModels
 {
@@ -25,17 +27,18 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         private ObservableCollection<ClsDepartamento> listadoDepartamentos;
         private ObservableCollection<clsPersonDepartmentName> listadoPersonasNombreDepartamento;
         private DelegateCommand deletePersonCommand;
-        private DelegateCommand editPersonCommand;
         private DelegateCommand addPersonCommand;
         private DelegateCommand savePersonCommand;
-        private String txtBlckOperacionExitosa;
+        private String txtBlckMensajeOperacion;
         private String txtBlckError;
         private static Timer timer;
+        private readonly ContentDialog contentDialogDeletePerson;
+        private bool btnAddPulsado = false;
         #endregion
-        public const string MENSAJE_OPERACION_EXITOSA = "La operación ha sido un exito";
-        public const string MENSAJE_OPERACION_FALLIDA = "Algo ha fallado";
 
         #region constantes
+        public const string MENSAJE_OPERACION_EXITOSA = "La operación ha sido un exito";
+        public const string MENSAJE_OPERACION_FALLIDA = "Algo ha fallado";
         #endregion
         #region propiedades publicas
         public DelegateCommand SavePersonCommand
@@ -61,24 +64,6 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 return deletePersonCommand = new DelegateCommand(DeletePersonCommand_Execute, DeletePersonCommand_CanExecute);
             }
         }
-        //public DelegateCommand EditPersonCommand
-        //{
-        //    get
-        //    {
-        //        return editPersonCommand = new DelegateCommand(EditPersonCommand_Execute, EditPersonCommand_CanExecute);
-        //    }
-        //}
-
-        //private bool EditPersonCommand_CanExecute()
-        //{
-        //    return oPersonaSeleccionadaNombreDepartamento.Id != 0;
-        //}
-
-        //private void EditPersonCommand_Execute()
-        //{
-        //    //Que se desactive el botón edit y activar el de save
-        //}
-
         public ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento
         {
             get { return listadoPersonasNombreDepartamento; }
@@ -111,23 +96,23 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             }
         }
 
-        public String TxtBlckOperacionExitosa
+        public String TxtBlckMensajeOperacion
         {
-            get { return txtBlckOperacionExitosa; }
+            get { return txtBlckMensajeOperacion; }
             set
             {
-                txtBlckOperacionExitosa = value;
-                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+                txtBlckMensajeOperacion = value;
+                NotifyPropertyChanged("TxtBlckMensajeOperacion");
                 setTimer();
             }
         }
 
         public String TxtBlckError
         {
-            get { return txtBlckOperacionExitosa; }
+            get { return TxtBlckError; }
             set
             {
-                txtBlckOperacionExitosa = value;
+                TxtBlckError = value;
                 NotifyPropertyChanged("TxtBlckError");
             }
         }
@@ -136,18 +121,19 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         public clsPersonsPageVM()
         {
             ListadoPersonasNombreDepartamento = new ObservableCollection<clsPersonDepartmentName>();
+            this.contentDialogDeletePerson = instanciarContentDialogDeletePerson();
             try
             {
                 listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
                 recargarAtributosVM();
-            }catch (SqlException ex)
+            }
+            catch (Exception ex)
             {
-                txtBlckOperacionExitosa = ex.Message;
-                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+                txtBlckError = ex.Message;
+                NotifyPropertyChanged("TxtBlckError");
             }
         }
         #endregion
-
 
         #region commands
         private bool DeletePersonCommand_CanExecute()
@@ -155,15 +141,10 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             return oPersonaSeleccionadaNombreDepartamento.Id != 0;
         }
 
-        //CUANDO ELIJA UNA PERSONA NO PUEDA GUARDAR HASTA QUE CAMBIE ALGÚN CAMPO
         private bool SavePersonCommand_CanExecute()
         {
-            return true;//oPersonaSeleccionadaNombreDepartamento.Id != 0 /* || QUE CONDICION LE PONGO  */;
+            return oPersonaSeleccionadaNombreDepartamento.Id != 0 || btnAddPulsado;
         }
-
-        //TODO DUDA CUANDO QUIERO AGREGAR UNA PERSONA LE DIGO Q EL ID SEA != 0 (NO HAY PERSONA SELECCIONADA) PERO YO QUIERO ESA CONDICIÓN Y OTRA 
-        //MÁS PARA QUE ESA PERSONA NO ME LA ENVIE
-
         /// <summary>
         /// 
         /// </summary>
@@ -171,12 +152,14 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         {
             try
             {
+                btnAddPulsado = true;
+                savePersonCommand.RaiseCanExecuteChanged();
                 recargarAtributosVM();
             }
             catch (SqlException ex)
             {
-                txtBlckOperacionExitosa = ex.Message;
-                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+                txtBlckError = ex.Message;
+                NotifyPropertyChanged("TxtBlckError");
             }
         }
         /// <summary>
@@ -190,13 +173,17 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             }
             try
             {
-                TxtBlckOperacionExitosa = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento) == 1 ? MENSAJE_OPERACION_EXITOSA : MENSAJE_OPERACION_FALLIDA;
+                txtBlckMensajeOperacion = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento) == 1 ? MENSAJE_OPERACION_EXITOSA : MENSAJE_OPERACION_FALLIDA;
+                NotifyPropertyChanged("TxtBlckMensajeOperacion");
+                setTimer();
                 recargarAtributosVM();
+                btnAddPulsado = false;
+                savePersonCommand.RaiseCanExecuteChanged();
             }
             catch (SqlException ex)
             {
-                txtBlckOperacionExitosa = ex.Message;
-                NotifyPropertyChanged("TxtBlckOperacionExitosa");
+                txtBlckError = ex.Message;
+                NotifyPropertyChanged("TxtBlckError");
             }
         }
         /// <summary>
@@ -204,16 +191,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         /// </summary>
         private void DeletePersonCommand_Execute()
         {
-            try
-            {
-                ClsManejadoraPersonaBL.eliminarPersonaBL(oPersonaSeleccionadaNombreDepartamento.Id);
-                ListadoPersonasNombreDepartamento.Remove(oPersonaSeleccionadaNombreDepartamento);
-            }
-            catch (SqlException ex)
-            {
-                txtBlckOperacionExitosa = ex.Message;
-                NotifyPropertyChanged("TxtBlckOperacionExitosa");
-            }
+            mostrarContentDialog();
         }
         #endregion
 
@@ -257,12 +235,42 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         {
             CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                TxtBlckOperacionExitosa = "";
-                //O asi
-                //txtBlckOperacionExitosa = "";
-                //NotifyPropertyChanged("TxtBlckOperacionExitosa");
+                txtBlckMensajeOperacion = "";
+                NotifyPropertyChanged("TxtBlckMensajeOperacion");
                 timer.Stop();
             });
+        }
+
+        private ContentDialog instanciarContentDialogDeletePerson()
+        {
+            ContentDialog deleteFileDialog = new ContentDialog
+            {
+                Title = "¿Estás seguro de que quieres borrar a esta persona?",
+                Content = "Si borras esta persona, no podrás recuperarla. ¿Quieres borrarla?",
+                PrimaryButtonText = "Borrar",
+                CloseButtonText = "Cancelar",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            return deleteFileDialog;
+        }
+        private async void mostrarContentDialog()
+        {
+            var result = await instanciarContentDialogDeletePerson().ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                try
+                {
+                    ClsManejadoraPersonaBL.eliminarPersonaBL(oPersonaSeleccionadaNombreDepartamento.Id);
+                    ListadoPersonasNombreDepartamento.Remove(oPersonaSeleccionadaNombreDepartamento);
+                    btnAddPulsado = false;
+                    savePersonCommand.RaiseCanExecuteChanged();
+                }
+                catch (SqlException ex)
+                {
+                    txtBlckError = ex.Message;
+                    NotifyPropertyChanged("TxtBlckError");
+                }
+            }
         }
         #endregion
     }
