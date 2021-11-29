@@ -6,97 +6,67 @@ using System.Data.SqlClient;
 
 namespace CRUD_Personas_DAL.Manejadoras
 {
+    /// <summary>
+    /// Contiene  todos los métodos y ctes necesarias para el manejo de personas de mi capa DAL
+    /// </summary>
     public class ClsManejadoraPersonaDAL : ClsUtilidadDMLDAL
     {
         #region constantes
-        public const String INSTRUCCION_UPDATE_PERSONA = "UPDATE Personas SET ";
-        public const String INSTRUCCION_UPDATE_PERSONA_CONDICION = " WHERE IDPersona =";
         public const String INSTRUCCION_DELETE_PERSONA_PK = "DELETE FROM Personas WHERE IDPersona=";
+        public const String INSTRUCCION_UPDATE_PERSONA = "UPDATE Personas SET nombrePersona = @nombre, apellidosPersona = @apellidos, " +
+                "fechaNacimiento = @fechaNacimiento, telefono = @telefono, direccion = @direccion, foto = @foto, " +
+                "IDDepartamento = @idDepartamento WHERE IDPersona = @idPersona";
+        public const string INSTRUCCION_INSERT_PERSONA = "INSERT INTO PERSONAS VALUES (@nombre,@apellidos,@fechaNacimiento,@telefono,@direccion,@foto,@idDepartamento)";
         #endregion
 
         #region metodos publicos
         /// <summary>
-        /// 
+        /// <b>Prototipo:</b> public static int actualizarAñadirPersonaDAL(ClsPersona oPersona)<br/>
+        /// <b>Comentarios:</b> Añade una persona o actualiza pasada por parámetro a la BD<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b>Abre una conexión a la BD, y, dado una persona, si tiene un Id la actualiza en la BD, en caso contrario, la añade, al final, devuelve
+        /// el numero de filas afectadas y cierra la conexión
         /// </summary>
         /// <param name="oPersona"></param>
-        /// <returns></returns>
+        /// <returns> int representando el número de filas afectadas</returns>
         public static int actualizarAñadirPersonaDAL(ClsPersona oPersona)
         {
-            int resultado = 0;
-
             instanciarConexion();
-            if (oPersona.Id != 0)
-            {
-                resultado = ejecutarUpdatePersona(oPersona);
-            }
-            else
-            {
-                resultado = ejecutarInsertPersona(oPersona);
-            }
-
+            aniadirParametrosPersonaMiComando(oPersona);
+            int resultado = oPersona.Id == 0 ? ejecutarSentenciaDML(INSTRUCCION_INSERT_PERSONA) : ejecutarSentenciaDML(INSTRUCCION_UPDATE_PERSONA);
             MiConexion.closeConnection();
-
             return resultado;
         }
 
         /// <summary>
-        /// 
+        /// <b>Prototipo:</b> public static int eliminarPersonaDAL(int idPersona)<br/>
+        /// <b>Comentarios:</b> Elimina a una persona de la BD<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b> Dado el id de una persona, abre una conexión, elimina a la persona con ese id, cierra y la conexión y devuelve el número de filas afectadas
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public static int eliminarPersonaDAL(int id)
+        /// <param name="idPersona"></param>
+        /// <returns> int representando el número de filas afectadas</returns>
+        public static int eliminarPersonaDAL(int idPersona)
         {
             int resultado = 0;
-
             instanciarConexion();
-
-            resultado = ejecutarSentenciaDMLCondicion(INSTRUCCION_DELETE_PERSONA_PK, id);
-
+            resultado = ejecutarSentenciaDMLCondicion(INSTRUCCION_DELETE_PERSONA_PK, idPersona);
             MiConexion.closeConnection();
-
             return resultado;
         }
         #endregion
 
         #region metodos privados
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sentencia"></param>
-        /// <param name="primaryKey"></param>
-        /// <returns></returns>
-        private static int ejecutarUpdatePersona(ClsPersona oPersona)
-        {
-            aniadirParametrosPersonaMiComando(oPersona);
-            //TODO CTE
-            MiComando.CommandText = $"UPDATE Personas SET nombrePersona = @nombre, apellidosPersona = @apellidos, " +
-                $"fechaNacimiento = @fechaNacimiento, telefono = @telefono, direccion = @direccion, foto = @foto, " +
-                $"IDDepartamento = @idDepartamento WHERE IDPersona = @id";
-            MiComando.Connection = MiConexion.Conexion;
-            return MiComando.ExecuteNonQuery();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="oPersona"></param>
-        /// <returns></returns>
-        private static int ejecutarInsertPersona(ClsPersona oPersona)
-        {
-            aniadirParametrosPersonaMiComando(oPersona);
-            //TODO CTE
-            MiComando.CommandText = "INSERT INTO PERSONAS VALUES (@nombre,@apellidos,@fechaNacimiento,@telefono,@direccion,@foto,@idDepartamento)";
-            MiComando.Connection = MiConexion.Conexion;
-            return MiComando.ExecuteNonQuery();
-        }
-
-        /// <summary>
-        /// 
+        /// <b>Prototipo:</b> private static void aniadirParametrosPersonaMiComando(ClsPersona oPersona)<br/>
+        /// <b>Comentarios:</b> Añade a los paramétros a un SqlCommand<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b> Dado una persona, añade los parámetros de dicha persona al SqlCommand heredado MiComando
         /// </summary>
         /// <param name="oPersona"></param>
         private static void aniadirParametrosPersonaMiComando(ClsPersona oPersona)
         {
-            MiComando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = oPersona.Id;
+            MiComando.Parameters.Add("@idPersona", System.Data.SqlDbType.Int).Value = oPersona.Id;
             MiComando.Parameters.Add("@nombre", System.Data.SqlDbType.VarChar).Value = oPersona.Nombre;
             MiComando.Parameters.Add("@apellidos", System.Data.SqlDbType.VarChar).Value = oPersona.Apellidos;
             MiComando.Parameters.Add("@fechaNacimiento", System.Data.SqlDbType.Date).Value = oPersona.FechaNacimiento;

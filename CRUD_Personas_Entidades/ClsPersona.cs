@@ -26,7 +26,7 @@ namespace CRUD_Personas_Entidades
             IdDepartamento = idDepartamento;
         }
         #endregion
-        //GET +  SET
+
         #region propiedades publicas
         public int Id { get; set; }
         public string Nombre
@@ -54,24 +54,4 @@ namespace CRUD_Personas_Entidades
         public String Foto { get; set; }
         #endregion
     }
-    //public ClsPersona(string nombre, string apellido, DateTime fechaNacimiento, String direccion, String telefono, String foto)
-    //{
-    //    Nombre = nombre;
-    //    Apellidos = apellido;
-    //    FechaNacimiento = fechaNacimiento;
-    //    Direccion = direccion;
-    //    Telefono = telefono;
-    //    Foto = foto;
-    //}
-
-    //public ClsPersona(string nombre, string apellido, DateTime fechaNacimiento, String direccion, String telefono, String foto, int idDepartamento)
-    //{
-    //    Nombre = nombre;
-    //    Apellidos = apellido;
-    //    FechaNacimiento = fechaNacimiento;
-    //    Direccion = direccion;
-    //    Telefono = telefono;
-    //    Foto = foto;
-    //    IdDepartamento = idDepartamento;
-    //}
 }

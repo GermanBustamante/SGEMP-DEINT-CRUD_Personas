@@ -117,18 +117,6 @@ namespace CRUD_Personas_Core_UI.Controllers
             return View(oPersonaListadoDepartamentos);
         }
 
-//        ObservableCollection<String> listadoNombresDepartamento;
-//            try
-//            {
-//                listadoNombresDepartamento = ClsListadoDepartamentosBL.getListadoNombresDepartamentosBL();
-//            }
-//            catch (SqlException ex)
-//            {
-//                ViewBag.ErrorMsg = ex.Message;
-//                return View("Error");
-//}
-//return View(listadoNombresDepartamento);
-
         [HttpPost]
         public IActionResult Insert(ClsPersona oPersona)
         {

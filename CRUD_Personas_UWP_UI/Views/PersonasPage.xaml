@@ -29,6 +29,7 @@
                     <KeyboardAccelerator Modifiers="Control" Key="E"/>
                 </AppBarButton.KeyboardAccelerators>
             </AppBarButton>
+            <AppBarSeparator/>
             <AppBarButton Icon="Add" Label="Add Person" Command="{Binding AddPersonCommand}">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Control" Key="S"/>
@@ -36,12 +37,11 @@
             </AppBarButton>
             <!--TODO MOSTRAR ATAJOS TECLADO-->
             <AppBarSeparator/>
-            <AppBarButton Icon="Edit" Label="Edit" Command="{Binding EditPersonCommand}">
+            <!--<AppBarButton Icon="Edit" Label="Edit" Command="{Binding EditPersonCommand}">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Control" Key="E"/>
                 </AppBarButton.KeyboardAccelerators>
-            </AppBarButton>
-            <AppBarSeparator/>
+            </AppBarButton>-->
             <AppBarButton Icon="Delete" Label="Delete" Command="{Binding DeletePersonCommand}">
                 <AppBarButton.KeyboardAccelerators>
                     <KeyboardAccelerator Modifiers="Control" Key="D"/>
@@ -65,6 +65,7 @@
         <Grid x:Name="gridMaster" Background="AliceBlue" Margin="10"
               RelativePanel.Below="cmndBarPersonas" RelativePanel.RightOf="lstVwPersonas" RelativePanel.AlignRightWith="cmndBarPersonas" RelativePanel.AlignBottomWith="lstVwPersonas">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -111,6 +112,9 @@
 
             <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionadaNombreDepartamento.FechaNacimiento,Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Margin="10,10,10,0" Grid.Row="4" Grid.Column="1"/>
+            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckOperacionExitosa}"
+                     Grid.Row="5" Grid.Column="0" />
+            
         </Grid>
     </RelativePanel>
 </Page>

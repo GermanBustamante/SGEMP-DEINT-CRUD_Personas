@@ -21,8 +21,6 @@ namespace CRUD_Personas_DAL.Listados
 
         #endregion
 
-        #region propiedades publicas
-        #endregion
         #region metodos publicos
         /// <summary>
         /// 
