@@ -59,6 +59,7 @@ namespace CRUD_Personas_Core_UI.Controllers
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
+
                 ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
                 oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
                 actionResult = View(oPersonaListadoDepartamentos);

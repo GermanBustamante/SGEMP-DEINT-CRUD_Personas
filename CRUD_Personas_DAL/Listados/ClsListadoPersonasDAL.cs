@@ -15,6 +15,7 @@ namespace CRUD_Personas_DAL.Listados
         #region constantes
         public const String INSTRUCCION_SELECT_ALL_PERSONAS = "SELECT * FROM Personas";
         public const String INSTRUCCION_SELECT_PERSONA_CONDICION_ID = "SELECT * FROM Personas WHERE IDPersona=";
+        public const String INSTRUCCION_SELECT_PERSONA_CONDICION_IDDEPARTAMENTO = "SELECT * FROM Personas WHERE IDDepartamento=";
         public const String COLUMNA_ID = "IDPersona";
         public const String COLUMNA_NOMBRE = "nombrePersona";
         public const String COLUMNA_APELLIDOS = "apellidosPersona";
@@ -23,6 +24,8 @@ namespace CRUD_Personas_DAL.Listados
         public const String COLUMNA_FOTO = "foto";
         public const String COLUMNA_TELEFONO = "telefono";
         public const String COLUMNA_ID_DEPARTAMENTO = "IDDepartamento";
+
+
 
         #endregion
         //TODO PREGUNTAR SI EN LAS CLASES LISTADOS, ES INTERESANTE TENER UNA LISTA Y UN ATRIBUTO DE LA LISTA
@@ -56,6 +59,26 @@ namespace CRUD_Personas_DAL.Listados
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idDepartamento"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public static ObservableCollection<ClsPersona> getListadoPersonasDepartamentoDAL(int idDepartamento)
+        {
+            ObservableCollection<ClsPersona> listadoPersonasRecogido = new ObservableCollection<ClsPersona>();
+            instanciarConexion();
+
+            MiLector = ejecutarSelectCondicion(INSTRUCCION_SELECT_PERSONA_CONDICION_IDDEPARTAMENTO, idDepartamento);
+            if (MiLector.HasRows)
+            {
+                listadoPersonasRecogido = getListadoPersonasMiLector();
+            }
+            cerrarFlujos();
+            return listadoPersonasRecogido;
+        }
+
+        /// <summary>
         /// <b>Prototipo:</b> public static ClsPersona getPersonaDAL(int idPersona)<br/>
         /// <b>Comentarios:</b> Devuelve una persona de la BD<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
@@ -77,6 +100,8 @@ namespace CRUD_Personas_DAL.Listados
             cerrarFlujos();
             return oPersonaRecogida;
         }
+        
+        
         #endregion
 
         #region metodos privados

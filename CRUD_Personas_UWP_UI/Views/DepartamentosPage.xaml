@@ -6,9 +6,49 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    xmlns:vm="using:CRUD_Personas_UWP_UI.ViewModels"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
+    <Page.DataContext>
+        <vm:clsDepartmentsPageVM/>
+    </Page.DataContext>
 
-    <Grid>
-
-    </Grid>
+    <RelativePanel>
+        <CommandBar x:Name="cmdnBarDepartments" DefaultLabelPosition="Right"
+                    RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+            <AppBarSeparator/>
+            <AppBarButton Icon="Save" Label="Save">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
+            <AppBarSeparator/>
+            <AppBarButton Icon="Add" Label="Add Person">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="A"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
+            <!--TODO MOSTRAR ATAJOS TECLADO-->
+            <AppBarSeparator/>
+            <AppBarButton Icon="Delete" Label="Delete">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="D"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
+        </CommandBar>
+        <ListView x:Name="lstVwPersonas" RelativePanel.Below="cmdnBarDepartments" RelativePanel.AlignLeftWith="cmdnBarDepartments" RelativePanel.AlignBottomWithPanel="True"
+                  ItemsSource="{Binding ListadoDepartametos}"
+                Margin="10">
+            <!--SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="/Assets/Images/ImgFotoListView.png" Height="40" Width="40" Margin="10" Stretch="UniformToFill"/>
+                        <TextBlock Text="{Binding Id}"  FontSize="22" Margin="10"/>
+                        <TextBlock Text="{Binding Nombre}" FontSize="22" Margin="10"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </RelativePanel>
 </Page>

@@ -35,5 +35,15 @@ namespace CRUD_Personas_BL.Listados
         {
             return ClsListadoPersonasDAL.getPersonaDAL(idPersona);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idDepartamento"></param>
+        /// <returns></returns>
+        public static ObservableCollection<ClsPersona> getListadoPersonasDepartamentoBL(int idDepartamento)
+        {
+            return ClsListadoPersonasDAL.getListadoPersonasDepartamentoDAL(idDepartamento);
+        }
     }
 }

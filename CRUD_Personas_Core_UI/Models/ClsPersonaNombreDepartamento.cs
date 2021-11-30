@@ -18,16 +18,17 @@ namespace CRUD_Personas_Core_UI.Models
         public ClsPersonaNombreDepartamento()
         {
         }
-        public ClsPersonaNombreDepartamento(int id, string nombre, string apellidos, DateTime fechaNacimiento, string direccion, string telefono, String foto, int idDepartamento)
-                       : base(id, nombre, apellidos, fechaNacimiento, direccion, telefono, foto, idDepartamento)
-        {
-            NombreDepartamento = ClsListadoDepartamentosBL.getNombreDepartamentoBL(idDepartamento);
-        }
 
         public ClsPersonaNombreDepartamento(ClsPersona oPersona)
                       : base(oPersona.Id, oPersona.Nombre, oPersona.Apellidos, oPersona.FechaNacimiento, oPersona.Direccion, oPersona.Telefono, oPersona.Foto, oPersona.IdDepartamento)
         {
             NombreDepartamento = ClsListadoDepartamentosBL.getNombreDepartamentoBL(oPersona.IdDepartamento);
+        }
+
+        public ClsPersonaNombreDepartamento(ClsPersona oPersona, String nombreDepartamento)
+                      : base(oPersona.Id, oPersona.Nombre, oPersona.Apellidos, oPersona.FechaNacimiento, oPersona.Direccion, oPersona.Telefono, oPersona.Foto, oPersona.IdDepartamento)
+        {
+            NombreDepartamento = nombreDepartamento;
         }
         #endregion
 

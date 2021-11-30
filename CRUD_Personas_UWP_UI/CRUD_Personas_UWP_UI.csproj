@@ -119,8 +119,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\clsDepartmentsPageVM.cs" />
     <Compile Include="ViewModels\clsMainPageVM.cs" />
     <Compile Include="ViewModels\clsPersonsPageVM.cs" />
+    <Compile Include="ViewModels\Models\clsDepartmentListOfPersons.cs" />
     <Compile Include="ViewModels\Models\clsPersonDepartmentName.cs" />
     <Compile Include="ViewModels\Utilidades\clsVMBase.cs" />
     <Compile Include="ViewModels\Utilidades\clsDelegateCommand.cs" />

@@ -16,7 +16,7 @@ namespace CRUD_Personas_DAL.Manejadoras
         public const String INSTRUCCION_UPDATE_PERSONA = "UPDATE Personas SET nombrePersona = @nombre, apellidosPersona = @apellidos, " +
                 "fechaNacimiento = @fechaNacimiento, telefono = @telefono, direccion = @direccion, foto = @foto, " +
                 "IDDepartamento = @idDepartamento WHERE IDPersona = @idPersona";
-        public const string INSTRUCCION_INSERT_PERSONA = "INSERT INTO PERSONAS VALUES (@nombre,@apellidos,@fechaNacimiento,@telefono,@direccion,@foto,@idDepartamento)";
+        public const string INSTRUCCION_INSERT_PERSONA = "INSERT INTO Personas VALUES (@nombre,@apellidos,@fechaNacimiento,@telefono,@direccion,@foto,@idDepartamento)";
         #endregion
 
         #region metodos publicos

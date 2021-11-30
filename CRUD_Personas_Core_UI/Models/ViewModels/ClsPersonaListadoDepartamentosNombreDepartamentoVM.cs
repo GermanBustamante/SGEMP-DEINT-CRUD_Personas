@@ -13,9 +13,8 @@ namespace CRUD_Personas_Core_UI.Models.ViewModels
         #endregion
         #region constructores
         public ClsPersonaListadoDepartamentosNombreDepartamentoVM(ClsPersona oPersona)
-                       : base(oPersona.Id, oPersona.Nombre, oPersona.Apellidos, oPersona.FechaNacimiento, oPersona.Direccion, oPersona.Telefono, oPersona.Foto, oPersona.IdDepartamento)
+                       : base(oPersona)
         {
-
             ListadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
         }
 

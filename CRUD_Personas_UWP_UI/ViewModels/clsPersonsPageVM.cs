@@ -210,6 +210,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             oPersonaSeleccionadaNombreDepartamento = new clsPersonDepartmentName();
             NotifyPropertyChanged("OPersonaSeleccionadaNombreDepartamento");
         }
+
         /// <summary>
         /// <b>Prototipo:</b> private void setTimer()<br/>
         /// <b>Comentarios:</b> Método que setea los atributos del objeto tipo Timer<br/>
