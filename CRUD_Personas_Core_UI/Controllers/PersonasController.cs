@@ -57,18 +57,25 @@ namespace CRUD_Personas_Core_UI.Controllers
         {
             IActionResult actionResult = null;
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
-            try
+            if (!ModelState.IsValid)
             {
+                actionResult = View("Edit", new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona));
+            }
+            else
+            {
+                try
+                {
+                    ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
+                    oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
+                    actionResult = View(oPersonaListadoDepartamentos);
+                }
+                catch (SqlException ex)
+                {
+                    ViewBag.ErrorMsg = ex.Message;
+                    actionResult = View("Error");
+                }
+            }
 
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
-                oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
-                actionResult = View(oPersonaListadoDepartamentos);
-            }
-            catch (SqlException ex)
-            {
-                ViewBag.ErrorMsg = ex.Message;
-                actionResult = View("Error");
-            }
             return actionResult;
         }
         #endregion
@@ -86,7 +93,7 @@ namespace CRUD_Personas_Core_UI.Controllers
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                actionResult =  View("Error");
+                actionResult = View("Error");
             }
             return actionResult;
         }
@@ -113,7 +120,7 @@ namespace CRUD_Personas_Core_UI.Controllers
         #region ActionInsert
         public IActionResult Insert()
         {
-            IActionResult actionResult =null;
+            IActionResult actionResult = null;
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
             try
             {
@@ -123,7 +130,7 @@ namespace CRUD_Personas_Core_UI.Controllers
             catch (SqlException ex)
             {
                 ViewBag.ErrorMsg = ex.Message;
-                actionResult =  View("Error");
+                actionResult = View("Error");
             }
             return actionResult;
         }
@@ -131,18 +138,25 @@ namespace CRUD_Personas_Core_UI.Controllers
         [HttpPost]
         public IActionResult Insert(ClsPersona oPersona)
         {
-            IActionResult actionResult =null;
+            IActionResult actionResult = null;
             ClsPersonaListadoDepartamentosNombreDepartamentoVM oPersonaListadoDepartamentos = null;
-            try
+            if (!ModelState.IsValid)
             {
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
-                oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
-                actionResult = View(oPersonaListadoDepartamentos);
+                actionResult = View("Insert", new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona));
             }
-            catch (SqlException ex)
+            else
             {
-                ViewBag.ErrorMsg = ex.Message;
-                actionResult =  View("Error");
+                try
+                {
+                    ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
+                    oPersonaListadoDepartamentos = new ClsPersonaListadoDepartamentosNombreDepartamentoVM(oPersona);
+                    actionResult = View(oPersonaListadoDepartamentos);
+                }
+                catch (SqlException ex)
+                {
+                    ViewBag.ErrorMsg = ex.Message;
+                    actionResult = View("Error");
+                }
             }
             return actionResult;
         }

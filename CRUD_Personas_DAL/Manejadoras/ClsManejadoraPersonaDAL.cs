@@ -72,7 +72,14 @@ namespace CRUD_Personas_DAL.Manejadoras
             MiComando.Parameters.Add("@fechaNacimiento", System.Data.SqlDbType.Date).Value = oPersona.FechaNacimiento;
             MiComando.Parameters.Add("@direccion", System.Data.SqlDbType.VarChar).Value = oPersona.Direccion;
             MiComando.Parameters.Add("@telefono", System.Data.SqlDbType.VarChar).Value = oPersona.Telefono;
-            MiComando.Parameters.Add("@foto", System.Data.SqlDbType.VarChar).Value = oPersona.Foto;
+            if(oPersona.Foto != null)
+            {
+                MiComando.Parameters.Add("@foto", System.Data.SqlDbType.VarChar).Value = oPersona.Foto;
+            }
+            else
+            {//TODO MIRAR COMO LO TIENE JUANJO
+                MiComando.Parameters.Add(new SqlParameter("@foto", DBNull.Value));
+            }
             MiComando.Parameters.Add("@idDepartamento", System.Data.SqlDbType.Int).Value = oPersona.IdDepartamento;
         }
         #endregion

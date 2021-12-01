@@ -12,6 +12,7 @@ namespace CRUD_Personas_Core_UI.Models.ViewModels
         public ObservableCollection<ClsDepartamento> ListadoDepartamentos { get; set; }
         #endregion
         #region constructores
+        //TODO DUDA AQUÍ NO IMPORTA NO?
         public ClsPersonaListadoDepartamentosNombreDepartamentoVM(ClsPersona oPersona)
                        : base(oPersona)
         {
@@ -20,7 +21,6 @@ namespace CRUD_Personas_Core_UI.Models.ViewModels
 
         public ClsPersonaListadoDepartamentosNombreDepartamentoVM()
         {
-
             ListadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
         }
         #endregion

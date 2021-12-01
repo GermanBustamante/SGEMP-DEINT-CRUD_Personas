@@ -17,32 +17,31 @@ namespace CRUD_Personas_Core_UI.Models
         #region constructores
         public ClsListadoPersonasNombreDepartamentoVM()
         {
-            ListadoPersonasDepartamento = rellenarListaPersonasDepartamento2();
-
+            ListadoPersonasDepartamento = rellenarListaPersonasDepartamento();
         }
-
-        private ObservableCollection<ClsPersonaNombreDepartamento> rellenarListaPersonasDepartamento2()
+        #endregion
+        #region metodos privados
+        private ObservableCollection<ClsPersonaNombreDepartamento> rellenarListaPersonasDepartamento()
         {
             ObservableCollection<ClsPersona> listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
             ObservableCollection<ClsDepartamento> listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
             ObservableCollection<ClsPersonaNombreDepartamento> listadoARetornar = new ObservableCollection<ClsPersonaNombreDepartamento>();
-            //Ya tenemos las 2 listas
-            foreach(ClsPersona itemPersona in listadoPersonas)
+            //TODO PREGUNTAR A FERNANDO LO QUE ESTÁ COMENTADO
+            foreach (ClsPersona itemPersona in listadoPersonas)
             {
-                foreach(ClsDepartamento itemDepartamento in listadoDepartamentos)
-                {
-                    if(itemPersona.IdDepartamento == itemDepartamento.Id)
-                    {
-                        listadoARetornar.Add(new ClsPersonaNombreDepartamento(itemPersona, itemDepartamento.Nombre));
-                    }
-                }
+                String nombreDepartamentoItemPersona = (from l in listadoDepartamentos
+                                                       where itemPersona.IdDepartamento == l.Id
+                                                       select l.Nombre).FirstOrDefault().ToString();
+                listadoARetornar.Add(new ClsPersonaNombreDepartamento(itemPersona, nombreDepartamentoItemPersona));
+                //listadoARetornar = (ObservableCollection<ClsPersonaNombreDepartamento>)
+                //    (from d in listadoDepartamentos
+                //     join p in listadoPersonas
+                //        on d.Id equals p.IdDepartamento
+                //     select new ClsPersonaNombreDepartamento(new ClsPersona(p.Id, p.Nombre, p.Apellidos, p.FechaNacimiento, p.Direccion, p.Telefono, p.Foto, p.IdDepartamento), d.Nombre));
+                //listadoARetornar.Add(new ClsPersonaNombreDepartamento(itemPersona, listadoDepartamentos.First(department => department.Id == itemPersona.Id).Nombre));
             }
-
             return listadoARetornar;
         }
-        #endregion
-        #region metodos privados
-
         #endregion
     }
 }
