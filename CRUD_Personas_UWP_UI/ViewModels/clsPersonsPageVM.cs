@@ -127,7 +127,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
                 recargarAtributosVM();
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
                 txtBlckError = ex.Message;
                 NotifyPropertyChanged("TxtBlckError");
@@ -150,17 +150,10 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         /// </summary>
         private void AddPersonCommand_Execute()
         {
-            try
-            {
                 btnAddPulsado = true;
                 savePersonCommand.RaiseCanExecuteChanged();
-                recargarAtributosVM();
-            }
-            catch (SqlException ex)
-            {
-                txtBlckError = ex.Message;
-                NotifyPropertyChanged("TxtBlckError");
-            }
+                oPersonaSeleccionadaNombreDepartamento = new clsPersonDepartmentName();
+                NotifyPropertyChanged("OPersonaSeleccionadaNombreDepartamento");
         }
         /// <summary>
         /// 
@@ -203,9 +196,13 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             {
                 ListadoPersonasNombreDepartamento.Clear();//Cuando limpio la lista se crea una nueva, es muy raro
             }
-            foreach (var item in listaPersonas)
+            foreach (ClsPersona itemPersona in listaPersonas)
             {
-                ListadoPersonasNombreDepartamento.Add(new clsPersonDepartmentName(item));
+                String nombreDepartamentoItemPersona = (from l in listadoDepartamentos
+                                                        where itemPersona.IdDepartamento == l.Id
+                                                        select l.Nombre).FirstOrDefault().ToString();
+                //String nombreDepartamentoItemPersona = listadoDepartamentos.Where(x => x.Id == itemPersona.IdDepartamento).FirstOrDefault().Nombre;
+                ListadoPersonasNombreDepartamento.Add(new clsPersonDepartmentName(itemPersona, nombreDepartamentoItemPersona));
             }
             oPersonaSeleccionadaNombreDepartamento = new clsPersonDepartmentName();
             NotifyPropertyChanged("OPersonaSeleccionadaNombreDepartamento");

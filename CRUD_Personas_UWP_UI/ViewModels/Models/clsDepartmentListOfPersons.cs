@@ -12,15 +12,20 @@ namespace CRUD_Personas_UWP_UI.ViewModels.Models
     public class clsDepartmentListOfPersons : ClsDepartamento
     {
         #region atributos
+        public ObservableCollection<ClsPersona> ListadoPersonas { get; set; }
         #endregion
         #region propiedades publicas
-        public ObservableCollection<ClsPersona> ListadoPersonasDepartamento{ get; set; }
-        #endregion
+        #endregion 
         #region constructores
         public clsDepartmentListOfPersons() { }
         public clsDepartmentListOfPersons(ClsDepartamento oDepartamento) : base(oDepartamento.Id, oDepartamento.Nombre)
         {
-            ListadoPersonasDepartamento = ClsListadoPersonasBL.getListadoPersonasDepartamentoBL(oDepartamento.Id);
+            ListadoPersonas = ClsListadoPersonasBL.getListadoPersonasDepartamentoBL(oDepartamento.Id);
+        }
+
+        public clsDepartmentListOfPersons(ClsDepartamento oDepartamento, ObservableCollection<ClsPersona> listadoPersonas) : base(oDepartamento.Id, oDepartamento.Nombre)
+        {
+            ListadoPersonas = listadoPersonas;
         }
         #endregion
 

@@ -11,6 +11,9 @@ namespace CRUD_Personas_DAL.Manejadoras
         #region constantes
         public const String INSTRUCCION_UPDATE_DEPARTAMENTO = "UPDATE Departamentos SET nombreDepartamento = @nombre WHERE IDDepartamento = @idDepartamento";
         public const String INSTRUCCION_INSERT_DEPARTAMENTO = "INSERT INTO Departametos VALUES (@nombreDepartamento)";
+        public const String INTRUCCION_DELETE_DEPARTAMENTO = "DELETE FROM Departamentos WHERE IDDepartamento=";
+        public const String PARAMETRO_ID_DEPARTAMENTO = "idDepartamento";
+
         #endregion
 
         #region metodos publicos
@@ -19,6 +22,15 @@ namespace CRUD_Personas_DAL.Manejadoras
             instanciarConexion();
             aniadirParametrosDepartamentoMiComando(oDepartamento);
             int resultado = oDepartamento.Id == 0 ? ejecutarSentenciaDML(INSTRUCCION_INSERT_DEPARTAMENTO) : ejecutarSentenciaDML(INSTRUCCION_UPDATE_DEPARTAMENTO);
+            MiConexion.closeConnection();
+            return resultado;
+        }
+
+        public static int eliminarDepartamentoDAL(int idDepartamento)
+        {
+            int resultado = 0;
+            instanciarConexion();
+            resultado = ejecutarSentenciaDMLCondicion(INTRUCCION_DELETE_DEPARTAMENTO, idDepartamento);
             MiConexion.closeConnection();
             return resultado;
         }

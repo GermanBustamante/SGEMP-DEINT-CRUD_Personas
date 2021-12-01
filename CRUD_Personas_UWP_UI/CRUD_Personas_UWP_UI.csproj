@@ -120,7 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\clsDepartmentsPageVM.cs" />
-    <Compile Include="ViewModels\clsMainPageVM.cs" />
+    <Compile Include="ViewModels\Utilidades\ClsDepartmentsPersonsBaseVM.cs" />
     <Compile Include="ViewModels\clsPersonsPageVM.cs" />
     <Compile Include="ViewModels\Models\clsDepartmentListOfPersons.cs" />
     <Compile Include="ViewModels\Models\clsPersonDepartmentName.cs" />
@@ -145,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Images\CRUD.png" />
+    <Content Include="Assets\Images\img departamento.png" />
     <Content Include="Assets\Images\ImgFotoListView.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

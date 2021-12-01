@@ -17,16 +17,17 @@ namespace CRUD_Personas_UWP_UI.ViewModels.Models
         public clsPersonDepartmentName()
         {
         }
-        public clsPersonDepartmentName(int id, string nombre, string apellidos, DateTime fechaNacimiento, string direccion, string telefono, String foto, int idDepartamento)
-                       : base(id, nombre, apellidos, fechaNacimiento, direccion, telefono, foto, idDepartamento)
-        {
-            NombreDepartamento = ClsListadoDepartamentosBL.getNombreDepartamentoBL(idDepartamento);
-        }
 
         public clsPersonDepartmentName(ClsPersona oPersona)
                       : base(oPersona.Id, oPersona.Nombre, oPersona.Apellidos, oPersona.FechaNacimiento, oPersona.Direccion, oPersona.Telefono, oPersona.Foto, oPersona.IdDepartamento)
         {
             NombreDepartamento = ClsListadoDepartamentosBL.getNombreDepartamentoBL(oPersona.IdDepartamento);
+        }
+
+        public clsPersonDepartmentName(ClsPersona oPersona, String departmentName)
+                      : base(oPersona.Id, oPersona.Nombre, oPersona.Apellidos, oPersona.FechaNacimiento, oPersona.Direccion, oPersona.Telefono, oPersona.Foto, oPersona.IdDepartamento)
+        {
+            NombreDepartamento = departmentName;
         }
         #endregion
 
