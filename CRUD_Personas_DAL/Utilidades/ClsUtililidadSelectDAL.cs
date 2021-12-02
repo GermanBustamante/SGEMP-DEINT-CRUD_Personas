@@ -59,8 +59,8 @@ namespace DAL.Utilidades
         /// <b>Prototipo:</b> public static SqlDataReader ejecutarSelect(String instruccionSelect)<br/>
         /// <b>Comentarios:</b> Ejecuta una instrucción Select y la devuelve<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
-        /// <b>Postcondiciones:</b> Dado las propiedades heredadas y una instrucción select ejecuta dicha instrucción Select, luego
-        /// deuvelve el resultado correspondiente
+        /// <b>Postcondiciones:</b> Dado las propiedades heredadas y una instrucción select ejecuta dicha instrucción Select, luego,
+        /// devuelve el resultado correspondiente
         /// </summary>
         /// <param name="instruccionSelect"></param>
         /// <returns> SqlDataReader flujo de filas de solo avance resultante de la instrucción</returns>
@@ -70,8 +70,6 @@ namespace DAL.Utilidades
             MiComando.Connection = MiConexion.Conexion;
             return MiComando.ExecuteReader();
         }
-
-
 
         /// <summary>
         /// <b>Prototipo:</b> public static void cerrarFlujos()<br/>

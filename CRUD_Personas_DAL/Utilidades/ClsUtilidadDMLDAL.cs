@@ -19,13 +19,12 @@ namespace CRUD_Personas_DAL.Utilidades
         #region metodos publicos
         /// <summary>
         /// <b>Prototipo:</b> public static int ejecutarSentenciaDML(String sentenciaDML)<br/>
-        /// <b>Comentarios:</b> Ejecuta una sentenciaDML DML<br/>
+        /// <b>Comentarios:</b> Ejecuta una sentencia DML<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
         /// <b>Postcondiciones:</b> Mediante las propiedades heredadas y una sentenciaDML, ejecuta dicha sentencia y devolviendo
         /// el numero de filas afectado
         /// </summary>
         /// <param name="sentenciaDML"></param>
-        /// <param name="condicion"></param>
         /// <returns> int representando el número de filas afectadas por dicha sentenciaDML</returns>
         public static int ejecutarSentenciaDML(String sentenciaDML)
         {

@@ -8,6 +8,7 @@ namespace CRUD_Personas_DAL.Manejadoras
 {
     public class ClsManejadoraDepartamentoDAL : ClsUtilidadDMLDAL
     {
+        //NOTA A FERNANDO --> NO MIRAR AÚN ESTA CLASE YA QUE FALTA COMENTARLA BIEN PORQUE NO PERTENCECE AL TRABAJO DE SGEMP
         #region constantes
         public const String INSTRUCCION_UPDATE_DEPARTAMENTO = "UPDATE Departamentos SET nombreDepartamento = @nombre WHERE IDDepartamento = @idDepartamento";
         public const String INSTRUCCION_INSERT_DEPARTAMENTO = "INSERT INTO Departametos VALUES (@nombreDepartamento)";

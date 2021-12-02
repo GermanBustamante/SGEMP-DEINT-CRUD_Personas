@@ -7,6 +7,10 @@ using System.Text;
 
 namespace CRUD_Personas_BL.Listados
 {
+    /// <summary>
+    /// Esta clase contiene los métodos que llamarán a la capa DAL para obtener datos sobre la tabla Departamentos de nuestra BBDD, aquí
+    /// se aplicarán las reglas de negocio sobre dichos objetos si es que hay
+    /// </summary>
     public class ClsListadoDepartamentosBL
     {
         /// <summary>
@@ -63,6 +67,6 @@ namespace CRUD_Personas_BL.Listados
             return ClsListadoDepartamentosDAL.getIdDepartamentoDAL(nombreDepartamento);
         }
 
-        
+
     }
 }

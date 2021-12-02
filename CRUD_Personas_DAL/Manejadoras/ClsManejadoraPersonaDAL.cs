@@ -13,7 +13,7 @@ namespace CRUD_Personas_DAL.Manejadoras
     {
         #region constantes
         public const String INSTRUCCION_DELETE_PERSONA_PK = "DELETE FROM Personas WHERE IDPersona=";
-        public const String INSTRUCCION_UPDATE_PERSONA = "UPDATE Personas SET nombrePersona = @nombre, apellidosPersona = @apellidos, " +
+        public const String INSTRUCCION_UPDATE_PERSONA_PK = "UPDATE Personas SET nombrePersona = @nombre, apellidosPersona = @apellidos, " +
                 "fechaNacimiento = @fechaNacimiento, telefono = @telefono, direccion = @direccion, foto = @foto, " +
                 "IDDepartamento = @idDepartamento WHERE IDPersona = @idPersona";
         public const string INSTRUCCION_INSERT_PERSONA = "INSERT INTO Personas VALUES (@nombre,@apellidos,@fechaNacimiento,@telefono,@direccion,@foto,@idDepartamento)";
@@ -33,7 +33,7 @@ namespace CRUD_Personas_DAL.Manejadoras
         {
             instanciarConexion();
             aniadirParametrosPersonaMiComando(oPersona);
-            int resultado = oPersona.Id == 0 ? ejecutarSentenciaDML(INSTRUCCION_INSERT_PERSONA) : ejecutarSentenciaDML(INSTRUCCION_UPDATE_PERSONA);
+            int resultado = oPersona.Id == 0 ? ejecutarSentenciaDML(INSTRUCCION_INSERT_PERSONA) : ejecutarSentenciaDML(INSTRUCCION_UPDATE_PERSONA_PK);
             MiConexion.closeConnection();
             return resultado;
         }
@@ -61,7 +61,8 @@ namespace CRUD_Personas_DAL.Manejadoras
         /// <b>Prototipo:</b> private static void aniadirParametrosPersonaMiComando(ClsPersona oPersona)<br/>
         /// <b>Comentarios:</b> Añade a los paramétros a un SqlCommand<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
-        /// <b>Postcondiciones:</b> Dado una persona, añade los parámetros de dicha persona al SqlCommand heredado MiComando
+        /// <b>Postcondiciones:</b> Dado una persona, añade los parámetros de dicha persona al SqlCommand heredado MiComando, en caso de que pueda existir 
+        /// algún valor nulo, lo controla
         /// </summary>
         /// <param name="oPersona"></param>
         private static void aniadirParametrosPersonaMiComando(ClsPersona oPersona)
@@ -77,7 +78,7 @@ namespace CRUD_Personas_DAL.Manejadoras
                 MiComando.Parameters.Add("@foto", System.Data.SqlDbType.VarChar).Value = oPersona.Foto;
             }
             else
-            {//TODO MIRAR COMO LO TIENE JUANJO
+            {
                 MiComando.Parameters.Add(new SqlParameter("@foto", DBNull.Value));
             }
             MiComando.Parameters.Add("@idDepartamento", System.Data.SqlDbType.Int).Value = oPersona.IdDepartamento;

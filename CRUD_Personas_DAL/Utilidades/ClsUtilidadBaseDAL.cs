@@ -20,7 +20,7 @@ namespace CRUD_Personas_DAL.Utilidades
         #region metodos publicos
         /// <summary>
         /// <b>Prototipo:</b> public static void instanciarConexion()<br/>
-        /// <b>Comentarios:</b> Método que instancia una conexión a una BD<br/>
+        /// <b>Comentarios:</b> Método que instancia una conexión a una BBDD<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
         /// <b>Postcondiciones:</b> Los atributos MiConexion y MiCommando son instanciados,luego, se abre una conexión a la BD guardada en los atributos
         /// del objeto tipo MiConexion

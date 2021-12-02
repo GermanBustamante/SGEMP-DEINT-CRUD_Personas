@@ -15,13 +15,13 @@ namespace CRUD_Personas_DAL.Listados
     public class ClsListadoDepartamentosDAL : ClsUtililidadSelectDAL
     {
         #region constantes
-        public const String INSTRUCCION_SELECT_NOMBRE_DEPARTAMENTO_PK = "SELECT nombreDepartamento FROM Departamentos WHERE IdDepartamento=";
-        public const String INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS = "SELECT nombreDepartamento FROM Departamentos";
-        public const String INTRUCCION_SELECT_ID_DEPARTAMENTO_DADO_NOMBRE = "SELECT IDDepartamento FROM Departamentos WHERE " + COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS + "=";
-        public const String INSTRUCCION_SELECT_DEPARTAMENTOS = "SELECT * FROM Departamentos";
-        public const String COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS = "nombreDepartamento";
-        public const String COLUMNA_IDDEPARTAMENTO_TABLA_DEPARTAMENTOS = "IDDepartamento";
-
+        public const String COLUMNA_NOMBRE_DEPARTAMENTO = "nombreDepartamento";
+        public const String COLUMNA_IDDEPARTAMENTO = "IDDepartamento";
+        public const String TABLA_DEPARTAMENTOS = "Departamentos";
+        public const String INSTRUCCION_SELECT_NOMBRE_DEPARTAMENTO_PK = "SELECT " + COLUMNA_NOMBRE_DEPARTAMENTO + " FROM "+ TABLA_DEPARTAMENTOS + " WHERE " + COLUMNA_IDDEPARTAMENTO + "=";
+        public const String INSTRUCCION_SELECT_NOMBRES_DEPARTAMENTOS = "SELECT "+COLUMNA_NOMBRE_DEPARTAMENTO + " FROM " + TABLA_DEPARTAMENTOS;
+        public const String INTRUCCION_SELECT_ID_DEPARTAMENTO_DADO_NOMBRE = "SELECT "+COLUMNA_IDDEPARTAMENTO+ " FROM " + TABLA_DEPARTAMENTOS + " WHERE " + COLUMNA_NOMBRE_DEPARTAMENTO + "=";
+        public const String INSTRUCCION_SELECT_DEPARTAMENTOS = "SELECT * FROM " + TABLA_DEPARTAMENTOS;
         #endregion
 
         #region metodos publicos
@@ -29,11 +29,11 @@ namespace CRUD_Personas_DAL.Listados
         /// <b>Prototipo:</b> public static int getIdDepartamentoDAL(string nombreDepartamento)<br/>
         /// <b>Comentarios:</b> Devuelve el id de un departamento dado un nombre<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
-        /// <b>Postcondiciones:</b> Abre una conexión a la BD, ejecuta una instrucción Select dado el nombre de un departamento
+        /// <b>Postcondiciones:</b> Abre una conexión a la BD, ejecuta una instrucción Select dado el nombre de un departamento pasado por parámetro
         /// ,lee su id, cierra los flujos y lo retorna
         /// </summary>
         /// <param name="nombreDepartamento"></param>
-        /// <returns> int idDepartamento representando el id del departamento leido o null si la instrucción no devuelve ninguna fila</returns>
+        /// <returns> int idDepartamento representando el id del departamento leido</returns>
         public static int getIdDepartamentoDAL(string nombreDepartamento)
         {
             int idDepartamento = 0;
@@ -43,7 +43,7 @@ namespace CRUD_Personas_DAL.Listados
             if (MiLector.HasRows)
             {
                 MiLector.Read();
-                idDepartamento = (int)MiLector[COLUMNA_IDDEPARTAMENTO_TABLA_DEPARTAMENTOS];
+                idDepartamento = (int)MiLector[COLUMNA_IDDEPARTAMENTO];
             }
             cerrarFlujos();
             return idDepartamento;
@@ -53,7 +53,7 @@ namespace CRUD_Personas_DAL.Listados
         /// <b>Prototipo:</b> public static String getNombreDepartamentoDAL(int idDepartamento)<br/>
         /// <b>Comentarios:</b> Devuelve el nombre de un departamento dado su id<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
-        /// <b>Postcondiciones:</b> Abre una conexión a la BD, ejecuta una instrucción Select dado el id de un departamento
+        /// <b>Postcondiciones:</b> Abre una conexión a la BD, ejecuta una instrucción Select dado el id de un departamento pasado por parámetro
         /// ,lee su nombre, cierra los flujos y lo retorna
         /// <param name="idDepartamento"></param>
         /// <returns> string nombreDepartamento representando el nombre del departamento leido o null si la instrucción no devuelve ninguna fila</returns>
@@ -65,7 +65,7 @@ namespace CRUD_Personas_DAL.Listados
             if (MiLector.HasRows)
             {
                 MiLector.Read();
-                nombreDepartamento = (String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS];
+                nombreDepartamento = (String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO];
             }
             cerrarFlujos();
             return nombreDepartamento;
@@ -73,7 +73,7 @@ namespace CRUD_Personas_DAL.Listados
 
         /// <summary>
         /// <b>Prototipo:</b> public static ObservableCollection *ClsDepartamento* getListadoDepartamentosDAL()<br/>
-        /// <b>Comentarios:</b> Devuelve un listado de departamentos de la tabla Departamentos de la BD<br/>
+        /// <b>Comentarios:</b> Devuelve un listado de departamentos de la tabla Departamentos de la BBDD<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
         /// <b>Postcondiciones:</b> Abre una conexión a la BD, ejecuta una instrucción Select para leer todas las filas de la tabla Departamentos
         /// ,los instancia, añade a una lista, cierra los flujos y lo retorna
@@ -116,6 +116,25 @@ namespace CRUD_Personas_DAL.Listados
         #endregion
 
         #region metodos privados
+
+        /// <summary>
+        /// <b>Prototipo:</b> private static ObservableCollection*ClsDepartamento* getListadoDepartamentosMiLector()<br/>
+        /// <b>Comentarios:</b> Devuelve un listado de departamentos de un lector<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b> Lee los departamentos de MiLector heredado mientras haya filas, los instancia, añade 
+        /// a una lista y luego devuelve esta
+        /// </summary>
+        /// <returns> ObservableCollection*ClsDepartamento* representando los departamentos de la tabla</returns>
+        private static ObservableCollection<ClsDepartamento> getListadoDepartamentosMiLector()
+        {
+            ObservableCollection<ClsDepartamento> listadoDepartamentos = new ObservableCollection<ClsDepartamento>();
+            while (MiLector.Read())
+            {
+                listadoDepartamentos.Add(getDepartamentoMiLector());
+            }
+            return listadoDepartamentos;
+        }
+
         /// <summary>
         /// <b>Prototipo:</b> private static ObservableCollection<string> getListadoNombresDepartamentosMiLector()<br/>
         /// <b>Comentarios:</b> Devuelve un listado de nombres de departamentos de un lector<br/>
@@ -128,27 +147,9 @@ namespace CRUD_Personas_DAL.Listados
             ObservableCollection<String> listadoNombresDepartamentos = new ObservableCollection<String>();
             while (MiLector.Read())
             {
-                listadoNombresDepartamentos.Add((String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS]);
+                listadoNombresDepartamentos.Add((String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO]);
             }
             return listadoNombresDepartamentos;
-        }
-
-        /// <summary>
-        /// <b>Prototipo:</b> private static ObservableCollection*ClsDepartamento* getListadoDepartamentosMiLector()<br/>
-        /// <b>Comentarios:</b> Devuelve un listado de departamentos de un lector<br/>
-        /// <b>Precondiciones:</b> ninguna<br/>
-        /// <b>Postcondiciones:</b> Lee los departamentos de MiLector heredado mientras haya filas, los instancia, añade 
-        /// a una lista y luego devuelve esta
-        /// </summary>
-        /// <returns> ObservableCollection*ClsDepartamento* representando los departamentos del lector</returns>
-        private static ObservableCollection<ClsDepartamento> getListadoDepartamentosMiLector()
-        {
-            ObservableCollection<ClsDepartamento> listadoDepartamentos = new ObservableCollection<ClsDepartamento>();
-            while (MiLector.Read())
-            {
-                listadoDepartamentos.Add(getDepartamentoMiLector());
-            }
-            return listadoDepartamentos;
         }
 
         /// <summary>
@@ -160,7 +161,7 @@ namespace CRUD_Personas_DAL.Listados
         /// <returns> ClsDepartamento representando el departamento leido</returns>
         private static ClsDepartamento getDepartamentoMiLector()
         {
-            return new ClsDepartamento((int)MiLector[COLUMNA_IDDEPARTAMENTO_TABLA_DEPARTAMENTOS],(String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS]);
+            return new ClsDepartamento((int)MiLector[COLUMNA_IDDEPARTAMENTO],(String)MiLector[COLUMNA_NOMBRE_DEPARTAMENTO]);
         }
         #endregion
     }

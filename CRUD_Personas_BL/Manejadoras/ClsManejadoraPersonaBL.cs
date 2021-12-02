@@ -14,7 +14,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// <b>Comentarios:</b> Actualiza o añade una persona pasada por parámetro<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
         /// <b>Postcondiciones:</b> Llama al método ClsManejadoraPersonaDAL.actualizarAñadirPersonaDAL y le pasa la persona
-        /// pasada por parámetro
+        /// pasada por parámetro, si hubiera reglas de negocio irían aquí
         /// </summary>
         /// <param name="oPersona"></param>
         /// <returns> int representando el número de filas afectadas</returns>
@@ -28,7 +28,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// <b>Comentarios:</b> Elimina una persona en la capa DAL<br/>
         /// <b>Precondiciones:</b> ninguna<br/>
         /// <b>Postcondiciones:</b> Llama al método ClsManejadoraPersonaDAL.eliminarPersonaDAL y le pasa el id de la persona
-        /// a eliminar
+        /// a eliminar, si hubiera reglas de negocio irían aquí
         /// </summary>
         /// <param name="idPersona"></param>
         /// <returns> int representando el número de filas afectadas</returns>
