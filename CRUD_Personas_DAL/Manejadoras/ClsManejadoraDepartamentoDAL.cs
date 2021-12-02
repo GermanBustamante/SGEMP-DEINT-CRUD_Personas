@@ -13,10 +13,14 @@ namespace CRUD_Personas_DAL.Manejadoras
         public const String INSTRUCCION_INSERT_DEPARTAMENTO = "INSERT INTO Departametos VALUES (@nombreDepartamento)";
         public const String INTRUCCION_DELETE_DEPARTAMENTO = "DELETE FROM Departamentos WHERE IDDepartamento=";
         public const String PARAMETRO_ID_DEPARTAMENTO = "idDepartamento";
-
         #endregion
 
         #region metodos publicos
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oDepartamento"></param>
+        /// <returns></returns>
         public static int actualizarAniadirDepartamentoDAL(ClsDepartamento oDepartamento)
         {
             instanciarConexion();
@@ -26,6 +30,11 @@ namespace CRUD_Personas_DAL.Manejadoras
             return resultado;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="idDepartamento"></param>
+        /// <returns></returns>
         public static int eliminarDepartamentoDAL(int idDepartamento)
         {
             int resultado = 0;
@@ -34,11 +43,13 @@ namespace CRUD_Personas_DAL.Manejadoras
             MiConexion.closeConnection();
             return resultado;
         }
-
-
         #endregion
 
         #region metodos privados
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="oDepartamento"></param>
         private static void aniadirParametrosDepartamentoMiComando(ClsDepartamento oDepartamento)
         {
             MiComando.Parameters.Add("@idDepartamento", System.Data.SqlDbType.Int).Value = oDepartamento.Id;

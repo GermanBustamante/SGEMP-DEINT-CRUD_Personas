@@ -8,14 +8,18 @@
 
 <p>
     @{
-        if (ViewBag.NumeroFilasAfectadas == 1)
+        if (ViewBag.Resultado != null)
         {
-            <div><font color = "green">Se ha borrado correctamente</font></div>
+            if (ViewBag.Resultado == "Se ha borrado correctamente")
+            {
+                <div><font color="green">@ViewBag.Resultado</font></div>
+            }
+            else
+            {
+                <div><font color="red">@ViewBag.Resultado</font></div>
+            }
         }
-        else if (ViewBag.NumeroFilasAfectadas == 0)
-        {
-            <div><font color = "red">No se ha borrado la persona correspondiente</font></div>
-        }
+
     }
 </p>
 <h3>
@@ -56,7 +60,7 @@
         {
             <tr>
                 <td>
-                    <img src="@item.Foto" height="100" width="100" />
+                    <img src="@item.Foto" height="80" width="80" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Id)

@@ -16,13 +16,14 @@ namespace CRUD_Personas_Core_UI.Controllers
     public class PersonasController : Controller
     {
         #region ActionList
-        public IActionResult Index(/*int numeroFilas*/)
+        public IActionResult Index(String resultado)
         {
             IActionResult actionResult = null;
             ClsListadoPersonasNombreDepartamentoVM personasDepart = null;
             try
             {
                 personasDepart = new ClsListadoPersonasNombreDepartamentoVM();
+                ViewBag.Resultado = resultado;
                 actionResult = View(personasDepart.ListadoPersonasDepartamento);
             }
             catch (SqlException ex)
@@ -105,8 +106,9 @@ namespace CRUD_Personas_Core_UI.Controllers
             IActionResult actionResult;
             try
             {
-                ViewBag.NumeroFilasAfectadas = ClsManejadoraPersonaBL.eliminarPersonaBL(Id);
-                actionResult = RedirectToAction("Index");//, new {numeroFilas = ViewBag.NumeroFilasAfectadas}
+                int numeroFilas = ClsManejadoraPersonaBL.eliminarPersonaBL(Id);
+                String resultado = numeroFilas != 0 ? "Se ha borrado correctamente" : "No se ha borrado correctamente";
+                actionResult = RedirectToAction("Index", new { resultado = resultado });
             }
             catch (SqlException ex)
             {

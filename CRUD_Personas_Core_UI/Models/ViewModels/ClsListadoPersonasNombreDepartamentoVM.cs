@@ -26,6 +26,11 @@ namespace CRUD_Personas_Core_UI.Models
             ObservableCollection<ClsPersona> listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
             ObservableCollection<ClsDepartamento> listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
             ObservableCollection<ClsPersonaNombreDepartamento> listadoARetornar = new ObservableCollection<ClsPersonaNombreDepartamento>();
+
+            //listadoPersonas.ToList().ForEach(persona => listadoARetornar.Add(
+            //    new ClsPersonaNombreDepartamento(persona,
+            //    listadoDepartamentos.First(departamento => departamento.Id == persona.Id).Nombre)));
+
             //TODO PREGUNTAR A FERNANDO LO QUE ESTÁ COMENTADO
             foreach (ClsPersona itemPersona in listadoPersonas)
             {

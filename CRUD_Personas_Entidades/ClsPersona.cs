@@ -52,8 +52,8 @@ namespace CRUD_Personas_Entidades
         }
 
         //TODO DATAANNOTATION CORRECTO AL METER UNA FECHA INVALIDA
-        [DataType(DataType.Date, ErrorMessage = "Debes introducir una fecha")]
         [Required(ErrorMessage = "La fecha de nacimiento debe ser obligatoria")]
+        [DataType(DataType.Date, ErrorMessage = "Debes introducir una fecha")]
         [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
         public DateTime FechaNacimiento { get; set; }
 

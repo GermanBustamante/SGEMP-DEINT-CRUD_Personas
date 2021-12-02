@@ -5,7 +5,7 @@ using System;
 namespace CRUD_Personas_BL.Manejadoras
 {
     /// <summary>
-    /// Contiene las reglas de negocio que se aplicarán a los objetos retornados por la capa DAL
+    /// Contiene las reglas de negocio que se aplicarán a los objetos tipo Persona con los que se tratará en la capa DAL
     /// </summary>
     public class ClsManejadoraPersonaBL
     {
@@ -17,7 +17,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// pasada por parámetro
         /// </summary>
         /// <param name="oPersona"></param>
-        /// <returns> int representando el número de filas afecta</returns>
+        /// <returns> int representando el número de filas afectadas</returns>
         public static int actualizarAñadirPersonaBL(ClsPersona oPersona)
         {
             return ClsManejadoraPersonaDAL.actualizarAñadirPersonaDAL(oPersona);
@@ -31,7 +31,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// a eliminar
         /// </summary>
         /// <param name="idPersona"></param>
-        /// <returns> int representando el número de filas afectada</returns>
+        /// <returns> int representando el número de filas afectadas</returns>
         public static int eliminarPersonaBL(int idPersona)
         {
             return ClsManejadoraPersonaDAL.eliminarPersonaDAL(idPersona);
