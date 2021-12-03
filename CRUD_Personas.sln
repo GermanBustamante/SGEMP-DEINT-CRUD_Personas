@@ -1,17 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Personas_Core_UI", "CRUD_Personas_Core_UI\CRUD_Personas_Core_UI.csproj", "{0D704557-BD4F-410E-9595-E5657388CB6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Personas_Core_UI", "CRUD_Personas_Core_UI\CRUD_Personas_Core_UI.csproj", "{0D704557-BD4F-410E-9595-E5657388CB6D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Personas_DAL", "CRUD_Personas_DAL\CRUD_Personas_DAL.csproj", "{532AA965-C426-4082-B258-B7499D59B602}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Personas_DAL", "CRUD_Personas_DAL\CRUD_Personas_DAL.csproj", "{532AA965-C426-4082-B258-B7499D59B602}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Personas_BL", "CRUD_Personas_BL\CRUD_Personas_BL.csproj", "{0ECF8D3F-8747-45B5-B185-026B3F4E3F72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Personas_BL", "CRUD_Personas_BL\CRUD_Personas_BL.csproj", "{0ECF8D3F-8747-45B5-B185-026B3F4E3F72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Personas_Entidades", "CRUD_Personas_Entidades\CRUD_Personas_Entidades.csproj", "{E0156E38-97E5-436B-9ABD-D5EFFA3A6312}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Personas_Entidades", "CRUD_Personas_Entidades\CRUD_Personas_Entidades.csproj", "{E0156E38-97E5-436B-9ABD-D5EFFA3A6312}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Personas_UWP_UI", "CRUD_Personas_UWP_UI\CRUD_Personas_UWP_UI.csproj", "{7BD1B69C-D277-436F-93E7-C3D677F53A3C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diseño", "Diseño", "{8D106CB4-D34F-482D-B483-BEF1BC97CC29}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\..\Mi unidad\2º DAM\Estructura proyecto CRUD_Personas.txt = ..\..\..\..\Mi unidad\2º DAM\Estructura proyecto CRUD_Personas.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
