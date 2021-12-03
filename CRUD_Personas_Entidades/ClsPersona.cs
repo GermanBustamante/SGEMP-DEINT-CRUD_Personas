@@ -29,7 +29,7 @@ namespace CRUD_Personas_Entidades
         #endregion
 
         #region propiedades publicas]
-        public int Id { get;}
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "El nombre debe ser obligatorio"), MaxLength(30)]
         public string Nombre
