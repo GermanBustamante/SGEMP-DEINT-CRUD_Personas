@@ -155,6 +155,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 oPersonaSeleccionadaNombreDepartamento = new clsPersonDepartmentName();
                 NotifyPropertyChanged("OPersonaSeleccionadaNombreDepartamento");
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -179,6 +180,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 NotifyPropertyChanged("TxtBlckError");
             }
         }
+
         /// <summary>
         /// 
         /// </summary>

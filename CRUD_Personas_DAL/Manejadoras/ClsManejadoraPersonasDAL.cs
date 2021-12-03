@@ -9,7 +9,7 @@ namespace CRUD_Personas_DAL.Manejadoras
     /// <summary>
     /// Contiene  todos los métodos y ctes necesarias para el manejo de personas de mi capa DAL
     /// </summary>
-    public class ClsManejadoraPersonaDAL : ClsUtilidadDMLDAL
+    public class ClsManejadoraPersonasDAL : ClsUtilidadDMLDAL
     {
         #region constantes
         public const String INSTRUCCION_DELETE_PERSONA_PK = "DELETE FROM Personas WHERE IDPersona=";

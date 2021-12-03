@@ -20,7 +20,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// <returns> int representando el número de filas afectadas</returns>
         public static int actualizarAñadirPersonaBL(ClsPersona oPersona)
         {
-            return ClsManejadoraPersonaDAL.actualizarAñadirPersonaDAL(oPersona);
+            return ClsManejadoraPersonasDAL.actualizarAñadirPersonaDAL(oPersona);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// <returns> int representando el número de filas afectadas</returns>
         public static int eliminarPersonaBL(int idPersona)
         {
-            return ClsManejadoraPersonaDAL.eliminarPersonaDAL(idPersona);
+            return ClsManejadoraPersonasDAL.eliminarPersonaDAL(idPersona);
         }
     }
 }

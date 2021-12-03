@@ -23,7 +23,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// <returns> int representando el número de filas afectadas</returns>
         public static int actualizarAniadirDepartamentoBL(ClsDepartamento oDepartamento)
         {
-            return ClsManejadoraDepartamentoDAL.actualizarAniadirDepartamentoDAL(oDepartamento);
+            return ClsManejadoraDepartamentosDAL.actualizarAniadirDepartamentoDAL(oDepartamento);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace CRUD_Personas_BL.Manejadoras
         /// <returns> int representando el número de filas afectadas</returns>
         public static int eliminarDepartamentoBL(int idDepartamento)
         {
-            return ClsManejadoraDepartamentoDAL.eliminarDepartamentoDAL(idDepartamento);
+            return ClsManejadoraDepartamentosDAL.eliminarDepartamentoDAL(idDepartamento);
         }
     }
 }
