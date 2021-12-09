@@ -11,9 +11,9 @@ namespace CRUD_Personas_DAL.Manejadoras
         #region constantes
         public const String INSTRUCCION_UPDATE_DEPARTAMENTO = "UPDATE Departamentos SET nombreDepartamento = @nombreDepartamento WHERE IDDepartamento = @idDepartamento";
         public const String INSTRUCCION_INSERT_DEPARTAMENTO = "INSERT INTO Departamentos  VALUES (@nombreDepartamento)";
-        public const String INTRUCCION_DELETE_DEPARTAMENTO = "DELETE FROM Departamentos WHERE IDDepartamento=";
-        public const String PARAMETRO_ID_DEPARTAMENTO = "idDepartamento";
         public const String SP_ELIMINAR_DEPARTAMENTO = "SPEliminarDepartamento";
+        public const String COLUMNA_ID_DEPARTAMENTO_TABLA_DEPARTAMENTOS = "IDDepartamento";
+        public const String COLUMNA_NOMBRE_DEPARTAMENTO_TABLA_DEPARTAMENTOS = "nombreDepartamento";
         #endregion
 
         #region metodos publicos

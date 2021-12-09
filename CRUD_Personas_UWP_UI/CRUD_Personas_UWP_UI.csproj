@@ -120,7 +120,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\clsDepartmentsPageVM.cs" />
-    <Compile Include="ViewModels\Utilidades\ClsDepartmentsPersonsBaseVM.cs" />
     <Compile Include="ViewModels\clsPersonsPageVM.cs" />
     <Compile Include="ViewModels\Models\clsDepartmentListOfPersons.cs" />
     <Compile Include="ViewModels\Models\clsPersonDepartmentName.cs" />

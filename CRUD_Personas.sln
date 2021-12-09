@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Personas_UWP_UI", "CRU
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diseño", "Diseño", "{8D106CB4-D34F-482D-B483-BEF1BC97CC29}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Mi unidad\2º DAM\Estructura proyecto CRUD_Personas.txt = ..\..\..\..\Mi unidad\2º DAM\Estructura proyecto CRUD_Personas.txt
+		..\..\..\..\Desktop\Estructura proyecto CRUD_Personas.txt = ..\..\..\..\Desktop\Estructura proyecto CRUD_Personas.txt
 	EndProjectSection
 EndProject
 Global

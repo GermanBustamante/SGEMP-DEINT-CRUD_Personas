@@ -54,8 +54,8 @@
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <Image Source="/Assets/Images/ImgFotoListView.png" Height="30" Width="30" Margin="10" Stretch="UniformToFill"/>
-                        <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"  FontSize="17" Margin="0,10,10,10"/>
-                        <TextBlock Text="{Binding Apellidos}" VerticalAlignment="Center" FontSize="17" Margin="0,10,10,10"/>
+                        <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"  FontSize="16" Margin="0,5,5,5"/>
+                        <TextBlock Text="{Binding Apellidos}" VerticalAlignment="Center" FontSize="16" Margin="0,5,5,5"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -80,13 +80,13 @@
                 <Image x:Name="imgContact" Source="{Binding OPersonaSeleccionadaNombreDepartamento.Foto}" Height="150" Width="150"  Stretch="UniformToFill"
                        Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10" Visibility="Collapsed"/>
 
-                <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
+                <StackPanel x:Name="stckPanelNombre" Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
                     <TextBlock Text="Nombre *" Margin="10,10,10,0" TextWrapping="WrapWholeWords"/>
                     <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Margin="10,5,10,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
-                <StackPanel Orientation="Vertical" Grid.Row="1" Grid.Column="1">
+                <StackPanel  x:Name="stckPanelApellidos"  Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
                     <TextBlock Text="Apellidos *" Margin="10,10,10,0" TextWrapping="WrapWholeWords"/>
                     <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Apellidos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         Margin="10,5,10,0" VerticalAlignment="Center"/>
@@ -128,18 +128,21 @@
         </ScrollViewer>
         <StackPanel x:Name="stckPanel"  Background="LightBlue" Margin="10,0,10,10"
                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
-            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckMensajeOperacion}" VerticalAlignment="Center" Foreground="Black" TextWrapping="WrapWholeWords"/>
-            <TextBlock x:Name="txtBoxError" Text="{Binding TxtBlckError}" VerticalAlignment="Center" Foreground="Red" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckMensajeOperacion}" Padding="5,5,0,5" VerticalAlignment="Center" Foreground="Black" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Name="txtBoxError" Text="{Binding TxtBlckError}" Padding="5,0,0,0" VerticalAlignment="Center" Foreground="Red" TextWrapping="WrapWholeWords"/>
         </StackPanel>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState>
+                <VisualState x:Name="vslStateGrandecito">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="800"/>
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="imgContact.(Image.Visibility)" Value="Visible"/>
-                        <!--TODO JUANJO-->
+                        <Setter Target="stckPanelNombre.(Grid.Column)" Value="1"/>
+                        <Setter Target="stckPanelApellidos.(Grid.Column)" Value="1"/>
+                        <Setter Target="stckPanelNombre.(Grid.ColumnSpan)" Value="1"/>
+                        <Setter Target="stckPanelNombre.(Grid.ColumnSpan)" Value="1"/>
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

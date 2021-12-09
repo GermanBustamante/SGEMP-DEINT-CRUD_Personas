@@ -116,21 +116,13 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         {
             get { return txtBlckMensajeOperacion; }
             set
-            {
-                txtBlckMensajeOperacion = value;
-                NotifyPropertyChanged("TxtBlckMensajeOperacion");
-                setTimer();
-            }
+            { txtBlckMensajeOperacion = value; }
         }
 
         public String TxtBlckError
         {
             get { return txtBlckError; }
-            set
-            {
-                txtBlckError = value;
-                NotifyPropertyChanged("TxtBlckError");
-            }
+            set { txtBlckError = value; }
         }
         #endregion
         #region commands 
@@ -143,6 +135,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             return oDepartamentoSeleccionadoListadoPersonas.Id != 0;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void SaveDepartmentCommand_Execute()
         {
             if (!String.IsNullOrWhiteSpace(oDepartamentoSeleccionadoListadoPersonas.Nombre))
@@ -168,6 +163,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 NotifyPropertyChanged("TxtBlckError");
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private void AddDepartmentCommand_Execute()
         {
             btnAddPulsado = true;
@@ -176,6 +174,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             NotifyPropertyChanged("ODepartamentoSeleccionadoListadoPersonas");
             reinicarTextBoxes();
         }
+        /// <summary>
+        /// 
+        /// </summary>
         private async void DeleteDepartmentCommand_Execute()
         {
 

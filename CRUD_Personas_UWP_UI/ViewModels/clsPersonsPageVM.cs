@@ -41,10 +41,6 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         public const string MENSAJE_OPERACION_FALLIDA = "Algo ha fallado";
         public const string MENSAJE_NOMBRE_VACIO = "No puedes dejar el nombre vacío";
         public const string MENSAJE_APELLIDOS_VACIO = "No puedes dejar los apellidos vacíos";
-        public const string MENSAJE_FECHA_NACIMIENTO_VACIO = "No puedes dejar la fecha de nacimiento vacía";
-        public const string MENSAJE_DIRECCION_VACIO = "No puedes dejar la dirección vacía";
-        public const string MENSAJE_TELEFONO_VACIO = "No puedes dejar el teléfono vacío";
-        public const string MENSAJE_CAMPO_VACIO = "No puedes dejar ningún campo vacío";
         public const string MENSAJE_NOMBRE_APELLIDOS_VACIOS = "No puedes dejar ni el nombre ni los apellidos vacios";
         #endregion
         #region propiedades publicas
@@ -74,20 +70,13 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         public ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento
         {
             get { return listadoPersonasNombreDepartamento; }
-            set
-            {
-                listadoPersonasNombreDepartamento = value;
-                NotifyPropertyChanged("ListadoPersonasNombreDepartamento");
-            }
+            set {listadoPersonasNombreDepartamento = value;}
         }
 
         public ObservableCollection<ClsDepartamento> ListadoDepartamentos
         {
             get { return listadoDepartamentos; }
-            set
-            {
-                listadoDepartamentos = value;
-            }
+            set { listadoDepartamentos = value; }
         }
 
         public clsPersonDepartmentName OPersonaSeleccionadaNombreDepartamento
@@ -115,22 +104,13 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         public String TxtBlckMensajeOperacion
         {
             get { return txtBlckMensajeOperacion; }
-            set
-            {
-                txtBlckMensajeOperacion = value;
-                NotifyPropertyChanged("TxtBlckMensajeOperacion");
-                setTimer();
-            }
+            set { txtBlckMensajeOperacion = value; }
         }
 
         public String TxtBlckError
         {
             get { return txtBlckError; }
-            set
-            {
-                txtBlckError = value;
-                NotifyPropertyChanged("TxtBlckError");
-            }
+            set { txtBlckError = value;}
         }
         #endregion
         #region constructores
