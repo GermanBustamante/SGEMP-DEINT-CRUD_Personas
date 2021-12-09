@@ -71,18 +71,12 @@ namespace CRUD_Personas_DAL.Manejadoras
             MiComando.Parameters.Add("@nombre", System.Data.SqlDbType.VarChar).Value = oPersona.Nombre;
             MiComando.Parameters.Add("@apellidos", System.Data.SqlDbType.VarChar).Value = oPersona.Apellidos;
             MiComando.Parameters.Add("@fechaNacimiento", System.Data.SqlDbType.Date).Value = oPersona.FechaNacimiento;
-            MiComando.Parameters.Add("@direccion", System.Data.SqlDbType.VarChar).Value = oPersona.Direccion;
-            MiComando.Parameters.Add("@telefono", System.Data.SqlDbType.VarChar).Value = oPersona.Telefono;
-            if(oPersona.Foto != null)
-            {
-                MiComando.Parameters.Add("@foto", System.Data.SqlDbType.VarChar).Value = oPersona.Foto;
-            }
-            else
-            {
-                MiComando.Parameters.Add(new SqlParameter("@foto", DBNull.Value));
-            }
+            MiComando.Parameters.Add(!(oPersona.Direccion == null || oPersona.Direccion.Equals("")) ? new SqlParameter("@direccion", oPersona.Direccion) : new SqlParameter("@direccion", DBNull.Value));
+            MiComando.Parameters.Add(!(oPersona.Telefono == null || oPersona.Telefono.Equals("")) ? new SqlParameter("@telefono",oPersona.Telefono) : new SqlParameter("@telefono", DBNull.Value));
+            MiComando.Parameters.Add(!(oPersona.Foto == null || oPersona.Foto.Equals("")) ? new SqlParameter("@foto",oPersona.Foto) : new SqlParameter("@foto", DBNull.Value));
             MiComando.Parameters.Add("@idDepartamento", System.Data.SqlDbType.Int).Value = oPersona.IdDepartamento;
         }
         #endregion
     }
-}
+}          
+

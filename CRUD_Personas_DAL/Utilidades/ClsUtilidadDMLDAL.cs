@@ -50,6 +50,25 @@ namespace CRUD_Personas_DAL.Utilidades
             MiComando.Connection = MiConexion.Conexion;
             return MiComando.ExecuteNonQuery();
         }
+
+        /// /// <summary>
+        /// <b>Prototipo:</b> public static int ejecutarProcedimientoAlmacenado(String procedimiento)<br/>
+        /// <b>Comentarios:</b> Ejecuta un procedimiento almacenado<br/>
+        /// <b>Precondiciones:</b> si el SP tiene variables, estas ya deben haber sido instanciadas en MiComando<br/>
+        /// <b>Postcondiciones:</b> Mediante las propiedades heredadas y un procedimiento pasado por parámetro
+        /// ejecuta dicho SP, al final, devuelve el numero de filas afectado
+        /// </summary>
+        /// <param name="procedimiento"></param>
+        /// <returns></returns>
+        /// <returns> int representando el número de filas afectadas por dicha sentenciaDML</returns>
+        public static int ejecutarProcedimientoAlmacenado(String procedimiento)
+        {
+            MiComando.CommandType = System.Data.CommandType.StoredProcedure;
+            MiComando.CommandText = procedimiento;
+            MiComando.Connection = MiConexion.Conexion;
+            return MiComando.ExecuteNonQuery();
+
+        }
         #endregion
     }
 }

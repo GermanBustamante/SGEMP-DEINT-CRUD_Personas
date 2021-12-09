@@ -171,9 +171,16 @@ namespace CRUD_Personas_DAL.Listados
             oPersonaRecogida.Nombre = (string)MiLector[COLUMNA_NOMBRE];
             oPersonaRecogida.Apellidos = (string)MiLector[COLUMNA_APELLIDOS];
             oPersonaRecogida.FechaNacimiento = (DateTime)MiLector[COLUMNA_FECHA_NACIMIENTO];
-            oPersonaRecogida.Telefono = (string)MiLector[COLUMNA_TELEFONO];
-            oPersonaRecogida.Direccion = (string)MiLector[COLUMNA_DIRECCION];
-            if (MiLector[COLUMNA_FOTO] != System.DBNull.Value)
+            if (MiLector[COLUMNA_TELEFONO]!= DBNull.Value)
+            {
+                oPersonaRecogida.Telefono = (string)(MiLector[COLUMNA_TELEFONO]);
+
+            }
+            if (MiLector[COLUMNA_DIRECCION] != DBNull.Value)
+            {
+                oPersonaRecogida.Direccion = (string)MiLector[COLUMNA_DIRECCION];
+            }
+            if (MiLector[COLUMNA_FOTO] != DBNull.Value)
             {
                 oPersonaRecogida.Foto = (string)MiLector[COLUMNA_FOTO];
             }

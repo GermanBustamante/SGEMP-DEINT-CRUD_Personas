@@ -10,8 +10,9 @@ using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using System.Timers;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 using Windows.UI.Xaml.Controls;
 
 namespace CRUD_Personas_UWP_UI.ViewModels
@@ -19,7 +20,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
     public class clsDepartmentsPageVM : clsVMBase
     {
         #region atributos
-        private clsDepartmentListOfPersons oDepartamentoListadoPersonasSeleccionado;
+        private clsDepartmentListOfPersons oDepartamentoSeleccionadoListadoPersonas;
+        private ObservableCollection<ClsDepartamento> listadoDepartamentos;
+        private ObservableCollection<ClsPersona> listadoPersonas;
         private DelegateCommand deleteDepartmentCommand;
         private DelegateCommand addDepartmentCommand;
         private DelegateCommand saveDepartmentCommand;
@@ -32,33 +35,56 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         #region constructores
         public clsDepartmentsPageVM()
         {
-            contentDialogDeleteDepartment = instanciarContentDialogDeleteDepartment();
+            contentDialogDeleteDepartment = new ContentDialog
+            {
+                Title = "¿Estás seguro de que quieres borrar este departamento?",
+                Content = "Si borras este departamento, no podrás recuperarlo, además, sus empleados irán al Departamento Genérico",
+                PrimaryButtonText = "Borrar",
+                CloseButtonText = "Cancelar",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
             ListadoDepartametosPersonas = new ObservableCollection<clsDepartmentListOfPersons>();
+            recargarListaYSeleccion();
+        }
 
-            ObservableCollection<ClsDepartamento> listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
-            ObservableCollection<ClsPersona> listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
-            foreach (ClsDepartamento item in listadoDepartamentos)
+        private void recargarListaYSeleccion()
+        {
+            listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
+            if (ListadoDepartametosPersonas != null)
+            {
+                ListadoDepartametosPersonas.Clear();
+            }
+            foreach (ClsDepartamento itemDepartamento in listadoDepartamentos)
             {
                 ObservableCollection<ClsPersona> listadoPersonasDepartamento = new ObservableCollection<ClsPersona>(from p in listadoPersonas
-                                                                                                                    where p.IdDepartamento == item.Id
+                                                                                                                    where p.IdDepartamento == itemDepartamento.Id
                                                                                                                     select p);
                 //ObservableCollection<ClsPersona> listadoPersonasDepartamento = new ObservableCollection<ClsPersona>(listadoPersonas.Where(x => x.IdDepartamento == item.Id).ToList());
-                ListadoDepartametosPersonas.Add(new clsDepartmentListOfPersons(item, listadoPersonasDepartamento));
+                ListadoDepartametosPersonas.Add(new clsDepartmentListOfPersons(itemDepartamento, listadoPersonasDepartamento));
             }
-            oDepartamentoListadoPersonasSeleccionado = new clsDepartmentListOfPersons();
-            NotifyPropertyChanged("ODepartamentoListadoPersonasSeleccionado");
+            oDepartamentoSeleccionadoListadoPersonas = new clsDepartmentListOfPersons();
+            NotifyPropertyChanged("ODepartamentoSeleccionadoListadoPersonas");
         }
         #endregion
 
         #region propiedades publicas
         public ObservableCollection<clsDepartmentListOfPersons> ListadoDepartametosPersonas { get; set; }
-        public clsDepartmentListOfPersons ODepartamentoListadoPersonasSeleccionado
+        public clsDepartmentListOfPersons ODepartamentoSeleccionadoListadoPersonas
         {
-            get { return oDepartamentoListadoPersonasSeleccionado; }
+            get { return oDepartamentoSeleccionadoListadoPersonas; }
             set
             {
-                oDepartamentoListadoPersonasSeleccionado = value ?? new clsDepartmentListOfPersons();
-                NotifyPropertyChanged("ODepartamentoListadoPersonasSeleccionado");
+                if (value != null)
+                {
+                    oDepartamentoSeleccionadoListadoPersonas = value;
+                }
+                else
+                {
+                    oDepartamentoSeleccionadoListadoPersonas = new clsDepartmentListOfPersons();
+                    reinicarTextBoxes();//Por si está un mensaje de error y el usuario cambia de item seleccionado
+                }
+                NotifyPropertyChanged("ODepartamentoSeleccionadoListadoPersonas");
                 saveDepartmentCommand.RaiseCanExecuteChanged();
                 deleteDepartmentCommand.RaiseCanExecuteChanged();
             }
@@ -85,58 +111,48 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 return addDepartmentCommand = new DelegateCommand(AddDepartmentCommand_Execute);
             }
         }
+
+        public String TxtBlckMensajeOperacion
+        {
+            get { return txtBlckMensajeOperacion; }
+            set
+            {
+                txtBlckMensajeOperacion = value;
+                NotifyPropertyChanged("TxtBlckMensajeOperacion");
+                setTimer();
+            }
+        }
+
+        public String TxtBlckError
+        {
+            get { return txtBlckError; }
+            set
+            {
+                txtBlckError = value;
+                NotifyPropertyChanged("TxtBlckError");
+            }
+        }
         #endregion
         #region commands 
         private bool SaveDepartmentCommand_CanExecute()
         {
-            return oDepartamentoListadoPersonasSeleccionado.Id != 0 || btnAddPulsado;
-
+            return oDepartamentoSeleccionadoListadoPersonas.Id != 0 || btnAddPulsado;
         }
         private bool DeleteDepartmentCommand_CanExecute()
         {
-            return oDepartamentoListadoPersonasSeleccionado.Id != 0;
+            return oDepartamentoSeleccionadoListadoPersonas.Id != 0;
         }
 
         private void SaveDepartmentCommand_Execute()
         {
-
-        }
-        private void AddDepartmentCommand_Execute()
-        {
-            btnAddPulsado = true;
-            oDepartamentoListadoPersonasSeleccionado = new clsDepartmentListOfPersons();
-            NotifyPropertyChanged("ODepartamentoListadoPersonasSeleccionado");
-            saveDepartmentCommand.RaiseCanExecuteChanged();
-        }
-        private void DeleteDepartmentCommand_Execute()
-        {
-            mostrarContentDialog();
-        }
-        #endregion
-        #region metodos privados
-        private ContentDialog instanciarContentDialogDeleteDepartment()
-        {
-            ContentDialog deleteFileDialog = new ContentDialog
-            {
-                Title = "¿Estás seguro de que quieres borrar este departamento?",
-                Content = "Si borras este departamento, no podrás recuperarlo.",
-                PrimaryButtonText = "Borrar",
-                CloseButtonText = "Cancelar",
-                DefaultButton = ContentDialogButton.Primary
-            };
-            return deleteFileDialog;
-        }
-
-        private async void mostrarContentDialog()
-        {
-            var result = await instanciarContentDialogDeleteDepartment().ShowAsync();
-            if (result == ContentDialogResult.Primary)
+            if (!String.IsNullOrWhiteSpace(oDepartamentoSeleccionadoListadoPersonas.Nombre))
             {
                 try
                 {
-                    //HAY Q TRATAR CON TODAS LAS PERSONAS QUE TENGAN UN DEPARTAMENTO
-                    ClsManejadoraDepartamentoBL.eliminarDepartamentoBL(oDepartamentoListadoPersonasSeleccionado.Id);
-                    ListadoDepartametosPersonas.Remove(oDepartamentoListadoPersonasSeleccionado);
+                    txtBlckMensajeOperacion = ClsManejadoraDepartamentoBL.actualizarAniadirDepartamentoBL(ODepartamentoSeleccionadoListadoPersonas) == 1 ? clsPersonsPageVM.MENSAJE_OPERACION_EXITOSA : clsPersonsPageVM.MENSAJE_OPERACION_FALLIDA;
+                    NotifyPropertyChanged("TxtBlckMensajeOperacion");
+                    setTimer();
+                    recargarListaYSeleccion();
                     btnAddPulsado = false;
                     saveDepartmentCommand.RaiseCanExecuteChanged();
                 }
@@ -146,6 +162,84 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
+            else
+            {
+                txtBlckError = "No se puede dejar el nombre vacío";
+                NotifyPropertyChanged("TxtBlckError");
+            }
+        }
+        private void AddDepartmentCommand_Execute()
+        {
+            btnAddPulsado = true;
+            saveDepartmentCommand.RaiseCanExecuteChanged();
+            oDepartamentoSeleccionadoListadoPersonas = new clsDepartmentListOfPersons();
+            NotifyPropertyChanged("ODepartamentoSeleccionadoListadoPersonas");
+            reinicarTextBoxes();
+        }
+        private async void DeleteDepartmentCommand_Execute()
+        {
+
+            var result = await contentDialogDeleteDepartment.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                try
+                {
+                    ClsManejadoraDepartamentoBL.eliminarDepartamentoBL(oDepartamentoSeleccionadoListadoPersonas.Id);
+                    ListadoDepartametosPersonas.Remove(oDepartamentoSeleccionadoListadoPersonas);
+                    btnAddPulsado = false;
+                    saveDepartmentCommand.RaiseCanExecuteChanged();
+                    reinicarTextBoxes();
+                }
+                catch (SqlException ex)
+                {
+                    txtBlckError = ex.Message;
+                    NotifyPropertyChanged("TxtBlckError");
+                }
+            }
+        }
+        #endregion
+        #region metodos privados
+
+        /// <summary>
+        /// <b>Prototipo:</b> private void setTimer()<br/>
+        /// <b>Comentarios:</b> Método que setea los atributos del objeto tipo Timer<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b> Instancia el objeto tipo Timer con 5 segundos y crea su evento, además, comienza dicho objeto
+        /// </summary>
+        private void setTimer()
+        {
+            timer = new Timer(5000);
+            timer.Elapsed += Timer_Elapsed;
+            timer.Start();
+        }
+
+        /// <summary>
+        /// <b>Prototipo:</b> private void Timer_Elapsed(object sender, ElapsedEventArgs e)<br/>
+        /// <b>Comentarios:</b> Evento asociado a ocurrir cada 5 segundos en el timer<br/>
+        /// <b>Precondiciones:</b> ninguna<br/>
+        /// <b>Postcondiciones:</b> Mediante un método de sincronía, invisibiliza el txtBlockDatosGuardados y detiene el timer para que solo ocurra una vez
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Timer_Elapsed(object sender, ElapsedEventArgs e)
+        {
+            CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                txtBlckMensajeOperacion = "";
+                NotifyPropertyChanged("TxtBlckMensajeOperacion");
+                timer.Stop();
+            });
+        }
+
+        /// <summary>
+        /// Reinicia los textBoxes de la vista y lo notifica a esta
+        /// </summary>
+        private void reinicarTextBoxes()
+        {
+            txtBlckMensajeOperacion = "";
+            txtBlckError = "";
+            NotifyPropertyChanged("TxtBlckMensajeOperacion");
+            NotifyPropertyChanged("TxtBlckError");
         }
         #endregion
     }
