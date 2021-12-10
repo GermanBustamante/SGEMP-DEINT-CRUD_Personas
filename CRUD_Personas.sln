@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CRUD_Personas_Entidades", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CRUD_Personas_UWP_UI", "CRUD_Personas_UWP_UI\CRUD_Personas_UWP_UI.csproj", "{7BD1B69C-D277-436F-93E7-C3D677F53A3C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diseño", "Diseño", "{8D106CB4-D34F-482D-B483-BEF1BC97CC29}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CE37ACD4-E185-4B63-AD2F-73CC454AE4A6}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\..\..\Desktop\Estructura proyecto CRUD_Personas.txt = ..\..\..\..\Desktop\Estructura proyecto CRUD_Personas.txt
+		Estructura.txt = Estructura.txt
 	EndProjectSection
 EndProject
 Global

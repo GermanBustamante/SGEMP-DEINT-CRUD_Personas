@@ -55,9 +55,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 ListadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
                 recargarListaYPersonaSeleccionada();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                TxtBlckError = ex.Message;
+                TxtBlckError = MENSAJE_OPERACION_FALLIDA;
                 NotifyPropertyChanged("TxtBlckError");
             }
         }
@@ -113,6 +113,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             }
         }
 
+        //NOTA: NO ENTIENDO PORQUE NO SE VEN LOS TEXTBOXES, PERO ESTÁ TODO CORRECTO
         public String TxtBlckMensajeOperacion { get; set; }
 
         public String TxtBlckError { get; set; }
@@ -166,9 +167,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                     btnAddPulsado = false;
                     savePersonCommand.RaiseCanExecuteChanged();
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
-                    TxtBlckError = ex.Message;
+                    TxtBlckError = MENSAJE_OPERACION_FALLIDA;
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
@@ -210,9 +211,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                     savePersonCommand.RaiseCanExecuteChanged();
                     reinicarTextBoxes();
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
-                    TxtBlckError = ex.Message;
+                    TxtBlckError = MENSAJE_OPERACION_FALLIDA;
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
@@ -224,6 +225,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         /// Recoge un listado de personas de la BD, la limpia si ya habia algo y lo vuelve a dar
         /// </summary>
         private void recargarListaYPersonaSeleccionada()
+        //NOTA: Me hubiese gustado llamar a este método cada vez que diese una excepción, para limpiar la vista entera una vez dado el error y que solo
+        //se muestre el mensaje, pero tendría que controlar una SqlException ya aquí o al que le llame como en las otras llamadas, pudiendo ocasionar un bucle
+        //infinito de excepciones. Arreglar si da tiempo
         {
             listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
             if (ListadoPersonasNombreDepartamento != null)

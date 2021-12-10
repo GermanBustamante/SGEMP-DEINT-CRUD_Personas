@@ -44,8 +44,17 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 CloseButtonText = "Cancelar",
                 DefaultButton = ContentDialogButton.Primary
             };
-            listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
-            recargarListaDepartamentosYDepartamentoSeleccionado();
+            try
+            {
+                listadoPersonas = ClsListadoPersonasBL.getListadoPersonasCompletoBL();
+                recargarListaDepartamentosYDepartamentoSeleccionado();
+            }
+            catch (SqlException)
+            {
+                TxtBlckError = clsPersonsPageVM.MENSAJE_OPERACION_FALLIDA;
+                NotifyPropertyChanged("TxtBlckError");
+            }
+
         }
         #endregion
 
@@ -128,15 +137,15 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                     btnAddPulsado = false;
                     saveDepartmentCommand.RaiseCanExecuteChanged();
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
-                    TxtBlckError = ex.Message;
+                    TxtBlckError = clsPersonsPageVM.MENSAJE_OPERACION_FALLIDA;
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
             else
             {
-                TxtBlckError = "No se puede dejar el nombre vacío";
+                TxtBlckError = clsPersonsPageVM.MENSAJE_NOMBRE_VACIO;
                 NotifyPropertyChanged("TxtBlckError");
             }
         }
@@ -171,9 +180,9 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                     saveDepartmentCommand.RaiseCanExecuteChanged();
                     limpiarTextBoxes(false);
                 }
-                catch (SqlException ex)
+                catch (SqlException)
                 {
-                    TxtBlckError = ex.Message;
+                    TxtBlckError = clsPersonsPageVM.MENSAJE_OPERACION_FALLIDA;
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
@@ -183,8 +192,11 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         #region metodos privados
         /// <summary>
         /// Recarga la propiedad ListadoDepartametosConListadoPersonas (lista de departamento en la vista) y oDepartamentoSeleccionadoListadoPersonas notificando a la propiedad de dicha recarga
-        /// </summary>
+        /// </summary> 
         private void recargarListaDepartamentosYDepartamentoSeleccionado()
+        //NOTA: Me hubiese gustado llamar a este método cada vez que diese una excepción, para limpiar la vista entera una vez dado el error y que solo
+        //se muestre el mensaje, pero tendría que controlar una SqlException ya aquí o al que le llame como en las otras llamadas, pudiendo ocasionar un bucle
+        //infinito de excepciones. Arreglar si da tiempo
         {
             listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
             if (ListadoDepartametosConListadoPersonas.Count != 0)

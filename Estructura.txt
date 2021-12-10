@@ -1,0 +1,214 @@
+											DISEÑO INTERFAZ PROYECTO SGEMP-DEINT CRUD PERSONAS
+
+	CAPA DAL-->
+		CARPETA Conexion-->
+			ClsMyConnection: Contendrá propiedades y métodos para abrir la conexión a la BD y cerrarla:
+				---------	PROPIEDADES	---------
+				Server: string Consultable/modificable
+				Database: cadena Consultable/modificable.
+				User: cadena Consultable/modificable.
+				Pass: cadena Consultable/modificable.
+				---------	MÉTODOS		---------
+				void getConnection(): Abre una conexión con la base de datos
+				void closeConnection(): Cierra una conexión con la base de datos
+
+		CARPETA UTILIDADES-->
+			ClsUtilidadBaseDAL: Contiene todos los atributos y métodos que SIEMPRE se usan al trabajar con datos en la capa DAL.
+    				---------	PROPIEDADES	---------
+				MiConexion: ClsMyConnection Consultable/modificable
+				MiComando: SqlCommand Consultable/modificable.
+				---------	MÉTODOS		---------
+				void instanciarConexion(): instancia MiConexion y MiComando y llama a MiConexion.getConnection() abriendo una conexión a la BBDD
+
+			ClsUtilidadSelectDAL : ClsUtilidadBaseDAL --> Contiene todas las propiedades y métodos que usaremos en una clase que ejecute instrucciones SELECT
+				---------	PROPIEDADES	---------
+				MiLector: SqlDataReader Consultable/modificable
+				---------	MÉTODOS		---------
+				SqlDataReader ejecutarSelectCondicion(String instruccionSelect, int condicion): ejecuta una instrucción Select con condición y devuelve el resultado
+				SqlDataReader ejecutarSelectCondicion(String instruccionSelect, String condicion): ejecuta una instrucción Select con condición y devuelve el resultado
+				SqlDataReader  ejecutarSelect(String instrucción select): ejecuta una instrucción Select y devuelve el resultado
+				void cerrarFlujos(): cierra los flujos de MiConexion(heredado) y MiLector
+
+			ClsUtilidadDMLDAL : ClsUtilidadBaseDAL --> Contiene los atributos y métodos que SIEMPRE usaremos en las clases que ejecute sentencias DML, Insert, Update, Delete ...
+				---------	MÉTODOS		---------
+				int ejecutarSentenciaDML(String sentenciaDML): ejecuta una instrucción DML pasada por parámetro y devuelve el numero de fiasl afectadas
+				int ejecutarSentenciaDMLCondicion(String sentenciaDML, int condicion): ejecuta una instrucción DML con condición pasada por parámetro y devuelve el numero de fiasl afectadas
+		
+		CARPETA MANEJADORAS-->
+			ClsManejadoraDepartamentosDAL : ClsUtilidadDMLDAL --> Se encargará de gestionar las operaciones DML de mi tabla Departamentos
+				---------	MÉTODOS		---------
+				int actualizarAniadirDepartamentoDAL(ClsDepartamento oDepartamento)
+				int eliminarDepartamentoDAL(int idDepartamento)
+	
+			ClsManejadoraPersonasDAL : ClsUtilidadDMLDAL --> Se encargará de gestionar las operaciones DML de mi tabla Personas
+				---------	MÉTODOS		---------
+				int actualizarAñadirPersonaDAL(ClsPersona oPersona)
+				int eliminarPersonaDAL(int idPersona)
+		CARPETA LISTADOS-->
+			ClsListadoDepartamentosDAL : ClsUtililidadSelectDAL --> Se encarga de gestionar las instrucciones Select que quiera hacer sobre mi tabla Departamentos
+				---------	MÉTODOS		---------
+				int getIdDepartamentoDAL(string nombreDepartamento)
+				String getNombreDepartamentoDAL(int idDepartamento)
+				ObservableCollection<ClsDepartamento> getListadoDepartamentosDAL()
+				ObservableCollection<String> getListadoNombresDepartamentosDAL()
+			ClsListadoPersonasDAL : ClsUtililidadSelectDAL --> Se encarga de gestionar las instrucciones Select que quiera hacer sobre mi tabla Personas
+				---------	MÉTODOS		---------
+				ObservableCollection<ClsPersona> getListadoPersonasCompletoDAL()
+				ObservableCollection<ClsPersona> getListadoPersonasIdNombreApellidosIdDepartamentoDAL()
+				ObservableCollection<ClsPersona> getListadoPersonasDepartamentoDAL(int idDepartamento)
+				ClsPersona getPersonaDAL(int idPersona)
+-----------------------------------------------------------------------------------------------------------------------------------------
+	CAPA BL-->
+		CARPETA MANEJADORAS-->
+			ClsManejadoraDepartamentosBL --> Se encargará de gestionar las reglas de negocio sobre ClsManejadoraDepartamentosDAL
+				---------	MÉTODOS		---------
+				int actualizarAniadirDepartamentoBL(ClsDepartamento oDepartamento)
+				int eliminarDepartamentoBL(int idDepartamento)
+	
+			ClsManejadoraPersonasBL --> Se encargará de gestionar las reglas de negocio sobre ClsManejadoraPersonasDAL
+				---------	MÉTODOS		---------
+				int actualizarAñadirPersonaBL(ClsPersona oPersona)
+				int eliminarPersonalDAL(int idPersona)
+		CARPETA LISTADOS-->
+			ClsListadoDepartamentosBL --> Se encargará de gestionar las reglas de negocio sobre ClsListadoDepartamentosDAL
+				---------	MÉTODOS		---------
+				int getIdDepartamentoBL(string nombreDepartamento)
+				String getNombreDepartamentoBL(int idDepartamento)
+				ObservableCollection<ClsDepartamento> getListadoDepartamentosBL()
+				ObservableCollection<String> getListadoNombresDepartamentosBL()
+			ClsListadoPersonasBL --> Se encargará de gestionar las reglas de negocio sobre ClsListadoPersonasDAL
+				---------	MÉTODOS		---------
+				ObservableCollection<ClsPersona> getListadoPersonasCompletoBL()
+				ObservableCollection<ClsPersona> getListadoPersonasIdNombreApellidosIdDepartamentoBL()
+				ObservableCollection<ClsPersona> getListadoPersonasDepartamentoBL(int idDepartamento)
+				ClsPersona getPersonaBL(int idPersona)
+-----------------------------------------------------------------------------------------------------------------------------------------
+	CAPA ENTIDADES-->
+		ClsPersona -->
+			---------	PROPIEDADES	---------
+			Id: int Consultable
+			Nombre: cadena Consultable/modificable.
+			Apellidos: cadena Consultable/modificable.
+			Direccion: cadena Consultable/modificable.
+			Telefono: cadena Consultable/modificable.
+			Foto: cadena Consultable/modificable.
+			FechaNacimiento: fecha Consultable/modificable.
+			IdDepartamento: int Consultable/modificable.
+			---------	MÉTODOS		---------
+			constructores()
+		ClsDepartamento -->
+			---------	PROPIEDADES	---------
+			Id: int Consultable
+			Nombre: cadena Consultable/modificable.
+			---------	MÉTODOS		---------
+			constructores()
+-----------------------------------------------------------------------------------------------------------------------------------------
+	CAPA CORE UI-->
+		CARPETA MODELS--> Contiene los modelos y ViewModels que usaremos en mis vistas
+			ClsPersonaNombreApellidosNombreDepartamento --> Será usada para la vista de listado de personas
+				---------	PROPIEDADES	---------
+				Id: int Consultable
+				Nombre: cadena Consultable/modificable.
+				Apellidos: cadena Consultable/modificable.
+				IdDepartamento: int Consultable/modificable.
+				---------	MÉTODOS		---------
+				constructores()
+			CARPETA VIEWMODELS-->
+				ClsPersonaNombreDepartamentoVM : ClsPersona --> Clase persona con un nombre de departamento
+					---------	PROPIEDADES	---------
+					NombreDepartamento: cadena Consultable/modificable
+					---------	MÉTODOS		---------
+					constructores()
+				ClsPersonaListadoDepartamentosNombreDepartamentoVM : ClsPersonaNombreDepartamentoVM --> Clase que contiene una persona con su nombre de departamento y un listado de departamentos
+					---------	PROPIEDADES	---------
+					ListadoDepartamentos: ObservableCollection<ClsDepartamento> Consultable/modificable
+					---------	MÉTODOS		---------
+					constructores()
+				ClsListadoPersonasNombreApellidosNombreDepartamentoVM --> Clase que contiene una lista de ClsPersonaNombreApellidosNombreDepartamento
+					---------	PROPIEDADES	---------
+					ListadoPersonasNombreApellidosNombreDepartamento: ObservableCollection<ClsPersonaNombreApellidosNombreDepartamento> Consultable/modificable
+					---------	MÉTODOS		---------
+					constructores()
+		CARPETA VIEWS--> Contiene las vistas que usaremos
+			Index (Listado) --> VM usado:ClsListadoPersonasNombreApellidosNombreDepartamentoVM 
+			Edit --> VM usado: ClsPersonaListadoDepartamentosNombreDepartamentoVM
+			Insert --> VM usado: ClsPersonaListadoDepartamentosNombreDepartamentoVM
+			Delete --> VM usado: ClsPersonaNombreDepartamentoVM
+			Details --> VM usado: ClsPersonaNombreDepartamentoVM
+			Error --> Vista de error con ViewBag
+		CARPETA CONTROLADOR-->
+			---------	MÉTODOS		---------
+			IActionResult Index()
+			IActionResult Edit()
+			[HttpPost]IActionResult Edit()
+			IActionResult Delete()
+			[HttpPost]IActionResult Delete()
+			IActionResult Insert()
+			[HttpPost]IActionResult Insert()
+			IActionResult Details()
+			[HttpPost]IActionResult Details()
+-----------------------------------------------------------------------------------------------------------------------------------------
+	CAPA UWP UI-->
+		CARPETA VIEWMODELS--> Aquí estarán los Models, ViewModels y Utilidades
+			CARPETA UTILIDADES-->
+				clsDelegetaCommand
+				clsVMBase
+				CARPETA CONVERTERS--> Aquí estarán mis converters
+					DateTimeToDateTimeOffsetConverter--> clase que implemente IValueConverter y hace de converter entre DateTime a DateTimeOffSet
+			CARPETA MODELS-->
+				clsDepartmentListOfPersons--> Clase que usara el VM clsDepartmentsPageVM, hereda de ClsDepartamento
+					---------	PROPIEDADES	---------
+					ObservableCollection*ClsPersona* ListadoPersonas Consultable/Modificable
+					---------	MÉTODOS		---------
+					constructores()
+				clsPersonDepartmentName--> Clase que usará el VM clsPersonsPageVM, hereda de ClsPersona
+					---------	PROPIEDADES	---------
+					String NombreDepartamento Consultable/Modificable
+					---------	MÉTODOS		---------
+					constructores()
+			clsPersonsPageVM : clsVMBase--> VM de la vista PersonasPage.xaml
+				---------	PROPIEDADES	---------
+        			clsPersonDepartmentName oPersonaSeleccionadaNombreDepartamento Consultable/Modificable
+       				ObservableCollection<ClsPersona> listadoPersonas
+        			clsDelegateCommand deletePersonCommand Consultable
+        			clsDelegateCommand addPersonCommand Consultable
+        			clsDelegateCommand savePersonCommand Consultable
+        			static Timer timer, para mostrar los textBoxes durante X segundos
+        			readonly ContentDialog contentDialogDeletePerson;
+        			bool btnAddPulsado, para controlar SavePersonCommand_CanExecute
+				ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento Consultable/Modificable
+				ObservableCollection<ClsDepartamento> ListadoDepartamentos Consultable/Modificable
+				String TxtBlckMensajeOperacion Consultable/Modificable
+				String TxtBlckError Consultable/Modificable
+				---------	MÉTODOS		---------
+				constructores()
+				addPersonCommand_Execute()
+				deletePersonCommand_Execute()
+				deletePersonCommand_CanExecute()
+				savePersonCommand_Execute()
+				savePersonCommand_CanExecute()
+			clsDepartmentVM: clsVMBase--> 
+				---------	PROPIEDADES	---------
+        			clsDepartmentListOfPersons oDepartamentoSeleccionadoListadoPersonas Consultable/Modificable
+				ObservableCollection<ClsPersona> listadoPersonas
+				ObservableCollection<ClsDepartamento> listadoDepartamentos
+        			clsDelegateCommand deleteDepartmentCommand Consultable
+        			clsDelegateCommand addDepartmentCommand Consultable
+        			clsDelegateCommand saveDepartmentCommand Consultable
+        			static Timer timer, para mostrar los textBoxes durante X segundos
+        			readonly ContentDialog contentDialogDeleteDepartment
+        			bool btnAddPulsado, para controlar SaveDepartmentCommand_CanExecute
+				ObservableCollection<clsDepartmentListOfPersons> ListadoDepartametosConListadoPersonas Consultable/Modificable
+				String TxtBlckMensajeOperacion Consultable/Modificable
+				String TxtBlckError Consultable/Modificable
+				---------	MÉTODOS		---------
+				constructores()
+				addDepartmentCommand_Execute()
+				deleteDepartmentCommand_Execute()
+				deleteDepartmentCommand_CanExecute()
+				saveDepartmentCommand_Execute()
+				saveDepartmentCommand_CanExecute()
+		CARPETA VIEWS--> Contendrá las páginas de mi programa
+			MainPage.xaml: Página principal que se ejecuta al comenzar la aplicación
+			PersonasPage.xaml: Página en la que se ejecutará los CRUD sobre la tabla Personas
+			DepartamentosPage.xaml: Página en la que se ejecutará los CRUD sobre la tabla Departamentos
