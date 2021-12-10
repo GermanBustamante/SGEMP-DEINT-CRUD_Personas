@@ -3,15 +3,10 @@ using CRUD_Personas_BL.Manejadoras;
 using CRUD_Personas_Entidades;
 using CRUD_Personas_UWP_UI.ViewModels.Models;
 using CRUD_Personas_UWP_UI.ViewModels.Utilidades;
-using GalaSoft.MvvmLight.Views;
-using Microsoft.VisualStudio.PlatformUI;
-using Prism.Commands;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
@@ -19,21 +14,20 @@ using Windows.UI.Xaml.Controls;
 
 namespace CRUD_Personas_UWP_UI.ViewModels
 {
+    /// <summary>
+    /// VM de la vista PersonasPage.xaml
+    /// </summary>
     public class clsPersonsPageVM : clsVMBase
     {
         #region atributos
         private clsPersonDepartmentName oPersonaSeleccionadaNombreDepartamento;
-        private ObservableCollection<ClsDepartamento> listadoDepartamentos;
-        private ObservableCollection<clsPersonDepartmentName> listadoPersonasNombreDepartamento;
         private ObservableCollection<ClsPersona> listadoPersonas;
         private clsDelegateCommand deletePersonCommand;
         private clsDelegateCommand addPersonCommand;
         private clsDelegateCommand savePersonCommand;
-        private String txtBlckMensajeOperacion;
-        private String txtBlckError;
         private static Timer timer;
         private readonly ContentDialog contentDialogDeletePerson;
-        private bool btnAddPulsado = false;
+        private bool btnAddPulsado;
         #endregion
 
         #region constantes
@@ -43,6 +37,32 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         public const string MENSAJE_APELLIDOS_VACIO = "No puedes dejar los apellidos vacíos";
         public const string MENSAJE_NOMBRE_APELLIDOS_VACIOS = "No puedes dejar ni el nombre ni los apellidos vacios";
         #endregion
+
+        #region constructores
+        public clsPersonsPageVM()
+        {
+            ListadoPersonasNombreDepartamento = new ObservableCollection<clsPersonDepartmentName>();
+            this.contentDialogDeletePerson = new ContentDialog
+            {
+                Title = "¿Estás seguro de que quieres borrar a esta persona?",
+                Content = "Si borras esta persona, no podrás recuperarla.",
+                PrimaryButtonText = "Borrar",
+                CloseButtonText = "Cancelar",
+                DefaultButton = ContentDialogButton.Primary
+            };
+            try
+            {
+                ListadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
+                recargarListaYPersonaSeleccionada();
+            }
+            catch (Exception ex)
+            {
+                TxtBlckError = ex.Message;
+                NotifyPropertyChanged("TxtBlckError");
+            }
+        }
+        #endregion
+
         #region propiedades publicas
         public clsDelegateCommand SavePersonCommand
         {
@@ -67,24 +87,16 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 return deletePersonCommand = new clsDelegateCommand(DeletePersonCommand_Execute, DeletePersonCommand_CanExecute);
             }
         }
-        public ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento
-        {
-            get { return listadoPersonasNombreDepartamento; }
-            set {listadoPersonasNombreDepartamento = value;}
-        }
+        public ObservableCollection<clsPersonDepartmentName> ListadoPersonasNombreDepartamento { get; set; }
 
-        public ObservableCollection<ClsDepartamento> ListadoDepartamentos
-        {
-            get { return listadoDepartamentos; }
-            set { listadoDepartamentos = value; }
-        }
+        public ObservableCollection<ClsDepartamento> ListadoDepartamentos { get; set; }
 
         public clsPersonDepartmentName OPersonaSeleccionadaNombreDepartamento
         {
             get { return oPersonaSeleccionadaNombreDepartamento; }
             set
             {
-                //Cuando borro una persona esta se queda en o edito o algo null ya que la elimino de la lista,  
+                //Cuando borro una persona esta se queda en o edito o algo null ya que la elimino de la lista
                 if (value == null)
                 {
                     oPersonaSeleccionadaNombreDepartamento = new clsPersonDepartmentName();
@@ -101,55 +113,26 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             }
         }
 
-        public String TxtBlckMensajeOperacion
-        {
-            get { return txtBlckMensajeOperacion; }
-            set { txtBlckMensajeOperacion = value; }
-        }
+        public String TxtBlckMensajeOperacion { get; set; }
 
-        public String TxtBlckError
-        {
-            get { return txtBlckError; }
-            set { txtBlckError = value;}
-        }
-        #endregion
-        #region constructores
-        public clsPersonsPageVM()
-        {
-            ListadoPersonasNombreDepartamento = new ObservableCollection<clsPersonDepartmentName>();
-            this.contentDialogDeletePerson = new ContentDialog
-            {
-                Title = "¿Estás seguro de que quieres borrar a esta persona?",
-                Content = "Si borras esta persona, no podrás recuperarla.",
-                PrimaryButtonText = "Borrar",
-                CloseButtonText = "Cancelar",
-                DefaultButton = ContentDialogButton.Primary
-            }; 
-            try
-            {
-                listadoDepartamentos = ClsListadoDepartamentosBL.getListadoDepartamentosBL();
-                recargarListaYPersonaSeleccionada();
-            }
-            catch (Exception ex)
-            {
-                txtBlckError = ex.Message;
-                NotifyPropertyChanged("TxtBlckError");
-            }
-        }
+        public String TxtBlckError { get; set; }
+
         #endregion
 
         #region commands
         private bool DeletePersonCommand_CanExecute()
         {
+            //Si hay alguna persona seleccionada
             return oPersonaSeleccionadaNombreDepartamento.Id != 0;
         }
 
         private bool SavePersonCommand_CanExecute()
         {
+            //Si hay alguna persona seleccionada o el botón de añadir ha sido pulsado
             return oPersonaSeleccionadaNombreDepartamento.Id != 0 || btnAddPulsado;
         }
         /// <summary>
-        /// 
+        /// Habilita el botón de guardar, limpia los textBoxes y limpia de la vista la persona seleccionada de la lista
         /// </summary>
         private void AddPersonCommand_Execute()
         {
@@ -161,20 +144,22 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// Si el nombre y los apellidos de la persona seleccionada son validos, actualiza o añade una persona a la BD, muestra el mensaje correspondiente con un Timer notificandolo a la vista
+        /// recarga la lista de personas y la persona seleccionada, y, al final, deshabilita el botón de guardar de la vista.
+        /// En caso contrario, setea el mensaje correspondiente y lo notifica a la vista
         /// </summary>
         private void SavePersonCommand_Execute()
         {
             if (esPersonaCompleta())
             {
                 //Setea una foto por defecto si se ha dejado vacío
-                if (oPersonaSeleccionadaNombreDepartamento.Foto == null || String.IsNullOrWhiteSpace(oPersonaSeleccionadaNombreDepartamento.Foto))
+                if (String.IsNullOrWhiteSpace(oPersonaSeleccionadaNombreDepartamento.Foto))
                 {
                     oPersonaSeleccionadaNombreDepartamento.Foto = "https://www.pinclipart.com/picdir/middle/393-3932440_png-file-svg-icono-de-contacto-png-blanco.png";
                 }
                 try
                 {
-                    txtBlckMensajeOperacion = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento) == 1 ? MENSAJE_OPERACION_EXITOSA : MENSAJE_OPERACION_FALLIDA;
+                    TxtBlckMensajeOperacion = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersonaSeleccionadaNombreDepartamento) == 1 ? MENSAJE_OPERACION_EXITOSA : MENSAJE_OPERACION_FALLIDA;
                     NotifyPropertyChanged("TxtBlckMensajeOperacion");
                     setTimer();
                     recargarListaYPersonaSeleccionada();
@@ -183,7 +168,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 }
                 catch (SqlException ex)
                 {
-                    txtBlckError = ex.Message;
+                    TxtBlckError = ex.Message;
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
@@ -191,17 +176,17 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             {
                 if (String.IsNullOrWhiteSpace(oPersonaSeleccionadaNombreDepartamento.Nombre) && !String.IsNullOrWhiteSpace(oPersonaSeleccionadaNombreDepartamento.Apellidos))
                 {
-                    txtBlckError = MENSAJE_NOMBRE_VACIO;
+                    TxtBlckError = MENSAJE_NOMBRE_VACIO;
                     NotifyPropertyChanged("TxtBlckError");
                 }
                 else if (String.IsNullOrWhiteSpace(oPersonaSeleccionadaNombreDepartamento.Apellidos) && !String.IsNullOrWhiteSpace(oPersonaSeleccionadaNombreDepartamento.Nombre))
                 {
-                    txtBlckError = MENSAJE_APELLIDOS_VACIO;
+                    TxtBlckError = MENSAJE_APELLIDOS_VACIO;
                     NotifyPropertyChanged("TxtBlckError");
                 }
                 else
                 {
-                    txtBlckError = MENSAJE_NOMBRE_APELLIDOS_VACIOS;
+                    TxtBlckError = MENSAJE_NOMBRE_APELLIDOS_VACIOS;
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
@@ -209,7 +194,8 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         }
 
         /// <summary>
-        /// 
+        /// Muestra un content dialog preguntando si quiere borrar una persona, y si ha pulsado el botón de Borrar, elimina dicha persona
+        /// de la BD y de ListadoPersonasNombreDepartamento, reinicia los textBoxes y comprueba si el botón de guardar se puede habilitar
         /// </summary>
         private async void DeletePersonCommand_Execute()
         {
@@ -226,7 +212,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                 }
                 catch (SqlException ex)
                 {
-                    txtBlckError = ex.Message;
+                    TxtBlckError = ex.Message;
                     NotifyPropertyChanged("TxtBlckError");
                 }
             }
@@ -246,7 +232,7 @@ namespace CRUD_Personas_UWP_UI.ViewModels
             }
             foreach (ClsPersona itemPersona in listadoPersonas)
             {
-                String nombreDepartamentoItemPersona = (from l in listadoDepartamentos
+                String nombreDepartamentoItemPersona = (from l in ListadoDepartamentos
                                                         where itemPersona.IdDepartamento == l.Id
                                                         select l.Nombre).FirstOrDefault().ToString();
                 //String nombreDepartamentoItemPersona = listadoDepartamentos.Where(x => x.Id == itemPersona.IdDepartamento).FirstOrDefault().Nombre;
@@ -281,14 +267,14 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         {
             CoreApplication.MainView.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
             {
-                txtBlckMensajeOperacion = "";
+                TxtBlckMensajeOperacion = "";
                 NotifyPropertyChanged("TxtBlckMensajeOperacion");
                 timer.Stop();
             });
         }
 
         /// <summary>
-        /// Devuelve true si la persona seleccionada en ka lista tiene nombres y apellidos no vacios, en caso contrario
+        /// Devuelve true si la persona seleccionada en la lista tiene nombres y apellidos no vacios, en caso contrario
         /// devuelve false
         /// </summary>
         /// <returns></returns>
@@ -302,8 +288,8 @@ namespace CRUD_Personas_UWP_UI.ViewModels
         /// </summary>
         private void reinicarTextBoxes()
         {
-            txtBlckMensajeOperacion = "";
-            txtBlckError = "";
+            TxtBlckMensajeOperacion = "";
+            TxtBlckError = "";
             NotifyPropertyChanged("TxtBlckMensajeOperacion");
             NotifyPropertyChanged("TxtBlckError");
         }

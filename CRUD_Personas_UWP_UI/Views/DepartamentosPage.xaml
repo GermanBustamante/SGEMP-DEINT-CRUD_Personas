@@ -37,29 +37,29 @@
             </AppBarButton>
         </CommandBar>
         <ListView x:Name="lstVwPersonas" Background="#f0f2f1" RelativePanel.Below="cmdnBarDepartments" RelativePanel.AlignLeftWith="cmdnBarDepartments"  RelativePanel.Above="stckPanel"
-                  ItemsSource="{Binding ListadoDepartametosPersonas}" SelectedItem="{Binding ODepartamentoSeleccionadoListadoPersonas, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Margin="10">
+                  ItemsSource="{Binding ListadoDepartametosConListadoPersonas}" SelectedItem="{Binding ODepartamentoConListadoPersonasSeleccionado, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Margin="8">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/Images/img departamento.png" Height="40" Width="40" Margin="10" Stretch="UniformToFill"/>
-                        <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"  FontSize="16" Margin="0,5,5,5"/>
+                        <Image Source="/Assets/Images/img departamento.png" Height="40" Width="40" Margin="8" Stretch="UniformToFill"/>
+                        <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"  FontSize="16" Margin="0,4,4,4"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <StackPanel x:Name="stckPanelDatosDepartamento" Orientation="Vertical" Margin="0,10,10,0"
+        <StackPanel x:Name="stckPanelDatosDepartamento" Orientation="Vertical" Margin="0,8,8,0"
                     RelativePanel.AlignTopWith="lstVwPersonas" RelativePanel.AlignRightWith="cmdnBarDepartments" RelativePanel.RightOf="lstVwPersonas">
-            <TextBlock Text="Nombre" Margin="0,10,10,0"/>
-            <TextBox Text="{Binding ODepartamentoSeleccionadoListadoPersonas.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,5,10,0"/>
-            <TextBlock Text="Empleados" Margin="0,10,0,0"/>
+            <TextBlock Text="Nombre" Margin="0,8,8,0"/>
+            <TextBox Text="{Binding ODepartamentoConListadoPersonasSeleccionado.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="0,4,8,0"/>
+            <TextBlock Text="Empleados" Margin="0,8,0,0"/>
         </StackPanel>
-        <GridView Background="#f0f2f1" Margin="0,5,10,10" ItemsSource="{Binding ODepartamentoSeleccionadoListadoPersonas.ListadoPersonas}"
+        <GridView Background="#f0f2f1" Margin="0,4,8,8" ItemsSource="{Binding ODepartamentoConListadoPersonasSeleccionado.ListadoPersonas}"
             RelativePanel.AlignLeftWith="stckPanelDatosDepartamento" RelativePanel.Below="stckPanelDatosDepartamento" RelativePanel.AlignRightWith="stckPanelDatosDepartamento" RelativePanel.AlignBottomWith="lstVwPersonas">
             <GridView.ItemContainerStyle>
                 <Style TargetType="GridViewItem">
-                    <Setter Property="Margin" Value="10"/>
+                    <Setter Property="Margin" Value="8"/>
                 </Style>
             </GridView.ItemContainerStyle>
             <GridView.ItemTemplate>
@@ -73,10 +73,10 @@
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
-        <StackPanel x:Name="stckPanel"  Background="LightBlue" Margin="10,0,10,10"
+        <StackPanel x:Name="stckPanel"  Background="LightBlue" Margin="8,0,8,8"
                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
-            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckMensajeOperacion}" Padding="5,5,0,5" VerticalAlignment="Center" Foreground="Black" TextWrapping="WrapWholeWords"/>
-            <TextBlock x:Name="txtBoxError" Text="{Binding TxtBlckError}" Padding="5,0,0,0" VerticalAlignment="Center" Foreground="Red" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckMensajeOperacion}" Padding="4,4,0,0" VerticalAlignment="Center" Foreground="Black" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Name="txtBoxError" Text="{Binding TxtBlckError}" Padding="4,0,0,4" VerticalAlignment="Center" Foreground="Red" TextWrapping="WrapWholeWords"/>
         </StackPanel>
     </RelativePanel>
 </Page>

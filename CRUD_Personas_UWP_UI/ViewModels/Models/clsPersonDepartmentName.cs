@@ -8,6 +8,10 @@ using System.Threading.Tasks;
 
 namespace CRUD_Personas_UWP_UI.ViewModels.Models
 {
+    /// <summary>
+    /// Clase que usará el VM clsPersonsPageVM, hereda de ClsPersona
+    /// <b>Propiedades: </b>String NombreDepartamento Consultable/Modificable
+    /// </summary>
     public class clsPersonDepartmentName : ClsPersona
     {
         #region propiedades publicas

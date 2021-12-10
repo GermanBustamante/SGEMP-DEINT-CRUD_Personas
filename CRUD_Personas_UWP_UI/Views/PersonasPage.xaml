@@ -49,20 +49,20 @@
         </CommandBar>
         <ListView x:Name="lstVwPersonas" Background="#f0f2f1" RelativePanel.Below="cmndBarPersonas" RelativePanel.AlignLeftWith="cmndBarPersonas" RelativePanel.Above="stckPanel"
                   ItemsSource="{Binding ListadoPersonasNombreDepartamento}" SelectedItem="{Binding OPersonaSeleccionadaNombreDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                  Margin="10">
+                  Margin="8">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Image Source="/Assets/Images/ImgFotoListView.png" Height="30" Width="30" Margin="10" Stretch="UniformToFill"/>
-                        <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"  FontSize="16" Margin="0,5,5,5"/>
-                        <TextBlock Text="{Binding Apellidos}" VerticalAlignment="Center" FontSize="16" Margin="0,5,5,5"/>
+                        <Image Source="/Assets/Images/ImgFotoListView.png" Height="32" Width="32" Margin="8" Stretch="UniformToFill"/>
+                        <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center"  FontSize="16" Margin="0,4,4,4"/>
+                        <TextBlock Text="{Binding Apellidos}" VerticalAlignment="Center" FontSize="16" Margin="0,4,4,4"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <ScrollViewer HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto"
             RelativePanel.AlignTopWith="lstVwPersonas" RelativePanel.RightOf="lstVwPersonas" RelativePanel.AlignRightWith="cmndBarPersonas" RelativePanel.AlignBottomWith="lstVwPersonas">
-            <Grid x:Name="gridMaster" Background="#f0f2f1" Margin="0,10,10,10">
+            <Grid x:Name="gridMaster" Background="#f0f2f1" Margin="0,8,8,8">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -77,41 +77,41 @@
                     <ColumnDefinition Width="*"/>
                     <!--Si lo pusiese en * y el otro en auto no queda bien-->
                 </Grid.ColumnDefinitions>
-                <Image x:Name="imgContact" Source="{Binding OPersonaSeleccionadaNombreDepartamento.Foto}" Height="150" Width="150"  Stretch="UniformToFill"
-                       Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="10" Visibility="Collapsed"/>
+                <Image x:Name="imgContact" Source="{Binding OPersonaSeleccionadaNombreDepartamento.Foto}" Height="160" Width="160"  Stretch="UniformToFill"
+                       Grid.Row="0" Grid.Column="0" Grid.RowSpan="2" Margin="8" Visibility="Collapsed"/>
 
                 <StackPanel x:Name="stckPanelNombre" Orientation="Vertical" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBlock Text="Nombre *" Margin="10,10,10,0" TextWrapping="WrapWholeWords"/>
+                    <TextBlock Text="Nombre *" Margin="8,8,8,0" TextWrapping="WrapWholeWords"/>
                     <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Nombre, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,5,10,0" VerticalAlignment="Center"/>
+                        Margin="8,4,8,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel  x:Name="stckPanelApellidos"  Orientation="Vertical" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBlock Text="Apellidos *" Margin="10,10,10,0" TextWrapping="WrapWholeWords"/>
+                    <TextBlock Text="Apellidos *" Margin="8,8,8,0" TextWrapping="WrapWholeWords"/>
                     <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Apellidos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,5,10,0" VerticalAlignment="Center"/>
+                        Margin="8,4,8,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBlock Text="Dirección" Margin="10,10,10,0" TextWrapping="WrapWholeWords"/>
+                    <TextBlock Text="Dirección" Margin="8,8,8,0" TextWrapping="WrapWholeWords"/>
                     <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Direccion, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,5,10,0" VerticalAlignment="Center"/>
+                        Margin="8,4,8,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBlock Text="Teléfono" Margin="10,10,10,0" TextWrapping="WrapWholeWords"/>
+                    <TextBlock Text="Teléfono" Margin="8,8,8,0" TextWrapping="WrapWholeWords"/>
                     <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Telefono, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                          Margin="10,5,10,0" VerticalAlignment="Center"/>
+                          Margin="8,4,8,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Vertical" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2">
-                    <TextBlock Text="Foto" Margin="10,10,10,0" TextWrapping="WrapWholeWords"/>
+                    <TextBlock Text="Foto" Margin="8,8,8,0" TextWrapping="WrapWholeWords"/>
                     <TextBox Text="{Binding OPersonaSeleccionadaNombreDepartamento.Foto, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                         Margin="10,5,10,0" VerticalAlignment="Center"/>
+                         Margin="8,4,8,0" VerticalAlignment="Center"/>
                 </StackPanel>
 
                 <ComboBox Header="Departamento" ItemsSource="{Binding ListadoDepartamentos}" SelectedValue="{Binding OPersonaSeleccionadaNombreDepartamento.IdDepartamento, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedValuePath="Id"
-                       Margin="10,10,10,0" Grid.Row="5" Grid.Column="0">
+                       Margin="8,8,8,0" Grid.Row="5" Grid.Column="0">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Nombre}" VerticalAlignment="Center" TextWrapping="WrapWholeWords"/>
@@ -120,16 +120,16 @@
                 </ComboBox>
 
                 <DatePicker Header="Fecha Nacimiento" SelectedDate="{Binding OPersonaSeleccionadaNombreDepartamento.FechaNacimiento,Converter={StaticResource Converter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                        Margin="10,10,10,0" Grid.Row="5" Grid.Column="1"/>
+                        Margin="8,8,8,0" Grid.Row="5" Grid.Column="1"/>
 
                 <TextBlock Text="* Estos campos no pueden estar vacíos" TextWrapping="WrapWholeWords" VerticalAlignment="Top"
-                       Margin="10" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
+                       Margin="8" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2"/>
             </Grid>
         </ScrollViewer>
-        <StackPanel x:Name="stckPanel"  Background="LightBlue" Margin="10,0,10,10"
+        <StackPanel x:Name="stckPanel"  Background="LightBlue" Margin="8,0,8,8"
                     RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True">
-            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckMensajeOperacion}" Padding="5,5,0,5" VerticalAlignment="Center" Foreground="Black" TextWrapping="WrapWholeWords"/>
-            <TextBlock x:Name="txtBoxError" Text="{Binding TxtBlckError}" Padding="5,0,0,0" VerticalAlignment="Center" Foreground="Red" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Name="txtBoxMsg" Text="{Binding TxtBlckMensajeOperacion}" Padding="4,4,0,0" VerticalAlignment="Center" Foreground="Black" TextWrapping="WrapWholeWords"/>
+            <TextBlock x:Name="txtBoxError" Text="{Binding TxtBlckError}" Padding="4,0,0,4" VerticalAlignment="Center" Foreground="Red" TextWrapping="WrapWholeWords"/>
         </StackPanel>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
