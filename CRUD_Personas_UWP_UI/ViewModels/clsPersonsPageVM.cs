@@ -166,6 +166,11 @@ namespace CRUD_Personas_UWP_UI.ViewModels
                     recargarListaYPersonaSeleccionada();
                     btnAddPulsado = false;
                     savePersonCommand.RaiseCanExecuteChanged();
+                    if (!String.IsNullOrWhiteSpace(TxtBlckError))//Esto ocurre cuando salta un error (por ej. nombre vacio) y lo corrijo para que no se quede el error mostrado
+                    {
+                        TxtBlckError = "";
+                        NotifyPropertyChanged("TxtBlckError");
+                    }
                 }
                 catch (SqlException)
                 {

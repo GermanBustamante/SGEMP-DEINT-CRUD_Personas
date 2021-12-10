@@ -17,7 +17,9 @@ namespace DAL.Utilidades
         #region propiedades publicas
         public static SqlDataReader MiLector { get; set; }
         #endregion
-
+        #region constantes
+        public const string ID_PARAMETRO = "@id";
+        #endregion
         #region metodos publicos
         /// <summary>
         /// <b>Prototipo:</b> public static SqlDataReader ejecutarSelectCondicion(String instruccionSelect, int condicion)<br/>
@@ -31,9 +33,9 @@ namespace DAL.Utilidades
         /// <returns> SqlDataReader flujo de filas de solo avance resultante de la instrucción</returns>
         public static SqlDataReader ejecutarSelectCondicion(String instruccionSelect, int condicion)
         {
-            MiComando.Parameters.Add("@id", System.Data.SqlDbType.Int).Value = condicion;
+            MiComando.Parameters.Add(ID_PARAMETRO, System.Data.SqlDbType.Int).Value = condicion;
             MiComando.Connection = MiConexion.Conexion;
-            MiComando.CommandText = instruccionSelect + "@id";//TODO HACER CTE
+            MiComando.CommandText = instruccionSelect + ID_PARAMETRO;
             return MiComando.ExecuteReader();
         }
 
@@ -49,9 +51,9 @@ namespace DAL.Utilidades
         /// <returns> SqlDataReader flujo de filas de solo avance resultante de la instrucción</returns>
         public static SqlDataReader ejecutarSelectCondicion(String instruccionSelect, String condicion)
         {
-            MiComando.Parameters.Add("@id", System.Data.SqlDbType.VarChar).Value = condicion;
+            MiComando.Parameters.Add(ID_PARAMETRO, System.Data.SqlDbType.VarChar).Value = condicion;
             MiComando.Connection = MiConexion.Conexion;
-            MiComando.CommandText = instruccionSelect + "@id";//TODO HACER CTE
+            MiComando.CommandText = instruccionSelect + ID_PARAMETRO;
             return MiComando.ExecuteReader();
         }
 
