@@ -6,84 +6,84 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
-using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
 using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
-using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CRUD_Personas_API.Controllers
 {
-    [Route("api/[controller]")]
+    [System.Web.Http.Route("api/[controller]")]
     [ApiController]
-    public class PersonasController : ControllerBase
+    public class DepartamentosController : ControllerBase
     {
-        // GET: api/<PersonasController>
+        // GET: api/<DepartamentosController>
         [HttpGet]
-        public IEnumerable<ClsPersona> Get()
+        public IEnumerable<ClsDepartamento> Get()
         {
-            List<ClsPersona> listaPersonas;
+            List<ClsDepartamento> listaDepartamentos;
             try
             {
-                listaPersonas = new List<ClsPersona>(ClsListadoPersonasBL.getListadoPersonasCompletoBL());
+                listaDepartamentos = new List<ClsDepartamento>(ClsListadoDepartamentosBL.getListadoDepartamentosBL());
             }
             catch (Exception e)
             {
                 throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
             }
 
-            if (listaPersonas == null || listaPersonas.Count == 0)
+            if (listaDepartamentos == null || listaDepartamentos.Count == 0)
             {
                 throw new HttpResponseException(HttpStatusCode.NoContent);
             }
 
-            return listaPersonas;
+            return listaDepartamentos;
         }
 
-        // GET api/<PersonasController>/5
+        // GET api/<DepartamentosController>/5
         [HttpGet("{id}")]
-        public ClsPersona Get(int id)
+        public ClsDepartamento Get(int id)
         {
-            ClsPersona oPersona;
+            ClsDepartamento oDepartamento;
+            String nombreDepartamento;
             try
             {
-                oPersona = ClsListadoPersonasBL.getPersonaBL(id);
+                nombreDepartamento = ClsListadoDepartamentosBL.getNombreDepartamentoBL(id);
+                oDepartamento = new ClsDepartamento(id, nombreDepartamento);//TODO getDepartamentoBL ENTERO
             }
             catch (Exception e)
             {
                 throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
             }
 
-            if (oPersona == null)
+            if (nombreDepartamento == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NoContent);
             }
 
-            return oPersona;
+            return oDepartamento;
         }
 
-        // POST api/<PersonasController>
+        // POST api/<DepartamentosController>
         [HttpPost]
-        public void Post([FromBody] ClsPersona oPersona)//[FromBody] 
+        public void Post([System.Web.Http.FromBody] ClsDepartamento oDepartamento)
         {
-            ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
+            ClsManejadoraDepartamentoBL.actualizarAniadirDepartamentoBL(oDepartamento);
         }
 
-        // PUT api/<PersonasController>/5
+        // PUT api/<DepartamentosController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ClsPersona oPersona)
+        public void Put(int id, [System.Web.Http.FromBody] ClsDepartamento oDepartamento)
         {
-            ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
+            ClsManejadoraDepartamentoBL.actualizarAniadirDepartamentoBL(oDepartamento);
         }
 
-        // DELETE api/<PersonasController>/5
+        // DELETE api/<DepartamentosController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            ClsManejadoraPersonaBL.eliminarPersonaBL(id);
+            ClsManejadoraDepartamentoBL.eliminarDepartamentoBL(id);
         }
     }
 }
