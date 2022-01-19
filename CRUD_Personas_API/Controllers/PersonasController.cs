@@ -67,23 +67,59 @@ namespace CRUD_Personas_API.Controllers
 
         // POST api/<PersonasController>
         [HttpPost]
-        public void Post([FromBody] ClsPersona oPersona)//[FromBody] 
+        public HttpStatusCode Post([FromBody] ClsPersona oPersona)//[FromBody] 
         {
-            ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
+            HttpStatusCode httpStatusCode = HttpStatusCode.OK;
+            try
+            {
+                if (ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona) == 0)
+                {
+                    httpStatusCode = HttpStatusCode.NoContent;
+                }
+            }
+            catch (Exception e)
+            {
+                httpStatusCode = HttpStatusCode.ServiceUnavailable;
+            }
+            return httpStatusCode;
         }
 
         // PUT api/<PersonasController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ClsPersona oPersona)
+        public HttpStatusCode Put(int id, [FromBody] ClsPersona oPersona)
         {
-            ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
+            HttpStatusCode httpStatusCode = HttpStatusCode.OK;
+            try
+            {
+                if (ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona) == 0)
+                {
+                    httpStatusCode = HttpStatusCode.NoContent;
+                }
+            }
+            catch (Exception e)
+            {
+                httpStatusCode = HttpStatusCode.ServiceUnavailable;
+            }
+            return httpStatusCode;
         }
 
         // DELETE api/<PersonasController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public HttpStatusCode Delete(int id)
         {
-            ClsManejadoraPersonaBL.eliminarPersonaBL(id);
+            HttpStatusCode httpStatusCode = HttpStatusCode.OK;
+            try
+            {
+                if (ClsManejadoraPersonaBL.eliminarPersonaBL(id)== 0)
+                {
+                    httpStatusCode = HttpStatusCode.NoContent;  
+                }
+            }
+            catch (Exception e)
+            {
+                httpStatusCode = HttpStatusCode.ServiceUnavailable;
+            }
+            return httpStatusCode;
         }
     }
 }

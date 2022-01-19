@@ -6,16 +6,18 @@ using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Web.Http;
+using FromBodyAttribute = Microsoft.AspNetCore.Mvc.FromBodyAttribute;
 using HttpDeleteAttribute = Microsoft.AspNetCore.Mvc.HttpDeleteAttribute;
 using HttpGetAttribute = Microsoft.AspNetCore.Mvc.HttpGetAttribute;
 using HttpPostAttribute = Microsoft.AspNetCore.Mvc.HttpPostAttribute;
 using HttpPutAttribute = Microsoft.AspNetCore.Mvc.HttpPutAttribute;
+using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CRUD_Personas_API.Controllers
 {
-    [System.Web.Http.Route("api/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
     public class DepartamentosController : ControllerBase
     {
@@ -67,14 +69,14 @@ namespace CRUD_Personas_API.Controllers
 
         // POST api/<DepartamentosController>
         [HttpPost]
-        public void Post([System.Web.Http.FromBody] ClsDepartamento oDepartamento)
+        public void Post([FromBody] ClsDepartamento oDepartamento)
         {
             ClsManejadoraDepartamentoBL.actualizarAniadirDepartamentoBL(oDepartamento);
         }
 
         // PUT api/<DepartamentosController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [System.Web.Http.FromBody] ClsDepartamento oDepartamento)
+        public void Put(int id, [FromBody] ClsDepartamento oDepartamento)
         {
             ClsManejadoraDepartamentoBL.actualizarAniadirDepartamentoBL(oDepartamento);
         }
