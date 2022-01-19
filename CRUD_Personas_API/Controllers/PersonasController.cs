@@ -67,59 +67,53 @@ namespace CRUD_Personas_API.Controllers
 
         // POST api/<PersonasController>
         [HttpPost]
-        public HttpStatusCode Post([FromBody] ClsPersona oPersona)//[FromBody] 
+        public void Post([FromBody] ClsPersona oPersona)//[FromBody] 
         {
-            HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             try
             {
                 if (ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona) == 0)
                 {
-                    httpStatusCode = HttpStatusCode.NoContent;
+                    throw new HttpResponseException(HttpStatusCode.NoContent);
                 }
             }
             catch (Exception e)
             {
-                httpStatusCode = HttpStatusCode.ServiceUnavailable;
+                throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
             }
-            return httpStatusCode;
         }
 
         // PUT api/<PersonasController>/5
         [HttpPut("{id}")]
-        public HttpStatusCode Put(int id, [FromBody] ClsPersona oPersona)
+        public void Put(int id, [FromBody] ClsPersona oPersona)
         {
-            HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             try
             {
                 if (ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona) == 0)
                 {
-                    httpStatusCode = HttpStatusCode.NoContent;
+                    throw new HttpResponseException(HttpStatusCode.NoContent);
                 }
             }
             catch (Exception e)
             {
-                httpStatusCode = HttpStatusCode.ServiceUnavailable;
+                throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
             }
-            return httpStatusCode;
         }
 
         // DELETE api/<PersonasController>/5
         [HttpDelete("{id}")]
-        public HttpStatusCode Delete(int id)
+        public void Delete(int id)
         {
-            HttpStatusCode httpStatusCode = HttpStatusCode.OK;
             try
             {
-                if (ClsManejadoraPersonaBL.eliminarPersonaBL(id)== 0)
+                if (ClsManejadoraPersonaBL.eliminarPersonaBL(id) == 0)
                 {
-                    httpStatusCode = HttpStatusCode.NoContent;  
+                    throw new HttpResponseException(HttpStatusCode.NoContent);
                 }
             }
             catch (Exception e)
             {
-                httpStatusCode = HttpStatusCode.ServiceUnavailable;
+                throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
             }
-            return httpStatusCode;
         }
     }
 }
