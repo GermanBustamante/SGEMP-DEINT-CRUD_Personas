@@ -44,6 +44,8 @@ namespace CRUD_Personas_DAL.Manejadoras
             resultado = ejecutarProcedimientoAlmacenado(SP_ELIMINAR_DEPARTAMENTO);
             MiConexion.closeConnection();
             return resultado;
+            
+
         }
         #endregion
 

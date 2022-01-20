@@ -103,16 +103,18 @@ namespace CRUD_Personas_API.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            int numeroFilasAfectadas;
             try
             {
-                if (ClsManejadoraPersonaBL.eliminarPersonaBL(id) == 0)
-                {
-                    throw new HttpResponseException(HttpStatusCode.NoContent);
-                }
+                numeroFilasAfectadas = ClsManejadoraPersonaBL.eliminarPersonaBL(id);
             }
-            catch (Exception e)
+            catch (HttpResponseException e)
             {
                 throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
+            }
+            if (numeroFilasAfectadas == 0)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
             }
         }
     }
