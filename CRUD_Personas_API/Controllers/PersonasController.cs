@@ -59,7 +59,7 @@ namespace CRUD_Personas_API.Controllers
 
             if (oPersona == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NoContent);
+                throw new HttpResponseException(HttpStatusCode.OK);
             }
 
             return oPersona;
