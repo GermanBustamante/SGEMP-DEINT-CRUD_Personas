@@ -67,55 +67,77 @@ namespace CRUD_Personas_API.Controllers
 
         // POST api/<PersonasController>
         [HttpPost]
-        public void Post([FromBody] ClsPersona oPersona)//[FromBody] 
+        public IActionResult Post([FromBody] ClsPersona oPersona)//[FromBody] 
         {
+            int numeroFilasAfectadas = 0;
+            IActionResult resultado;
             try
             {
-                if (ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona) == 0)
-                {
-                    throw new HttpResponseException(HttpStatusCode.NoContent);
-                }
+                numeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
             }
-            catch (Exception e)
+            catch (HttpResponseException e)
             {
-                throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
+                resultado = BadRequest();
             }
+            if (numeroFilasAfectadas == 0)
+            {
+                resultado = NotFound();
+            }
+            else
+            {
+                resultado = Ok();
+            }
+            return resultado;
         }
 
         // PUT api/<PersonasController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ClsPersona oPersona)
+        public IActionResult Put(int id, [FromBody] ClsPersona oPersona)
         {
+            int numeroFilasAfectadas = 0;
+            IActionResult resultado;
             try
             {
-                if (ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona) == 0)
-                {
-                    throw new HttpResponseException(HttpStatusCode.NoContent);
-                }
+                numeroFilasAfectadas = ClsManejadoraPersonaBL.actualizarAñadirPersonaBL(oPersona);
             }
-            catch (Exception e)
+            catch (HttpResponseException e)
             {
-                throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
+                resultado = BadRequest();
             }
+            if (numeroFilasAfectadas == 0)
+            {
+                resultado = NotFound();
+            }
+            else
+            {
+                resultado = Ok();
+            }
+            return resultado;
         }
 
         // DELETE api/<PersonasController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            int numeroFilasAfectadas;
+            int numeroFilasAfectadas = 0;
+            IActionResult resultado;
             try
             {
                 numeroFilasAfectadas = ClsManejadoraPersonaBL.eliminarPersonaBL(id);
             }
             catch (HttpResponseException e)
             {
-                throw new HttpResponseException(HttpStatusCode.ServiceUnavailable);
+                resultado = BadRequest();
             }
             if (numeroFilasAfectadas == 0)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                resultado = NotFound();
             }
+            else
+            {
+                resultado = Ok();
+            }
+            return resultado;
         }
     }
 }
